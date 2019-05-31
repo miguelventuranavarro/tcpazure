@@ -62,7 +62,7 @@ def guardar_carga(request):
     page = request.GET.get('page')
     data = paginator.get_page(page)
 
-    PuntoGeo.crearPuntoGeo(bultos)
+    PuntoGeo.crearPuntoGeo(bultos,request.user.id)
         
     return render(request, 'index.html', {"data1":data})
 

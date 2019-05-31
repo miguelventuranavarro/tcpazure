@@ -58,9 +58,20 @@ class PrePlanificacionCargaBulto(models.Model):
 class PuntoGeocerca(models.Model):
     lpn = models.CharField(max_length=50)
     geo_code = models.CharField(max_length=50)
+    us = models.IntegerField()
+    id_control = models.IntegerField()
 
     class Meta:
         db_table = 'punto_geo'
+
+class MarcacionesMatch(models.Model):
+    lpn = models.CharField(max_length=50)
+    id_marcacion = models.IntegerField()
+    us = models.IntegerField()
+    id_control = models.IntegerField()
+
+    class Meta:
+        db_table = 'marcaciones_match'
 
 
 
