@@ -1,0 +1,271 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+{% include "navbar.html" %}
+	<!-- Right Panel -->
+
+    <div id="right-panel" class="right-panel">
+
+        {% include "header.html" %}
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-4">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>Carga Masiva</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>Importar</strong>
+                            </div>
+                            <div class="card-body card-block">
+                            	{% if status == True  %}
+                                <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+                                    <span class="badge badge-pill badge-success">Bien</span>
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                {% elif status == False %}
+                                <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+                                    <span class="badge badge-pill badge-danger">Error</span>
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                {% else %}
+                              	{% endif %}
+                                <form action="{% url "index" %}" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="row form-group">
+                                        <div class="col-12 col-md-9">
+							            	<input type="file"
+							                   title="Upload excel file"
+							                   name="excel_file"
+							                   required="required" class="form-control-file">
+                                        </div>
+                                    </div>
+                                    <div class="form-actions form-group">
+                                    	<button type="submit" value="Upload" class="btn btn-primary btn-sm">Subir registros</button>
+                                	</div>
+							    </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+	                    <div class="card">
+	                        <div class="card-header">
+	                            <strong class="card-title">Registros Precargados</strong>
+	                        </div>
+	                        <div class="card-body">
+	                        
+	                            <form action = "{% url 'guardar_carga' %}" method="post" enctype="multipart/form-data">
+									{% csrf_token %}
+                                <div class="form-actions form-group">
+									<a href="{% url 'index' %}" id="eliminar_carga" class="btn btn-danger btn-sm">Eliminar pre-carga</a>
+									{% if status %}
+									<button id="guardar_carga" class="btn btn-primary btn-sm">Guardar pre-carga</button>
+									{% endif %}
+	                        	</div>
+	                            <table class="table table-striped" style="font-size:12px">
+	                            	<thead>
+	                                    <tr>
+	                                    	
+			                                <th>Fecha de Carga</th>
+			                                <th>Número de Carga</th>
+			                                <th>Ruta</th>
+			                                <th>Destino</th>
+			                                
+			                                <th>Paradas</th>
+			                                <th>Numero_lpn</th>
+			                                <th>Peso</th>
+			                                <th>Volumen</th>
+			                                <th>Guia de Remision</th>
+											<th>Transportista</th>
+											<th>Fecha de llegada inicial</th>
+			                                <th>Fecha de llegada final</th>
+											<th>Region</th>
+											<th>Unidades</th>
+	                                    </tr>
+	                                </thead>
+		                            <tbody>
+											
+									{% for contact in data %}
+									<input type="hidden" name="data[]" value="{{ contact.id }}" />
+									<td>
+								
+									    <tr>
+									    	
+			                                <td>{{ contact.fecha_carga }}</td>
+			                                <td>{{ contact.numero_carga }}</td>
+			                                <td>{{ contact.ruta_codigo.codigo }}</td>
+			                                <td>{{ contact.destino }}</td>
+			                               
+			                                <td>{{ contact.paradas }}</td>
+			                                <td>{{ contact.numero_lpn }}</td>
+			                                <td>{{ contact.peso }}</td>
+			                                <td>{{ contact.volumen }}</td>
+			                                <td>{{ contact.guia_remision }}</td>
+											<td>{{ contact.transportista }}</td>
+											<td>{{ contact.fecha_llegada_inicial }}</td>
+			                                <td>{{ contact.fecha_llegada }}</td>
+											<td>{{ contact.region }}</td>
+											<td>{{ contact.unidades }}</td>
+	                                    </tr>
+									{% endfor %}
+									</tbody>
+								</table>
+								</form>
+								<div class="pagination">
+								    <span class="step-links">
+								        {% if data.has_previous %}
+								            <a href="?page=1">&laquo; first</a>
+								            <a href="?page={{ data.previous_page_number }}">previous</a>
+								        {% endif %}
+
+								        <span class="current">
+								            Page {{ data.number }} of {{ data.paginator.num_pages }}.
+								        </span>
+
+								        {% if data.has_next %}
+								            <a href="?page={{ data.next_page_number }}">next</a>
+								            <a href="?page={{ data.paginator.num_pages }}">last &raquo;</a>
+								        {% endif %}
+								    </span>
+								</div>
+	                        </div>
+	                    </div>
+					</div>
+					<div class="col-lg-12">
+	                    <div class="card">
+	                        <div class="card-header">
+	                            <strong class="card-title">Registros Cargados</strong>
+	                        </div>
+	                        <div class="card-body">
+	                        
+	                           
+	                            <form action="{% url 'eliminar_carga' %}" method="post" enctype="multipart/form-data">
+
+                                <div class="form-actions form-group">
+	                            	<button id="eliminar_carga" class="btn btn-danger btn-sm">Eliminar carga</button>
+	                        	</div>
+	                            <table class="table table-striped" style="font-size:12px">
+	                            	<thead>
+	                                    <tr>
+	                                    	<th><input type="checkbox" id="selectall" onClick="selectAll(this)"/></th>
+			                                <th>Fecha de Carga</th>
+			                                <th>Número de Carga</th>
+			                                <th>Ruta</th>
+			                                <th>Destino</th>
+			                               
+			                                <th>Paradas</th>
+			                                <th>Numero_lpn</th>
+			                                <th>Peso</th>
+			                                <th>Volumen</th>
+			                                <th>Guia de Remision</th>
+			                                <th>Transportista</th>
+			                                <th>Fecha de llegada inicial</th>
+			                                <th>Fecha de llegada final</th>
+											<th>Region</th>
+											<th>Unidades</th>
+	                                    </tr>
+	                                </thead>
+		                            <tbody>
+		                            {% for contact in data1 %}
+									    <tr>
+									    	<td><input type="checkbox" name="data[]" value="{{ contact.id }}" /></td>
+			                                <td>{{ contact.fecha_carga }}</td>
+			                                <td>{{ contact.numero_carga }}</td>
+			                                <td>{{ contact.ruta_codigo.codigo }}</td>
+			                                <td>{{ contact.destino }}</td>
+			                            
+			                                <td>{{ contact.paradas }}</td>
+			                                <td>{{ contact.numero_lpn }}</td>
+			                                <td>{{ contact.peso }}</td>
+			                                <td>{{ contact.volumen }}</td>
+			                                <td>{{ contact.guia_remision }}</td>
+			                                <td>{{ contact.transportista }}</td>
+			                                <td>{{ contact.fecha_llegada_inicial }}</td>
+			                                <td>{{ contact.fecha_llegada }}</td>
+											<td>{{ contact.region }}</td>
+											<td>{{ contact.unidades }}</td>
+	                                    </tr>
+									{% endfor %}
+									</tbody>
+								</table>
+								</form>
+								<div class="pagination">
+								    <span class="step-links">
+								        {% if data.has_previous %}
+								            <a href="?page=1">&laquo; first</a>
+								            <a href="?page={{ data.previous_page_number }}">previous</a>
+								        {% endif %}
+
+								        <span class="current">
+								            Page {{ data.number }} of {{ data.paginator.num_pages }}.
+								        </span>
+
+								        {% if data.has_next %}
+								            <a href="?page={{ data.next_page_number }}">next</a>
+								            <a href="?page={{ data.paginator.num_pages }}">last &raquo;</a>
+								        {% endif %}
+								    </span>
+								</div>
+	                        </div>
+	                    </div>
+	                </div>
+                </div>
+        	</div><!-- .animated -->
+    	</div><!-- .content -->
+    	<div class="clearfix"></div>
+{% endif %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script language="JavaScript">
+	function selectAll(source) {
+		checkboxes = document.getElementsByName('data[]');
+		for(var i in checkboxes)
+			checkboxes[i].checked = source.checked;
+	}
+
+	/*$("#eliminar_carga").click(function() {
+		var checkboxes = document.getElementsByName('data[]');
+		//console.log(checkboxes);
+
+		var data = []
+		for (var i = 0; i < checkboxes.length; i++) {
+			if (checkboxes[i].checked) {
+				obj =  {"id": checkboxes[i].value};
+				data.push(obj);
+			}
+		}
+		console.log(data)
+		$.ajax({
+	        url: 'eliminar_carga/',
+	        type: 'POST',
+	        data: JSON.stringify(data),
+	        datatype: 'json',
+	        success: function (data) { 
+	        	console.log(data);
+	        	successFunction(data); 
+	        },
+	        error: function (jqXHR, textStatus, errorThrown) { errorFunction(); }
+	    });
+    });*/
+</script>
+{% endblock %}
+

@@ -1,0 +1,296 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+{% include "navbar.html" %}
+	<!-- Right Panel -->
+	<link rel="stylesheet" type="text/css" media="screen" href="{% static 'assets/css/bootstrap.css' %}" />
+
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+
+    <div id="right-panel" class="right-panel">
+
+        {% include "header.html" %}
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-6">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>Geocercas</h1>
+                            </div>                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+                    <div class="col-lg-12">
+	                    <div class="card">
+	                        <div class="card-header">
+	                            <strong class="card-title">Geocercas</strong>
+	                        </div>
+	                        <form action="{% url "registro_manual" %}" method="post">
+		                        <div class="card-body col-lg-6">
+
+	                                <div class="row form-group">
+                                        <div class="col col-md-3">
+                                        	<label for="hf-carga" class=" form-control-label">Numero de carga:</label>
+	                                	</div>
+	                                	<div class="col-12 col-md-9">
+		                                	<input type="text" id="carga" name="numero_carga" placeholder="" class="form-control">
+		                                </div>
+	                                </div>
+
+	                                
+	                                <div class="row form-group">
+                                        <div class="col col-md-3">
+                                        	<label for="bandeja" class=" form-control-label">Número de bandeja:</label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+	                                    	<input type="text" id="bandeja" name="numero_bandeja" placeholder="" class="form-control">
+	                                	</div>
+	                                </div>
+                                </div>
+                                <div class="card-body col-lg-6">
+	                                <div class="row form-group">
+                                        <div class="col col-md-3">
+                                        	<label for="fecini" class=" form-control-label">Fecha de carga inicial:</label>
+                                        </div>
+                                        <div class="col-12 col-md-9 input-group">
+                                        	<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+	                                    	<input type="text" id="fecini" name="fecini" placeholder="" class="form-control" >
+	                                    </div>
+	                                </div>
+
+	                                <div class="row form-group">
+                                        <div class="col col-md-3">
+                                        	<label for="fecfin" class=" form-control-label">Fecha de carga final:</label>
+                                        </div>
+                                        <div class="col-12 col-md-9 input-group">
+                                        	<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+	                                    	<input type="text" id="fecfin" name="fecfin" placeholder="" class="form-control" >
+	                                    </div>
+	                                </div>	                                
+		                        </div>
+		                        <div class="card-body col-lg-12">
+			                        <div class="form-actions form-group">
+		                                <button type="submit" value="Upload" class="btn btn-primary btn-sm">Buscar</button>
+		                            </div>
+		                        </div>
+	                        </form>
+	                    </div>
+	                </div>
+	                <div class="col-lg-12">
+	                    <div class="card">
+	                        <div class="card-body">
+	                            <table class="table table-striped" style="font-size:12px">
+	                            	<thead>
+	                                    <tr>
+	                                    	<th>Fecha de Carga</th>
+			                                <th>Número de Carga</th>
+			                                <th>Número de Bandeja</th>
+			                                <th>#Controles</th>
+			                                <th>Acciones</th>	
+	                                    </tr>
+	                                </thead>
+		                            <tbody>
+		                            {% for detalle in detalles %}
+									    <tr id="{{ detalle.numero_lpn }}" class="{{ detalle.numero_carga }}">
+			                                <td>{{ detalle.fecha_carga }}"</td>
+									    	<td>{{ detalle.numero_carga }}</td>
+			                                <td>{{ detalle.numero_lpn }}</td>
+			                                <td>{{ detalle.numero_controles }}</td>
+		                                    <td>
+		                                    	<a href="#" class="btn btn-info mb-1" id="modal-registro" data-bandeja="{{ detalle.numero_lpn }}" data-toggle="modal" data-target="#control"><i class="fa fa-plus-square-o"></i> Registrar</a>
+		                                    </td>
+	                                    </tr>
+									{% endfor %}
+									</tbody>
+								</table>
+								<div class="pagination">
+								    <span class="step-links">
+								        {% if data.has_previous %}
+								            <a href="?page=1">&laquo; first</a>
+								            <a href="?page={{ data.previous_page_number }}">previous</a>
+								        {% endif %}
+
+								        <span class="current">
+								            Page {{ data.number }} of {{ data.paginator.num_pages }}.
+								        </span>
+
+								        {% if data.has_next %}
+								            <a href="?page={{ data.next_page_number }}">next</a>
+								            <a href="?page={{ data.paginator.num_pages }}">last &raquo;</a>
+								        {% endif %}
+								    </span>
+								</div>
+	                        </div>
+	                    </div>
+	                </div>
+                </div>
+        	</div><!-- .animated -->
+    	</div><!-- .content -->
+    	<div class="clearfix"></div>
+    	<div class="modal fade" id="control" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="mediumModalLabel">Registro Manual</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-12">
+		                    <div class="card">
+
+		                        <div class="sufee-alert alert with-close alert-success alert-dismissible fade show" style="display:none">
+                                    <span class="badge badge-pill badge-success">Bien</span>
+                                    <p></p>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                
+                                <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show" style="display:none">
+                                    <span class="badge badge-pill badge-danger">Error</span>
+                                    <p></p>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+
+		                        <form id="registroManuaScaner" action="" method="get">
+			                        <div class="card-body col-lg-6">
+		                                <div class="row form-group">
+	                                        <div class="col col-md-3">
+	                                        	<label for="hf-numero_placa" class=" form-control-label">Numero de placa:</label>
+		                                	</div>
+		                                	<div class="col-12 col-md-9">
+			                                	<input type="text" id="numero_placa" name="numero_placa" placeholder="" class="form-control" required="">
+			                                </div>
+		                                </div>
+		                                <div class="row form-group">
+	                                        <div class="col col-md-3">
+	                                        	<label for="numero_bandeja" class=" form-control-label">Número de bandeja:</label>
+	                                        </div>
+	                                        <div class="col-12 col-md-9">
+		                                    	<input type="text" id="numero_bandeja" name="numero_bandeja" placeholder="" class="form-control" required="">
+		                                	</div>
+		                                </div>
+		                                <div class="row form-group">
+	                                        <div class="col col-md-3">
+	                                        	<label for="latitud" class=" form-control-label">Latitud:</label>
+	                                        </div>
+	                                        <div class="col-12 col-md-9">
+		                                    	<input type="text" id="latitud" name="latitud" placeholder="" class="form-control" required="">
+		                                	</div>
+		                                </div>
+		                                <div class="row form-group">
+	                                        <div class="col col-md-3">
+	                                        	<label for="longitud" class=" form-control-label">longitud:</label>
+	                                        </div>
+	                                        <div class="col-12 col-md-9">
+		                                    	<input type="text" id="longitud" name="longitud" placeholder="" class="form-control" required="">
+		                                	</div>
+		                                </div>
+	                                </div>
+	                                <div class="card-body col-lg-6">
+		                                <div class="row form-group">
+	                                        <div class="col col-md-3">
+	                                        	<label for="fecini" class=" form-control-label">Fecha de registro:</label>
+	                                        </div>
+	                                        <div class="col-12 col-md-9 input-group">
+	                                        	<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+		                                    	<input type="text" id="fecha_registro" name="fecha_registro" placeholder="" class="form-control" required="" >
+		                                    </div>
+		                                </div>                                
+			                        </div>
+			                        <div class="card-body col-lg-12">
+				                        <div class="form-actions form-group">
+			                                <button type="submit" value="" id="registroManual" class="btn btn-primary btn-sm">Registrar</button>
+			                            </div>
+			                        </div>
+		                        </form>
+		                    </div>
+		                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endif %}
+<script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+        <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+
+        <script type="text/javascript">
+            $(function () {
+            	$('#fecha_registro').datetimepicker({
+		        	format: 'YYYY-MM-DD HH:mm:ss',
+		        });
+
+		        $('#fecini').datetimepicker({
+		        	format: 'DD/MM/YYYY HH:mm:ss',
+		        });
+		        $('#fecfin').datetimepicker({
+		        	format: 'DD/MM/YYYY HH:mm:ss',
+		            useCurrent: false //Important! See issue #1075
+		        });
+		        $("#fecini").on("dp.change", function (e) {
+		            $('#fecfin').data("DateTimePicker").minDate(e.date);
+		        });
+		        $("#fecfin").on("dp.change", function (e) {
+		            $('#fecini').data("DateTimePicker").maxDate(e.date);
+		        });
+		    });
+
+		    $('#modal-registro').click( function(){
+		    	var numero_bandeja = $(this).data('bandeja');
+		    	$('#numero_bandeja').val(numero_bandeja);
+		    })
+
+		    $('#registroManuaScaner').submit( function(e){
+		    	$('#registroManual').attr("disabled", true);
+		    	e.preventDefault();
+		    	var data = $(this).serialize();
+		    	$('.alert-success').hide();
+		    	$('.alert-danger').hide();
+		    	$.ajax({
+	                type: "GET",
+	                url: "/registro_manual_scaner/",
+	                data: data,
+	                cache: false,
+	                async: false,
+	                success: function(result) {
+	                    console.log(result)
+	                    if (result.status){
+	                    	$('.alert-success').show();
+	                    	$('.alert-success p').append(result.message);
+	                    	setTimeout(function(){ 
+	                    		url = window.location.host;
+	                    		console.log(url);
+	                    		window.location.reload(url+'/registro_manual/');
+	                    	}, 2000);
+	                    }else{
+	                    	$('.alert-danger').show();
+	                    	$('.alert-danger').append(result.message);
+	                    	$('#registroManual').attr("disabled", false);
+	                    }
+	                },
+	                error: function(result) {
+	                    $('.alert-danger').show();
+	                    $('.alert-danger').append('Lo sentimos hubo problemas de validación, por favor vuleva a intentarlo.');
+	                    $('#registroManual').attr("disabled", false);
+	                }
+	            });
+		    })
+        </script>
+{% endblock %}

@@ -1,0 +1,303 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+{% include "navbar.html" %}
+	<!-- Right Panel -->
+
+    <div id="right-panel" class="right-panel">
+
+        {% include "header.html" %}
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-6">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>Editar Geocerca</h1>
+                            </div>                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>Mapa</strong>
+                            </div>
+                            <div class="card-body card-block">
+                            	<!--div id="panel">
+						            <div id="color-palette"></div>
+						            <div>
+						                <button id="delete-button">Delete Selected Shape</button>
+						            </div>
+						        </div-->
+						        <div id="map"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+	                    <div class="card">
+	                        <div class="card-header">
+	                            <strong class="card-title">Datos</strong>
+	                        </div>
+	                        <div class="card-body">
+	                        	<form action="{% url "editar_geocercas" %}" method="post">
+		                        	<!--<div class="form-group"><label for="company" class=" form-control-label">Código</label><input type="text" id="codigo" name="codigo" placeholder="Código" class="form-control"></div>
+	                                <div class="form-group"><label for="vat" class=" form-control-label">Nombre</label><input type="text" id="nombre" name="nombre" placeholder="Nombre" class="form-control"></div>
+	                                <div class="form-group"><label for="street" class=" form-control-label">Dirección</label><input type="text" id="direccion" name="direccion" placeholder="Dirección" class="form-control"></div>
+	                                <div class="form-group"><label for="country" class=" form-control-label">Tipo de Geocerca</label><input type="text" id="tipo" name="tipo" placeholder="Tipo de Geocerca" class="form-control"></div>
+	                                <input type="hidden" name="coordenadas" id="coordenadas" value="">
+	                                <div class="form-actions form-group">
+                                    	<button type="submit" value="Upload" class="btn btn-primary btn-sm">Crear</button>
+                                	</div>-->
+
+                                    <div class="form-group"><label for="company" class=" form-control-label">Código</label>
+                                        {{ form.codigo }}
+                                    </div>
+                                    <div class="form-group"><label for="vat" class=" form-control-label">Nombre</label>
+                                        {{ form.nombre }}
+                                    </div>
+                                    <div class="form-group"><label for="street" class=" form-control-label">Dirección</label>
+                                        {{ form.direccion }}
+                                    </div>
+                                    <div class="form-group"><label for="country" class=" form-control-label">Tipo de Geocerca</label>
+                                        {{ form.tipo_geocerca }}
+                                    </div>
+                                    {{ form.coordenadas }}
+                                    <input type="hidden" name="coordenadas_poligon" id="coordenadas_poligon" value="{{ coordenadas_poligon }}">
+                                    <input type="hidden" name="id" id="id" value="{{ id }}">
+                                    <div class="form-actions form-group">
+                                        <button type="submit" value="Upload" class="btn btn-primary btn-sm">Editar</button>
+                                    </div>
+
+                                </form>
+	                        </div>
+	                    </div>
+	                </div>
+                </div>
+        	</div><!-- .animated -->
+    	</div><!-- .content -->
+    	<div class="clearfix"></div>
+
+<script type="text/javascript"
+        src="http://maps.google.com/maps/api/js?key=AIzaSyBUzO3TXD833UdmanX6SJsWjNByf-oe6Cg&sensor=false&libraries=drawing"></script>
+        <style type="text/css">
+            #map {
+                padding: 0;
+                margin: 0;
+                width: 540px;
+                height: 390px;
+            }
+            #panel {
+                width: 200px;
+                font-family: Arial, sans-serif;
+                font-size: 13px;
+                float: right;
+                margin: 10px;
+            }
+            #color-palette {
+                clear: both;
+            }
+            .color-button {
+                width: 14px;
+                height: 14px;
+                font-size: 0;
+                margin: 2px;
+                float: left;
+                cursor: pointer;
+            }
+            #delete-button {
+                margin-top: 5px;
+            }
+        </style>
+        <script type="text/javascript">
+            var drawingManager;
+            var selectedShape;
+            var colors = ['#1E90FF', '#FF1493', '#32CD32', '#FF8C00', '#4B0082'];
+            var selectedColor;
+            var colorButtons = {};
+            function clearSelection () {
+                if (selectedShape) {
+                    selectedShape.setEditable(false);
+                    selectedShape = null;
+                }
+            }
+            function setSelection (shape) {
+                clearSelection();
+                // getting shape coordinates
+                var v = shape.getPath();
+                var coordenadas = [];
+                var obj = '';
+                var cp = '';
+                for (var i=0; i < v.getLength(); i++) {
+                  var xy = v.getAt(i);
+                  obj = {"lat": xy.lat(), "lng": xy.lng()};
+                  cp += xy.lat()+" "+xy.lng()+", ";
+                  coordenadas.push(obj);
+                  console.log('Cordinate lat: ' + xy.lat() + ' and lng: ' + xy.lng());
+                }
+                cpo = cp.substring(0,cp.length-2);
+                var divisiones = cpo.split(",", 1);
+                console.log(divisiones);
+                coordenadas_poligon = "("+cpo+", "+divisiones[0]+")"
+                //texto = obj.substring(0,obj.length-2);
+                //texto = "'["+texto+"]'"
+                //console.log(texto)
+                document.getElementById('id_coordenadas').value = JSON.stringify(coordenadas)
+                document.getElementById('coordenadas_poligon').value = coordenadas_poligon
+                
+                selectedShape = shape;
+                shape.setEditable(true);
+                selectColor(shape.get('fillColor') || shape.get('strokeColor'));
+            }
+            function deleteSelectedShape () {
+                if (selectedShape) {
+                    selectedShape.setMap(null);
+                }
+            }
+            function selectColor (color) {
+                selectedColor = color;
+                for (var i = 0; i < colors.length; ++i) {
+                    var currColor = colors[i];
+                    colorButtons[currColor].style.border = currColor == color ? '2px solid #789' : '2px solid #fff';
+                }
+                // Retrieves the current options from the drawing manager and replaces the
+                // stroke or fill color as appropriate.
+                var polylineOptions = drawingManager.get('polylineOptions');
+                polylineOptions.strokeColor = color;
+                drawingManager.set('polylineOptions', polylineOptions);
+                var rectangleOptions = drawingManager.get('rectangleOptions');
+                rectangleOptions.fillColor = color;
+                drawingManager.set('rectangleOptions', rectangleOptions);
+                var circleOptions = drawingManager.get('circleOptions');
+                circleOptions.fillColor = color;
+                drawingManager.set('circleOptions', circleOptions);
+                var polygonOptions = drawingManager.get('polygonOptions');
+                polygonOptions.fillColor = color;
+                drawingManager.set('polygonOptions', polygonOptions);
+            }
+            function setSelectedShapeColor (color) {
+                console.log('fn setSelectedShapeColor()');
+                console.log(selectedShape);
+                if (selectedShape) {
+                    if (selectedShape.type == google.maps.drawing.OverlayType.POLYLINE) {
+                        selectedShape.set('strokeColor', color);
+                    } else {
+                        selectedShape.set('fillColor', color);
+                    }
+                }
+            }
+            function makeColorButton (color) {
+                var button = document.createElement('span');
+                button.className = 'color-button';
+                button.style.backgroundColor = color;
+                google.maps.event.addDomListener(button, 'click', function () {
+                    selectColor(color);
+                    setSelectedShapeColor(color);
+                });
+                return button;
+            }
+            function buildColorPalette () {
+                var colorPalette = document.getElementById('color-palette');
+                for (var i = 0; i < colors.length; ++i) {
+                    var currColor = colors[i];
+                    var colorButton = makeColorButton(currColor);
+                    colorPalette.appendChild(colorButton);
+                    colorButtons[currColor] = colorButton;
+                }
+                selectColor(colors[0]);
+            }
+            function initialize () {
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 11,
+                    center: new google.maps.LatLng(-12.0431800, -77.0282400),
+                    disableDefaultUI: true,
+                    zoomControl: true
+                });
+                var polyOptions = {
+                    strokeWeight: 0,
+                    fillOpacity: 0.45,
+                    editable: true,
+                    draggable: true
+                };
+
+                var coordenadas = document.getElementById('id_coordenadas').value;
+                var texto = coordenadas.substring(0,coordenadas.length-2);
+                var txtjson = texto;
+                console.log(coordenadas)
+                var verticesPoligono = JSON.parse(coordenadas);
+                console.log(verticesPoligono)
+
+                var poligono = new google.maps.Polygon({
+                    path: verticesPoligono,
+                    map: map,
+                    strokeColor: 'rgb(255, 0, 0)',
+                    fillColor: 'rgb(255, 255, 0)',
+                    strokeWeight: 4,
+                  });
+                // Creates a drawing manager attached to the map that allows the user to draw
+                // markers, lines, and shapes.
+                drawingManager = new google.maps.drawing.DrawingManager({
+                    drawingMode: google.maps.drawing.OverlayType.POLYGON,
+                    markerOptions: {
+                        draggable: true
+                    },
+                    polylineOptions: {
+                        editable: true,
+                        draggable: true
+                    },
+                    rectangleOptions: polyOptions,
+                    circleOptions: polyOptions,
+                    polygonOptions: polyOptions,
+                    map: map
+                });
+                google.maps.event.addListener(drawingManager, 'overlaycomplete', function (e) {
+                    if (e.type !== google.maps.drawing.OverlayType.MARKER) {
+                        // Switch back to non-drawing mode after drawing a shape.
+                        drawingManager.setDrawingMode(null);
+                        // Add an event listener that selects the newly-drawn shape when the user
+                        // mouses down on it.
+                        var newShape = e.overlay;
+                        newShape.type = e.type;
+                        console.log(newShape);
+                        google.maps.event.addListener(newShape, 'click', function (e) {
+                            if (e.vertex !== undefined) {
+                            	alert(document.getElementById('coordenadas').value);
+                                if (newShape.type === google.maps.drawing.OverlayType.POLYGON) {
+                                    var path = newShape.getPaths().getAt(e.path);
+                                    path.removeAt(e.vertex);
+                                    if (path.length < 3) {
+                                        newShape.setMap(null);
+                                    }
+                                }
+                                /*if (newShape.type === google.maps.drawing.OverlayType.POLYLINE) {
+                                    var path = newShape.getPath();
+                                    path.removeAt(e.vertex);
+                                    if (path.length < 2) {
+                                        newShape.setMap(null);
+                                    }
+                                }*/
+                            }
+                            setSelection(newShape);
+                        });
+                        setSelection(newShape);
+                    }
+                });
+                // Clear the current selection when the drawing mode is changed, or when the
+                // map is clicked.
+                google.maps.event.addListener(drawingManager, 'drawingmode_changed', clearSelection);
+                google.maps.event.addListener(map, 'click', clearSelection);
+                google.maps.event.addDomListener(document.getElementById('delete-button'), 'click', deleteSelectedShape);
+                buildColorPalette();
+            }
+            google.maps.event.addDomListener(window, 'load', initialize);
+        </script>
+{% endif %}
+{% endblock %}
