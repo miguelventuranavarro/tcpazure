@@ -5,6 +5,8 @@ from django.urls import reverse
 from django.views.generic import FormView
 from django.views.generic.detail import SingleObjectMixin
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
+from django.db.models import Max
+from datetime import datetime
 
 from apps.home.forms.form import *
 
@@ -527,6 +529,100 @@ http://en.wikipedia.org/wiki/Point_in_polygon#Ray_casting_algorithm """
 @csrf_exempt
 def consulta_registros(request):
     from django.db.models import Prefetch
+    numero_carga = request.POST.get('numero_carga')
+    numero_bandeja = request.POST.get('numero_bandeja')
+    ruta = request.POST.get('ruta')
+    trans = request.POST.get('trans')
+    fecini = request.POST.get('fecini')
+    fecfin = request.POST.get('fecfin')
+    resumen = {}
+    detalles = []
+    if "POST" == request.method:
+
+        
+        max_puntos = PlanificacionRuta.objects.aggregate(Max('numero_puntos')) 
+
+        if(numero_carga != '' and  numero_bandeja != '' and ruta != '' and trans != '' and trans != '' and fecini != '' and fecfin != ''):
+            fecini = datetime.strftime(datetime.strptime(fecini,'%d/%m/%Y %H:%M:%S'),'%Y-%m-%d %H:%M:%S')
+            fecfin = datetime.strftime(datetime.strptime(fecfin,'%d/%m/%Y %H:%M:%S'),'%Y-%m-%d %H:%M:%S')
+            carga_bulto = PlanificacionCargaBulto.objects.filter(numero_carga=numero_carga).filter(numero_lpn=numero_bandeja).filter(ruta_codigo=ruta).filter(transportista=trans).filter(fecha_carga__range=[fecini, fecfin])
+        else:
+            carga_bulto = PlanificacionCargaBulto.objects.all()
+
+        
+        control = []
+        total = []
+        dentro = []
+        fuera = []
+        control.append(0)
+        total.append(len(carga_bulto))
+        dentro.append('-')
+        fuera.append('-')
+
+        n_carga = []
+        n_lpn = []
+        n_controles = []
+        ruta = []
+        f_carga = []
+        cnt =[]
+        trans = []
+
+        dic = {}
+
+        for i in range(1,max_puntos['numero_puntos__max'] + 1):
+            control.append(i)
+            cont = 0
+            cont1 = 0
+            cont2 = 0
+            for cb in carga_bulto:
+
+                match = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i)
+                inside = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=1)
+                outside = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=0)
+                cont = cont + len(match)
+                cont1 = cont1 + len(inside)
+                cont2 = cont2 + len(outside)
+
+                
+
+            total.append(cont)
+            dentro.append(cont1)
+            fuera.append(cont2)
+
+        for cb in carga_bulto:
+            dic = {}
+            all_match = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn)
+            dic['numero_carga'] = cb.numero_carga
+            dic['numero_lpn'] = cb.numero_lpn
+            dic['numero_controles'] = len(all_match)
+            dic['ruta_codigo'] = cb.ruta_codigo
+            dic['fecha_carga'] = cb.fecha_carga
+            dic['transportista'] = cb.transportista
+            innercnt = []
+
+            for i in range(1,max_puntos['numero_puntos__max'] + 1):
+                match = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i)
+                if(len(match) > 0):
+                    innercnt.append('x')
+                else:
+                    innercnt.append('')
+
+            dic['control'] = innercnt
+
+            detalles.append(dic)
+
+        
+        resumen['detalles'] = detalles
+        resumen['control'] = control
+        resumen['total'] = total
+        resumen['dentro'] = dentro
+        resumen['fuera'] = fuera
+   
+    return render(request, 'consulta_registros.html', {'resumen':resumen})
+
+@csrf_exempt
+def consulta_registros1(request):
+    from django.db.models import Prefetch
     numero_carga = request.GET.get('numero_carga')
     numero_bandeja = request.GET.get('numero_bandeja')
     ruta = request.GET.get('ruta')
@@ -548,7 +644,7 @@ def consulta_registros(request):
 
     if "GET" == request.method:
         from django.db.models import Count
-        from shapely import wkt
+        #from shapely import wkt
         try:
             dataPuntoControl = PlanificacionPuntoControl.objects.all().select_related('geocerca').select_related('tipo_control').select_related('ruta_codigo').order_by('-orden')
             data_pc = PlanificacionPuntoControl.objects.values('ruta_codigo').annotate(total=Count('ruta_codigo')).order_by('-total').first()
@@ -587,7 +683,7 @@ def consulta_registros(request):
                 "or (t1.fecha_carga BETWEEN convert(datetime2, %s, 103) AND convert(datetime2, %s, 103)) order by t1.numero_carga", [ruta,numero_carga,numero_bandeja,local,fecini,fecfin])
 
             from collections import Counter
-            from shapely import wkt
+            #from shapely import wkt
             import math
             lpn1 = []
             '''m = 0

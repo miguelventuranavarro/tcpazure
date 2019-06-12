@@ -44,7 +44,7 @@
                                     </button>
                                 </div>
                               	{% endif %}
-	                        <form action="{% url "consulta_registros" %}" method="get">
+	                        <form action="{% url 'consulta_registros' %}" method="post">
 		                        <div class="card-body col-lg-6">
 
 	                                <div class="row form-group">
@@ -78,10 +78,10 @@
                                 <div class="card-body col-lg-6">
 	                                <div class="row form-group">
                                         <div class="col col-md-3">
-                                        	<label for="local" class=" form-control-label">Local:</label>
+                                        	<label for="local" class=" form-control-label">Transportista:</label>
                                         </div>
                                         <div class="col-12 col-md-9">
-	                                    	<input type="text" id="local" name="local" placeholder="" class="form-control">
+	                                    	<input type="text" id="trans" name="trans" placeholder="" class="form-control">
 	                                    </div>
 	                                </div>
 
@@ -113,7 +113,7 @@
 	                        </form>
 	                    </div>
 	                </div>
-	                {% if detalles %}
+	                {% if resumen %}
 	                <div class="col-lg-12">
 	                    <div class="card">
 	                    	<div class="card-body">
@@ -121,54 +121,40 @@
 	                            	<thead>
 	                                    <tr>
 	                                    	<th>-</th>
-			                                <th>Control 0</th>
-			                                {% for control in data_pc %}
-			                                	<th>Control {{ control.nombre }}</th>
+
+			                                {% for control in resumen.control %}
+			                                	<th>Control {{ control }}</th>
 			                                {% endfor %}		                            	
 	                                    </tr>
 	                                </thead>
 		                            <tbody>
 		                            	<tr>
 		                            		<th>Total</th>
-			                                <th>{{ countcargainicial }}</th>
-			                                {% for control in data_pc %}
-			                                	{% for key,value in resumen.items %}
-			                                		{% if key.id == control.id %}
-						                                <td>{{ value }}</td>
-					                                {% else %}
-
-					                                {% endif %}
-				                                {% endfor %}
+			                                
+			                                {% for total in resumen.total %}
+											<th>{{ total }}</th>
 			                                {% endfor %}
 			                            </tr>
 			                            <tr>
 			                            	<th>Dentro de Geocerca</th>
-			                                <th>-</th>
-			                                {% for control in data_pc %}
-			                                	{% for key,value in resumen.items %}
-			                                		{% if key.id == control.id %}
-						                                <td>{{ value }}</td>
-					                                {% else %}
-
-					                                {% endif %}
-				                                {% endfor %}
+			                                
+			                                
+			                                {% for dentro in resumen.dentro%}
+											<th class="text-success">{{ dentro }}</th>
+			                                {% endfor %}
+			                                
+										</tr>
+										
+										<tr>
+			                            	<th>Fuera de Geocerca</th>
+			                                
+			                                
+			                                {% for fuera in resumen.fuera %}
+											<th class = "text-danger">{{fuera }}</th>
 			                                {% endfor %}
 			                                
 	                                    </tr>
-	                                    <!--tr>
-			                            	<th>Fuera < 2km</th>
-			                                <th>-</th>
-		                            		{% for detalle in resumen %}
-			                                	<td>{{ detalle.menor_2km }}</td>
-			                                {% endfor %}
-	                                    </tr>
-	                                    <tr>
-			                            	<th>Fuera > 2km</th>
-			                                <th>-</th>
-		                            		{% for detalle in resumen %}
-			                                	<td>{{ detalle.mayor_2km }}</td>
-			                                {% endfor %}
-	                                    </tr-->
+	                                    
 									</tbody>
 								</table>
 	                        </div>
@@ -176,19 +162,38 @@
 	                            <table class="table table-striped" style="font-size:12px">
 	                            	<thead>
 	                                    <tr>
-	                                    	<th></th>
+	                                    	
 	                                    	<th>Número de Carga</th>
 			                                <th>Número de Bandeja</th>
 			                                <th>#Controles</th>
 			                                <th>Ruta</th>
-			                                <th>Local</th>
-			                                <th>Fecha de carga</th>
-			                                {% for control in data_pc %}
-			                                	<th>Control {{ control.nombre }}</th>
-			                                {% endfor %}	
+											<th>Fecha de carga</th>
+											<th>Transportista</th>
+											{% for control in resumen.control %}
+												{% if control != 0 %}
+												<th>Control {{ control }}</th>
+												{% endif %}
+			                                {% endfor %}		
 	                                    </tr>
-	                                </thead>
-		                            <tbody>
+									</thead>
+									<tbody>
+
+										
+									{% for detalle in resumen.detalles %}
+									<tr>
+										<td>{{ detalle.numero_carga }}</td>
+										<td>{{ detalle.numero_lpn }}</td>
+										<td>{{ detalle.numero_controles }}</td>
+										<td>{{ detalle.ruta_codigo }}</td>										
+										<td>{{ detalle.fecha_carga }}</td>
+										<td>{{ detalle.transportista }}</td>
+										{% for cnt in detalle.control %}
+											<td>{{ cnt }}</td>
+										{% endfor %}
+									{% endfor %}
+									</tr>
+									</tbody>
+		                            <!-- <tbody>
 		                            {% for detalle in detalles %}
 									    <tr id="{{ detalle.numero_lpn }}" class="block {{ detalle.numero_carga }}" style="display: {{ detalle.display }}">
 									    	<td>
@@ -253,31 +258,15 @@
 							            </div>
 	                                    
 									{% endfor %}
-									</tbody>
+									</tbody> -->
 								</table>
-								<div class="icon-container">
+								<!-- <div class="icon-container">
                                     <span class="ti-download"></span><span class="icon-name">
                                     	<a href="/export_consulta_registros/?numero_carga={{request.GET.numero_carga}}&numero_bandeja={{request.GET.numero_bandeja}}&ruta={{request.GET.ruta}}&fecini={{request.GET.fecini}}&fecfin={{request.GET.fecfin}}">Descargar Excel</a>
                                     </span>
-                                </div>
+                                </div> -->
 								
-								<!--<div class="pagination">
-								    <span class="step-links">
-								        {% if data.has_previous %}
-								            <a href="?page=1">&laquo; first</a>
-								            <a href="?page={{ data.previous_page_number }}">previous</a>
-								        {% endif %}
-
-								        <span class="current">
-								            Page {{ data.number }} of {{ data.paginator.num_pages }}.
-								        </span>
-
-								        {% if data.has_next %}
-								            <a href="?page={{ data.next_page_number }}">next</a>
-								            <a href="?page={{ data.paginator.num_pages }}">last &raquo;</a>
-								        {% endif %}
-								    </span>
-								</div>-->
+								
 	                        </div>
 	                    </div>
 	                </div>

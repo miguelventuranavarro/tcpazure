@@ -5,7 +5,7 @@ class PuntoGeo():
     def crearPuntoGeo(lpns,user):
         codigos = []
         for lpn in lpns:
-            puntos_control = PlanificacionPuntoControl.objects.filter(nombre=lpn.ruta_codigo)
+            puntos_control = PlanificacionPuntoControl.objects.filter(ruta_codigo=lpn.ruta_codigo)
 
             for pc in puntos_control:
                 lpnbd = lpn.numero_lpn
@@ -15,7 +15,7 @@ class PuntoGeo():
                 else:
                     geo = pc.geocerca.codigo
 
-                codigos.append(PuntoGeocerca(lpn=lpnbd,geo_code=geo,us=user,id_control=pc.id))
+                codigos.append(PuntoGeocerca(lpn=lpnbd,geo_code=geo,us=user,id_control=pc.orden))
 
         # codigos = PuntoGeocerca.objects.filter(user=user)
         # PuntoGeocerca.objects.filter(user=user).delete()
@@ -36,9 +36,9 @@ class PuntoGeo():
                         poly.append((x,y))
 
                     if PuntoGeo.point_inside_polygon(x1,y1,poly):
-                        MarcacionesMatch.objects.create(lpn=mar.numero_lpn,id_marcacion=mar.id,us=user,id_control=cod.id_control)
+                        MarcacionesMatch.objects.create(lpn=mar.numero_lpn,id_marcacion=mar.id,us=user,id_control=cod.id_control, dentro = 1)
                     else:
-                        MarcacionesMatch.objects.create(lpn=mar.numero_lpn,id_marcacion=mar.id,us=user,id_control=0)
+                        MarcacionesMatch.objects.create(lpn=mar.numero_lpn,id_marcacion=mar.id,us=user,id_control=cod.id_control, dentro = 0)
 
 
     def point_inside_polygon(x,y,poly):
