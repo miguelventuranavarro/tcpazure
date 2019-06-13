@@ -73,6 +73,14 @@
                                         <div class="col-12 col-md-9">
 	                                    	<input type="text" id="ruta" name="ruta" placeholder="" class="form-control" value="">
 	                                    </div>
+									</div>
+									<div class="row form-group">
+                                        <div class="col col-md-3">
+                                        	<label for="ruta" class=" form-control-label">Destino:</label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+	                                    	<input type="text" id="destino" name="destino" placeholder="" class="form-control" value="">
+	                                    </div>
 	                                </div>
                                 </div>
                                 <div class="card-body col-lg-6">
@@ -91,7 +99,7 @@
                                         </div>
                                         <div class="col-12 col-md-9 input-group">
                                         	<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-	                                    	<input type="text" id="fecini" name="fecini" placeholder="" class="form-control" autocomplete="">
+	                                    	<input type="text" id="fecini" name="fecini" placeholder="" class="form-control" autocomplete="" required>
 	                                    </div>
 	                                </div>
 
@@ -101,7 +109,7 @@
                                         </div>
                                         <div class="col-12 col-md-9 input-group">
                                         	<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-	                                    	<input type="text" id="fecfin" name="fecfin" placeholder="" class="form-control" autocomplete="">
+	                                    	<input type="text" id="fecfin" name="fecfin" placeholder="" class="form-control" autocomplete="" required>
 	                                    </div>
 	                                </div>	                                
 		                        </div>
@@ -166,14 +174,16 @@
 	                                    	<th>Número de Carga</th>
 			                                <th>Número de Bandeja</th>
 			                                <th>#Controles</th>
-			                                <th>Ruta</th>
+											<th>Ruta</th>
+											<th>Destino</th>
 											<th>Fecha de carga</th>
 											<th>Transportista</th>
 											{% for control in resumen.control %}
 												{% if control != 0 %}
 												<th>Control {{ control }}</th>
 												{% endif %}
-			                                {% endfor %}		
+											{% endfor %}
+											<th>Otras marcas</th>		
 	                                    </tr>
 									</thead>
 									<tbody>
@@ -184,12 +194,24 @@
 										<td>{{ detalle.numero_carga }}</td>
 										<td>{{ detalle.numero_lpn }}</td>
 										<td>{{ detalle.numero_controles }}</td>
-										<td>{{ detalle.ruta_codigo }}</td>										
+										<td>{{ detalle.ruta_codigo }}</td>
+										<td>{{ detalle.destino }}</td>										
 										<td>{{ detalle.fecha_carga }}</td>
 										<td>{{ detalle.transportista }}</td>
 										{% for cnt in detalle.control %}
+											{% if cnt == 'x' %}
+											<td style="background-color: #39ec0c";>{{ cnt }}</td>
+											{% elif cnt ==  '-' %}
+											<td style="background-color: #b3b3b3";>{{ cnt }}</td>
+											{% else %}
 											<td>{{ cnt }}</td>
+											{% endif%}
 										{% endfor %}
+										{% if detalle.om != 0 %}
+											<td style="background-color: #f5e93d";>{{ detalle.om }}</td>
+										{% else %}
+											<td>{{ detalle.om }}</td>
+										{% endif%}
 									{% endfor %}
 									</tr>
 									</tbody>
