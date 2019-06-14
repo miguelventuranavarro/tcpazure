@@ -201,8 +201,10 @@
 										{% for cnt in detalle.control %}
 											{% if cnt == 'x' %}
 											<td style="background-color: #39ec0c";>{{ cnt }}</td>
+											{% elif cnt ==  '.' %}
+											<td style="background-color: #b3b3b3";></td>
 											{% elif cnt ==  '-' %}
-											<td style="background-color: #b3b3b3";>{{ cnt }}</td>
+											<td style="background-color: #ec0a1d";></td>
 											{% else %}
 											<td>{{ cnt }}</td>
 											{% endif%}

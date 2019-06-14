@@ -2,7 +2,7 @@ from planificacion.models import PuntoGeocerca, PlanificacionPuntoControl,Planif
 
 class PuntoGeo():
 
-    def crearPuntoGeo(lpns,user):
+    def crearPuntoGeo(lpns,user,marcadores):
         codigos = []
         for lpn in lpns:
             puntos_control = PlanificacionPuntoControl.objects.filter(ruta_codigo=lpn.ruta_codigo)
@@ -20,7 +20,7 @@ class PuntoGeo():
         # codigos = PuntoGeocerca.objects.filter(user=user)
         # PuntoGeocerca.objects.filter(user=user).delete()
 
-        marcadores = PlanificacionCargaPuntoControl.objects.all()
+        #marcadores = PlanificacionCargaPuntoControl.objects.all()
 
         
         for mar in marcadores:

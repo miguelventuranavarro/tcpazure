@@ -84,6 +84,7 @@ from rest_framework.status import (
 )
 from rest_framework.response import Response
 from planificacion.models import *
+from planificacion.punto_geo import PuntoGeo
 
 from django.db import DatabaseError, transaction
 
@@ -215,19 +216,22 @@ def registro_scaner(request):
     except Exception as e:
         data = {'success': False, 'message': 'Error en formato de objeto (data).'}
         return Response(data, status=HTTP_200_OK)
-    
+    marcaciones = []
     try:
         with transaction.atomic():
             i = 0
             while i < len(dt):
                 coordenadas = '{"lat": '+dt[i].get('latitud')+', "lng": '+dt[i].get('longitud')+'}'
                 coordenadas_poligon = '('+dt[i].get('latitud')+' '+dt[i].get('longitud')+')'
-                PlanificacionCargaPuntoControl.objects.create(numero_lpn=dt[i].get('numero_lpn'),
+                pcpc = PlanificacionCargaPuntoControl.objects.create(numero_lpn=dt[i].get('numero_lpn'),
                     numero_placa=dt[i].get('numero_placa'),fecha_registro=dt[i].get('fecha_registro'),
                     latitud=dt[i].get('latitud'),longitud=dt[i].get('longitud'),
                     fecha_envio=now,coordenadas=coordenadas,coordenadas_poligon=coordenadas_poligon,usuario_id=valid_tokens.usuario)
                 i = i + 1
+                marcaciones.append(pcpc)
             message = str(i) + ' Registros insertados.'
+        bultos = PlanificacionCargaBulto.objects.get.all()
+        PuntoGeo.crearPuntoGeo(bultos,valid_tokens.usuario,marcaciones)
     except Exception as e:
         message = 'Error al insertar registros.'
         success = False

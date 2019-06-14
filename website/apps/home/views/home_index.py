@@ -64,7 +64,8 @@ def guardar_carga(request):
     page = request.GET.get('page')
     data = paginator.get_page(page)
 
-    PuntoGeo.crearPuntoGeo(bultos,request.user.id)
+    marcadores = PlanificacionCargaPuntoControl.objects.all()
+    PuntoGeo.crearPuntoGeo(bultos,request.user.id,marcadores)
         
     return render(request, 'index.html', {"data1":data})
 
@@ -540,15 +541,34 @@ def consulta_registros(request):
     detalles = []
     if "POST" == request.method:
 
-        
-        max_puntos = PlanificacionRuta.objects.aggregate(Max('numero_puntos')) 
         fecini = datetime.strftime(datetime.strptime(fecini,'%d/%m/%Y %H:%M:%S'),'%Y-%m-%d %H:%M:%S')
         fecfin = datetime.strftime(datetime.strptime(fecfin,'%d/%m/%Y %H:%M:%S'),'%Y-%m-%d %H:%M:%S')
 
-        if(numero_carga != '' and  numero_bandeja != '' and ruta != '' and destino != '' and trans != ''):
-            carga_bulto = PlanificacionCargaBulto.objects.filter(numero_carga=numero_carga).filter(numero_lpn=numero_bandeja).filter(ruta_codigo=ruta).filter(transportista=trans).filter(destino=destino).filter(fecha_carga__range=[fecini, fecfin])
-        else:
-            carga_bulto = PlanificacionCargaBulto.objects.filter(fecha_carga__range=[fecini, fecfin])
+        query = {}
+        query['fecha_carga__range'] = [fecini, fecfin]
+        if numero_carga != '':
+            query['numero_carga'] = numero_carga
+        if numero_bandeja != '':
+            query['numero_lpn'] = numero_bandeja
+        if ruta != '':
+            query['ruta_codigo'] = ruta
+        if destino != '':
+            query['destino'] = destino
+        if trans != '':
+            query['transportista'] = trans
+        
+        carga_bulto = PlanificacionCargaBulto.objects.filter(**query)
+    
+        # if(numero_carga != '' and  numero_bandeja != '' and ruta != '' and destino != '' and trans != ''):
+        #     carga_bulto = PlanificacionCargaBulto.objects.filter(numero_carga=numero_carga).filter(numero_lpn=numero_bandeja).filter(ruta_codigo=ruta).filter(transportista=trans).filter(destino=destino).filter(fecha_carga__range=[fecini, fecfin])
+        # else:
+        #     carga_bulto = PlanificacionCargaBulto.objects.filter(fecha_carga__range=[fecini, fecfin])
+
+        max_puntos = 0
+        for cb in carga_bulto:
+            plan_ruta = PlanificacionRuta.objects.get(codigo = cb.ruta_codigo)
+            if max_puntos < plan_ruta.numero_puntos:
+                max_puntos = plan_ruta.numero_puntos
 
         
         control = []
@@ -574,8 +594,8 @@ def consulta_registros(request):
         contf1 = 0
         contf2 = 0
 
-        for i in range(1,max_puntos['numero_puntos__max'] + 1):
-            if i < max_puntos['numero_puntos__max']:
+        for i in range(1,max_puntos + 1):
+            if i < max_puntos:
                 control.append(i)
             else:
                 control.append('final')
@@ -609,7 +629,7 @@ def consulta_registros(request):
                     elif len(inside) == 0 and len(outside) != 0:
                         contf2 = contf2 + 1
 
-            if i == max_puntos['numero_puntos__max']:
+            if i == max_puntos:
                 cont = cont + contf
                 cont1 = cont1 + contf1
                 cont2 = cont2 + contf2
@@ -634,8 +654,9 @@ def consulta_registros(request):
 
             cont = 0
             contx = 0
+            cont_ = 0
             found = 0
-            for i in range(1,max_puntos['numero_puntos__max'] + 1):
+            for i in range(1,max_puntos + 1):
                 match = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=1)
                 match1 = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=0)
                 if i < orden.numero_puntos:                  
@@ -647,24 +668,33 @@ def consulta_registros(request):
                     else:
                         innercnt.append('')
                         found = 1
-                elif i == orden.numero_puntos:
+                elif i == orden.numero_puntos and i < max_puntos:
                     if len(match) > 0 :
-                        innercnt.append('-')
+                        innercnt.append('.')
                         contx = 1
                     elif len(match1) > 0:
-                        innercnt.append('-')
+                        innercnt.append('.')
+                        cont_ = 1
                         cont = cont + 1
                     else:
                         innercnt.append('')
                         found = 1
+                elif i == orden.numero_puntos and i == max_puntos:
+                    if len(match) > 0 :
+                        contx = 1
+                    elif len(match1) > 0:
+                        cont = cont + 1
+                        cont_ = 1
+                    else:
+                        found = 1
 
-                elif i > orden.numero_puntos and i < max_puntos['numero_puntos__max']:
+                elif i > orden.numero_puntos and i < max_puntos:
                     innercnt.append('')
 
-                if i == max_puntos['numero_puntos__max']:
+                if i == max_puntos:
                     if contx > 0:
                         innercnt.append('x')
-                    elif found == 0:
+                    elif cont_ > 0:
                         innercnt.append('-')
                     else:
                         innercnt.append('')
