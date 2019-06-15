@@ -170,7 +170,7 @@
 	                            <table class="table table-striped" style="font-size:12px">
 	                            	<thead>
 	                                    <tr>
-	                                    	
+											<th></th>
 	                                    	<th>Número de Carga</th>
 			                                <th>Número de Bandeja</th>
 			                                <th>#Controles</th>
@@ -190,7 +190,12 @@
 
 										
 									{% for detalle in resumen.detalles %}
-									<tr>
+									<tr id="{{ detalle.numero_lpn }}" class="block {{ detalle.numero_carga }}" style="display: {{ detalle.display }}">
+										<td>	
+										{% if detalle.display != 'none' %}
+											<a class="a1" style="font-size:16px;font-weight:bold;padding:6px;" href="{{ detalle.numero_carga }}">+</a>
+										{% endif %}
+										</td>
 										<td>{{ detalle.numero_carga }}</td>
 										<td>{{ detalle.numero_lpn }}</td>
 										<td>{{ detalle.numero_controles }}</td>
@@ -200,7 +205,7 @@
 										<td>{{ detalle.transportista }}</td>
 										{% for cnt in detalle.control %}
 											{% if cnt == 'x' %}
-											<td style="background-color: #39ec0c";>{{ cnt }}</td>
+											<td style="background-color: #39ec0c";><a href="#" data-toggle="modal" data-target="#control-{{ detalle.numero_lpn }}">X</a></td>
 											{% elif cnt ==  '.' %}
 											<td style="background-color: #b3b3b3";></td>
 											{% elif cnt ==  '-' %}
@@ -214,8 +219,46 @@
 										{% else %}
 											<td>{{ detalle.om }}</td>
 										{% endif%}
-									{% endfor %}
 									</tr>
+										<div class="modal fade" id="control-{{ detalle.numero_lpn }}" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
+												<div class="modal-dialog modal-lg" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h5 class="modal-title" id="largeModalLabel">Detalle de Marca</h5>
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																<span aria-hidden="true">&times;</span>
+															</button>
+														</div>
+														<div class="modal-body">
+															<div class="row">
+																<div class="col-lg-12">
+																	<div class="col-lg-6 float-left">
+																		control :
+																	</div>
+																	<div class="col-lg-6 float-left">
+																		{{ detalle.nombre }}
+																	</div>
+																	<div class="col-lg-6 float-left">
+																		Latitud y Longitud:
+																	</div>
+																	<div class="col-lg-6 float-left">
+																		{{ detalle.point }}
+																	</div>
+																	<div class="col-lg-6 float-left">
+																		Fecha y Hora de Marca:
+																	</div>
+																	<div class="col-lg-6 float-left">
+																		{{ detalle.fecha_registro }}
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+									{% endfor %}
+									
 									</tbody>
 		                            <!-- <tbody>
 		                            {% for detalle in detalles %}
@@ -323,7 +366,7 @@
 		            $('#fecini').data("DateTimePicker").maxDate(e.date);
 		        });
 
-		        $("a").click(function(event) {
+		        $(".a1").click(function(event) {
 	                var href = $(this).attr('href');
 	                
 

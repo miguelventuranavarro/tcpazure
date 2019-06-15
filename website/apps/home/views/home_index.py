@@ -637,7 +637,7 @@ def consulta_registros(request):
             total.append(cont)
             dentro.append(cont1)
             fuera.append(cont2)
-
+        numCarga = []
         for cb in carga_bulto:
             dic = {}
             nc = PlanificacionRuta.objects.get(codigo = cb.ruta_codigo)
@@ -648,6 +648,7 @@ def consulta_registros(request):
             dic['destino'] = cb.destino
             dic['fecha_carga'] = cb.fecha_carga
             dic['transportista'] = cb.transportista
+            dic['fecha_registro'] = cb.fecha_registro
             innercnt = []
 
             orden = PlanificacionRuta.objects.get(codigo = cb.ruta_codigo)
@@ -702,6 +703,16 @@ def consulta_registros(request):
             dic['om'] = cont       
             dic['control'] = innercnt
 
+            
+            dic['display'] = 'table-row'
+            if not cb.numero_carga in numCarga:
+                numCarga.append(cb.numero_carga)
+                
+            else:
+                dic['display'] = 'none'
+                    
+               
+            
             detalles.append(dic)
 
         
