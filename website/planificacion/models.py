@@ -60,6 +60,7 @@ class PuntoGeocerca(models.Model):
     geo_code = models.CharField(max_length=50)
     us = models.IntegerField()
     id_control = models.IntegerField()
+    nombre = models.CharField(max_length=50)
 
     class Meta:
         db_table = 'punto_geo'
@@ -70,6 +71,9 @@ class MarcacionesMatch(models.Model):
     us = models.IntegerField()
     id_control = models.IntegerField()
     dentro = models.IntegerField()
+    cnt_nombre = models.CharField(max_length=50)
+    punto = models.CharField(max_length=50)
+    fecha_marca = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         db_table = 'marcaciones_match'

@@ -7,6 +7,7 @@ from django.views.generic.detail import SingleObjectMixin
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.db.models import Max
 from datetime import datetime
+from django.views.generic import TemplateView
 
 from apps.home.forms.form import *
 
@@ -527,6 +528,11 @@ http://en.wikipedia.org/wiki/Point_in_polygon#Ray_casting_algorithm """
  
     return inside
 
+
+class Upmodal1(TemplateView):
+    def get(self, request,id):
+        return render(request, 'modal1.html')
+
 @csrf_exempt
 def consulta_registros(request):
     from django.db.models import Prefetch
@@ -539,6 +545,7 @@ def consulta_registros(request):
     fecfin = request.POST.get('fecfin')
     resumen = {}
     detalles = []
+
     if "POST" == request.method:
 
         fecini = datetime.strftime(datetime.strptime(fecini,'%d/%m/%Y %H:%M:%S'),'%Y-%m-%d %H:%M:%S')
@@ -648,8 +655,9 @@ def consulta_registros(request):
             dic['destino'] = cb.destino
             dic['fecha_carga'] = cb.fecha_carga
             dic['transportista'] = cb.transportista
-            dic['fecha_registro'] = cb.fecha_registro
+            #dic['fecha_registro'] = cb.fecha_registro
             innercnt = []
+            modal1 = []
 
             orden = PlanificacionRuta.objects.get(codigo = cb.ruta_codigo)
 
@@ -657,12 +665,20 @@ def consulta_registros(request):
             contx = 0
             cont_ = 0
             found = 0
+           
             for i in range(1,max_puntos + 1):
                 match = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=1)
                 match1 = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=0)
+                
                 if i < orden.numero_puntos:                  
                     if len(match) > 0:
                         innercnt.append('x')
+                        for mt in match:
+                            equis= {}
+                            equis['nombre'] = mt.cnt_nombre
+                            equis['punto'] = mt.punto
+                            equis['fecha'] = mt.fecha_marca
+                            modal1.append(equis)
                     elif len(match1) > 0:
                         innercnt.append('-')
                         cont = cont + 1
@@ -695,6 +711,12 @@ def consulta_registros(request):
                 if i == max_puntos:
                     if contx > 0:
                         innercnt.append('x')
+                        for mt in match:
+                            equis= {}
+                            equis['nombre'] = mt.cnt_nombre
+                            equis['punto'] = mt.punto
+                            equis['fecha'] = mt.fecha_marca
+                            modal1.append(equis)
                     elif cont_ > 0:
                         innercnt.append('-')
                     else:
@@ -702,7 +724,7 @@ def consulta_registros(request):
 
             dic['om'] = cont       
             dic['control'] = innercnt
-
+            dic['modal1'] = modal1
             
             dic['display'] = 'table-row'
             if not cb.numero_carga in numCarga:

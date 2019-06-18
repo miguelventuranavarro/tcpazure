@@ -1,9 +1,12 @@
 from django.conf.urls import url
+
 from django.contrib.auth import views as auth_views
 
 from django.urls import include, path
 from apps.home.views import home_index as views
+from apps.home.views.home_index import *
 from django.contrib.auth.decorators import login_required
+
 
 
 #router = routers.DefaultRouter()
@@ -24,6 +27,7 @@ urlpatterns = [
     url(r'^registro_manual/', login_required(views.registro_manual), {}, 'registro_manual'),
     url(r'^registro_manual_scaner/', login_required(views.registro_manual_scaner), {}, 'registro_manual_scaner'),
     url(r'^consulta_incidencias/', login_required(views.consulta_incidencias), {}, 'consulta_incidencias'),
+    path('modal1/<slug:lpn>', Upmodal1.as_view(), name='up_modal1'),
 
     url(r'^export_consulta_registros/', login_required(views.export_consulta_registros), {}, 'export_consulta_registros'),
     
