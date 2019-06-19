@@ -205,10 +205,10 @@
 										<td>{{ detalle.fecha_carga }}</td>
 										<td>{{ detalle.transportista }}</td>
 										{% for cnt in detalle.control %}
-											{% if 'x' in cnt %}
-											<td style="background-color: #39ec0c";><a  href="{% url 'up_modal1' detalle.numero_lpn cnt %}" class="btn" target="_blank">X</a></td>
-											
-											
+											{% if cnt == 'all' %}
+											<td style="background-color: #39ec0c";>X</td>	
+											{% elif 'x' in cnt %}
+											<td style="background-color: #39ec0c";><a  href="{% url 'up_modal1' detalle.numero_lpn cnt %}" class="btn" target="_blank">X</a></td>	
 											{% elif '.' in cnt %}
 											<td style="background-color: #b3b3b3";></td>
 											{% elif '-' in cnt %}

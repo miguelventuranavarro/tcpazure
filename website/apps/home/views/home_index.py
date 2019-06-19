@@ -591,9 +591,9 @@ def consulta_registros(request):
 
         max_puntos = 0
         for cb in carga_bulto:
-            plan_ruta = PlanificacionRuta.objects.get(codigo = cb.ruta_codigo)
-            if max_puntos < plan_ruta.numero_puntos:
-                max_puntos = plan_ruta.numero_puntos
+            plan_ruta = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
+            if max_puntos < plan_ruta:
+                max_puntos = plan_ruta
 
         
         control = []
@@ -629,9 +629,9 @@ def consulta_registros(request):
             cont2 = 0
             for cb in carga_bulto:  
 
-                orden = PlanificacionRuta.objects.get(codigo = cb.ruta_codigo)
+                orden = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
 
-                if i < orden.numero_puntos:
+                if i < orden:
                     match = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i)  
                     inside = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=1)
                     outside = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=0)
@@ -663,20 +663,51 @@ def consulta_registros(request):
             dentro.append(cont1)
             fuera.append(cont2)
         numCarga = []
+        
         for cb in carga_bulto:
             dic = {}
-            nc = PlanificacionRuta.objects.get(codigo = cb.ruta_codigo)
+            innercnt = []
+            if not cb.numero_carga in numCarga:
+                dic1 = {}
+                innercnt1 = []
+                numCarga.append(cb.numero_carga)
+                dic1['numero_carga'] = cb.numero_carga
+                dic1['numero_lpn'] = ''
+                dic1['numero_controles'] = ''
+                dic1['ruta_codigo'] = ''
+                dic1['destino'] = ''
+                dic1['fecha_carga'] = ''
+                dic1['transportista'] = ''
+                dic1['om'] = 0      
+                dic1['display'] = 'table-row'
+                bultos = PlanificacionCargaBulto.objects.filter(numero_carga = cb.numero_carga)
+                for i in range(1,max_puntos + 1):
+                    con_in = 0
+                    for b in bultos:
+                        match = MarcacionesMatch.objects.filter(lpn = b.numero_lpn).filter(id_control=i).filter(dentro=1)
+                        match1 = MarcacionesMatch.objects.filter(lpn = b.numero_lpn).filter(id_control=i).filter(dentro=0)
+                        if len(match) > 0 and len(match1) == 0:
+                            con_in = con_in + 1
+                    if len(bultos) == con_in:
+                        innercnt1.append('all')
+                    else:
+                        innercnt1.append('')
+
+                dic1['control'] = innercnt1
+                detalles.append(dic1)
+                        
+            nc = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
             dic['numero_carga'] = cb.numero_carga
             dic['numero_lpn'] = cb.numero_lpn
-            dic['numero_controles'] = nc.numero_puntos
+            dic['numero_controles'] = nc
             dic['ruta_codigo'] = cb.ruta_codigo
             dic['destino'] = cb.destino
             dic['fecha_carga'] = cb.fecha_carga
             dic['transportista'] = cb.transportista
             #dic['fecha_registro'] = cb.fecha_registro
-            innercnt = []
+            
   
-            orden = PlanificacionRuta.objects.get(codigo = cb.ruta_codigo)
+            orden = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
 
             cont = 0
             contx = 0
@@ -686,37 +717,34 @@ def consulta_registros(request):
             for i in range(1,max_puntos + 1):
                 match = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=1)
                 match1 = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=0)
-                
-                if i < orden.numero_puntos:                  
+                cont = cont + len(match1)
+                if i < orden:                  
                     if len(match) > 0:
                         innercnt.append('x'+str(i))    
                     elif len(match1) > 0:
                         innercnt.append('-')
-                        cont = cont + 1
                     else:
                         innercnt.append('')
                         found = 1
-                elif i == orden.numero_puntos and i < max_puntos:
+                elif i == orden and i < max_puntos:
                     if len(match) > 0 :
                         innercnt.append('.')
                         contx = 1
                     elif len(match1) > 0:
                         innercnt.append('.')
                         cont_ = 1
-                        cont = cont + 1
                     else:
                         innercnt.append('')
                         found = 1
-                elif i == orden.numero_puntos and i == max_puntos:
+                elif i == orden and i == max_puntos:
                     if len(match) > 0 :
                         contx = 1
-                    elif len(match1) > 0:
-                        cont = cont + 1
+                    elif len(match1) > 0:                      
                         cont_ = 1
                     else:
                         found = 1
 
-                elif i > orden.numero_puntos and i < max_puntos:
+                elif i > orden and i < max_puntos:
                     innercnt.append('')
 
                 if i == max_puntos:

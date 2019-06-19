@@ -9,7 +9,6 @@ class planificacionCargaBultoAdmin(admin.ModelAdmin):
 class planificacionRutaAdmin(admin.ModelAdmin):
 	model = PlanificacionRuta
 	list_display = ['codigo']
-	exclude = ('numero_puntos',)
 
 class planificacionTipoControlAdmin(admin.ModelAdmin):
 	model = PlanificacionTipoControl

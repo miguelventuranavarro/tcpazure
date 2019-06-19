@@ -116,11 +116,11 @@ class PlanificacionPuntoControl(models.Model):
     def __str__(self):
         return "%s" % (self.nombre)
 
-    def save(self, *args, **kwargs):
-        super(PlanificacionPuntoControl, self).save()
-        ruta = PlanificacionRuta.objects.get(codigo=self.ruta_codigo)
-        puntos = ruta.numero_puntos + 1
-        PlanificacionRuta.objects.filter(codigo=self.ruta_codigo).update(numero_puntos = puntos)
+    # def save(self, *args, **kwargs):
+    #     super(PlanificacionPuntoControl, self).save()
+    #     ruta = PlanificacionRuta.objects.get(codigo=self.ruta_codigo)
+    #     puntos = ruta.numero_puntos + 1
+    #     PlanificacionRuta.objects.filter(codigo=self.ruta_codigo).update(numero_puntos = puntos)
     
 
 class PlanificacionDetalleGeocerca(models.Model):
@@ -166,7 +166,7 @@ class PlanificacionIncidencia(models.Model):
 
 class PlanificacionRuta(models.Model):
     codigo = models.CharField(primary_key=True, max_length=10)
-    numero_puntos = models.IntegerField()
+    #numero_puntos = models.IntegerField()
     nombre = models.CharField(max_length=45, blank=True, null=True)
 
     class Meta:
