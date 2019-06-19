@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^registro_manual/', login_required(views.registro_manual), {}, 'registro_manual'),
     url(r'^registro_manual_scaner/', login_required(views.registro_manual_scaner), {}, 'registro_manual_scaner'),
     url(r'^consulta_incidencias/', login_required(views.consulta_incidencias), {}, 'consulta_incidencias'),
-    path('modal1/<slug:lpn>', Upmodal1.as_view(), name='up_modal1'),
+    path('modal1/<slug:lpn>/<slug:cnt>', Upmodal1.as_view(), name='up_modal1'),
 
     url(r'^export_consulta_registros/', login_required(views.export_consulta_registros), {}, 'export_consulta_registros'),
     

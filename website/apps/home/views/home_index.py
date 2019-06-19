@@ -9,6 +9,7 @@ from django.db.models import Max
 from datetime import datetime
 from django.views.generic import TemplateView
 
+
 from apps.home.forms.form import *
 
 from django import forms
@@ -27,6 +28,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.contrib.auth.models import User,Group,Permission
 from django.http import JsonResponse
+from django.db.models import Max
 
 
 #from django.shortcuts import get_object_or_404, redirect, render, reverse
@@ -530,8 +532,24 @@ http://en.wikipedia.org/wiki/Point_in_polygon#Ray_casting_algorithm """
 
 
 class Upmodal1(TemplateView):
-    def get(self, request,id):
-        return render(request, 'modal1.html')
+    def get(self, request,lpn,cnt):
+        if cnt == 'fuera':
+            estado = 'Fuera'
+            matchs = MarcacionesMatch.objects.filter(lpn=lpn).filter(dentro=0)
+
+        else:
+            cnt = cnt.replace('x','')
+            estado = 'Dentro'
+            if cnt == 'f':
+                args = MarcacionesMatch.objects.filter(lpn=lpn)
+                max = args.aggregate(Max('id_control'))
+                matchs = MarcacionesMatch.objects.filter(lpn=lpn).filter(dentro=1).filter(id_control=max['id_control__max'])
+            else:
+                matchs = MarcacionesMatch.objects.filter(lpn=lpn).filter(dentro=1).filter(id_control=int(cnt))
+        equis = {}
+        equis['equis'] = matchs
+        equis['estado'] = estado  
+        return render(request, 'modal1.html',{'equis':equis})
 
 @csrf_exempt
 def consulta_registros(request):
@@ -657,8 +675,7 @@ def consulta_registros(request):
             dic['transportista'] = cb.transportista
             #dic['fecha_registro'] = cb.fecha_registro
             innercnt = []
-            modal1 = []
-
+  
             orden = PlanificacionRuta.objects.get(codigo = cb.ruta_codigo)
 
             cont = 0
@@ -672,13 +689,7 @@ def consulta_registros(request):
                 
                 if i < orden.numero_puntos:                  
                     if len(match) > 0:
-                        innercnt.append('x')
-                        for mt in match:
-                            equis= {}
-                            equis['nombre'] = mt.cnt_nombre
-                            equis['punto'] = mt.punto
-                            equis['fecha'] = mt.fecha_marca
-                            modal1.append(equis)
+                        innercnt.append('x'+str(i))    
                     elif len(match1) > 0:
                         innercnt.append('-')
                         cont = cont + 1
@@ -710,13 +721,7 @@ def consulta_registros(request):
 
                 if i == max_puntos:
                     if contx > 0:
-                        innercnt.append('x')
-                        for mt in match:
-                            equis= {}
-                            equis['nombre'] = mt.cnt_nombre
-                            equis['punto'] = mt.punto
-                            equis['fecha'] = mt.fecha_marca
-                            modal1.append(equis)
+                        innercnt.append('xf')
                     elif cont_ > 0:
                         innercnt.append('-')
                     else:
@@ -724,7 +729,6 @@ def consulta_registros(request):
 
             dic['om'] = cont       
             dic['control'] = innercnt
-            dic['modal1'] = modal1
             
             dic['display'] = 'table-row'
             if not cb.numero_carga in numCarga:
