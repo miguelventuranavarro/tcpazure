@@ -533,9 +533,31 @@ http://en.wikipedia.org/wiki/Point_in_polygon#Ray_casting_algorithm """
 
 class Upmodal1(TemplateView):
     def get(self, request,lpn,cnt):
+        det = []
         if cnt == 'fuera':
             estado = 'Fuera'
-            matchs = MarcacionesMatch.objects.filter(lpn=lpn).filter(dentro=0)
+            marcaciones = []
+            todas = MarcacionesMatch.objects.filter(lpn=lpn).filter(dentro=0)
+            matchs = []
+            for t in todas:
+                if not t.id_marcacion in marcaciones:
+                    marcaciones.append(t.id_marcacion)
+                    matchs.append(t)
+
+            for mt in matchs:
+                geo = PuntoGeo.hallarGeo(mt.punto)
+                dic = {}
+                dic['marca'] = mt.id_marcacion
+                dic['punto'] = mt.punto
+                dic['fecha'] = mt.fecha_marca
+                if geo != None:
+                    dic['nombre'] = geo.nombre
+                    dic['dir'] = geo.direccion
+                else:
+                    dic['nombre'] = ''
+                    dic['dir'] = 'http://maps.google.com/?q='+mt.punto
+
+                det.append(dic)
 
         else:
             cnt = cnt.replace('x','')
@@ -546,8 +568,19 @@ class Upmodal1(TemplateView):
                 matchs = MarcacionesMatch.objects.filter(lpn=lpn).filter(dentro=1).filter(id_control=max['id_control__max'])
             else:
                 matchs = MarcacionesMatch.objects.filter(lpn=lpn).filter(dentro=1).filter(id_control=int(cnt))
+        
+            
+            for mt in matchs:
+                dic = {}
+                geo = PlanificacionPuntoControl.objects.get(ruta_codigo = mt.cnt_nombre,orden = mt.id_control)
+                dic['control'] = mt.id_control
+                dic['nombre'] = geo.geocerca.nombre
+                dic['punto'] = mt.punto
+                dic['fecha'] = mt.fecha_marca
+                det.append(dic)
+
         equis = {}
-        equis['equis'] = matchs
+        equis['equis'] = det
         equis['estado'] = estado  
         return render(request, 'modal1.html',{'equis':equis})
 
@@ -663,19 +696,21 @@ def consulta_registros(request):
             dentro.append(cont1)
             fuera.append(cont2)
         numCarga = []
-        
+
         for cb in carga_bulto:
             dic = {}
             innercnt = []
-            if not cb.numero_carga in numCarga:
+            geo = PlanificacionGeocerca.objects.get(codigo = cb.destino)
+            if not cb.numero_carga+"-"+str(cb.destino) in numCarga:
                 dic1 = {}
                 innercnt1 = []
-                numCarga.append(cb.numero_carga)
-                dic1['numero_carga'] = cb.numero_carga
+                numCarga.append(cb.numero_carga+"-"+str(cb.destino))
+        
+                dic1['numero_carga'] = cb.numero_carga+"-"+str(cb.destino)
                 dic1['numero_lpn'] = ''
                 dic1['numero_controles'] = ''
                 dic1['ruta_codigo'] = ''
-                dic1['destino'] = ''
+                dic1['destino'] = geo.nombre
                 dic1['fecha_carga'] = ''
                 dic1['transportista'] = ''
                 dic1['om'] = 0      
@@ -697,11 +732,11 @@ def consulta_registros(request):
                 detalles.append(dic1)
                         
             nc = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
-            dic['numero_carga'] = cb.numero_carga
+            dic['numero_carga'] = cb.numero_carga+"-"+str(cb.destino)
             dic['numero_lpn'] = cb.numero_lpn
             dic['numero_controles'] = nc
             dic['ruta_codigo'] = cb.ruta_codigo
-            dic['destino'] = cb.destino
+            dic['destino'] = geo.nombre
             dic['fecha_carga'] = cb.fecha_carga
             dic['transportista'] = cb.transportista
             #dic['fecha_registro'] = cb.fecha_registro
@@ -709,7 +744,7 @@ def consulta_registros(request):
   
             orden = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
 
-            cont = 0
+            
             contx = 0
             cont_ = 0
             found = 0
@@ -717,7 +752,7 @@ def consulta_registros(request):
             for i in range(1,max_puntos + 1):
                 match = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=1)
                 match1 = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=0)
-                cont = cont + len(match1)
+                #cont = cont + len(match1)
                 if i < orden:                  
                     if len(match) > 0:
                         innercnt.append('x'+str(i))    
@@ -755,17 +790,25 @@ def consulta_registros(request):
                     else:
                         innercnt.append('')
 
+            marcaciones = []
+            todas = MarcacionesMatch.objects.filter(lpn=cb.numero_lpn).filter(dentro=0)
+            cont = 0
+            for t in todas:
+                if not t.id_marcacion in marcaciones:
+                    marcaciones.append(t.id_marcacion)
+                    cont = cont + 1
+
             dic['om'] = cont       
             dic['control'] = innercnt
             
             dic['display'] = 'table-row'
-            if not cb.numero_carga in numCarga:
-                numCarga.append(cb.numero_carga)
-                
+            if not cb.numero_carga+"-"+str(cb.destino) in numCarga:
+                numCarga.append(cb.numero_carga+"-"+str(cb.destino))
+
             else:
                 dic['display'] = 'none'
                     
-               
+            
             
             detalles.append(dic)
 

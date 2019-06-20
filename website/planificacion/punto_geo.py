@@ -40,6 +40,25 @@ class PuntoGeo():
                     else:
                         MarcacionesMatch.objects.create(lpn=mar.numero_lpn,id_marcacion=mar.id,us=user,id_control=cod.id_control, dentro = 0,cnt_nombre =cod.nombre, punto=mar.latitud+', '+mar.longitud,fecha_marca=mar.fecha_registro)
 
+    def hallarGeo(punto):
+        geo = None
+        coor = punto.split(',')
+        x1 = float(coor[0].replace(' ',''))
+        y1 = float(coor[1].replace(' ',''))
+        geoCercas = PlanificacionGeocerca.objects.all()
+        for gc in geoCercas:
+            puntosPoly = PlanificacionDetalleGeocerca.objects.filter(geocerca=gc)
+            poly = []
+            for py in puntosPoly:
+                x = float(py.latitud)
+                y = float(py.longitud)
+                poly.append((x,y))
+            if PuntoGeo.point_inside_polygon(x1,y1,poly):
+                geo = gc
+                break
+
+        return geo
+        
 
     def point_inside_polygon(x,y,poly):
 

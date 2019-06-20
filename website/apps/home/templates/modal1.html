@@ -37,19 +37,37 @@
 	                            <strong class="card-title">Detalles Marcas</strong>
                             </div>
                             <div class="card-body col-lg-12 text-center">
-                            {% for x in equis.equis %} 
-                            <div class="col-lg-12 float-left">
-                                    control {{x.id_control}}: {{ x.cnt_nombre }}
-                                </div>
-                               
-                                <div class="col-lg-12 float-left">
-                                    Latitud y Longitud: {{ x.punto }}
-                                </div>
-                                
-                                <div class="col-lg-12 float-left" style="margin-bottom: 25px;">
-                                    Fecha y Hora de Marca: {{ x.fecha_marca}}
-                                </div>
-                                 
+							{% for x in equis.equis %} 
+								{% if equis.estado == 'Dentro' %}
+									<div class="col-lg-12 float-left">
+										control {{x.control}}: {{ x.nombre }}
+									</div>
+								
+									<div class="col-lg-12 float-left">
+										Latitud y Longitud: {{ x.punto }}
+									</div>
+									
+									<div class="col-lg-12 float-left" style="margin-bottom: 25px;">
+										Fecha y Hora de Marca: {{ x.fecha}}
+									</div>
+								{% else %}
+									<div class="col-lg-12 float-left">
+										Marca {{x.marca}}
+									</div>
+									<div class="col-lg-12 float-left">
+										Nombre: {{ x.nombre }}
+									</div>
+									<div class="col-lg-12 float-left">
+										Dirección: {{ x.dir }}
+									</div>
+									<div class="col-lg-12 float-left">
+										Latitud y Longitud: {{ x.punto }}
+									</div>
+									
+									<div class="col-lg-12 float-left" style="margin-bottom: 25px;">
+										Fecha y Hora de Marca: {{ x.fecha}}
+									</div>
+								{% endif %}   
                             {% endfor %}
                         </div>
 	                    </div>
