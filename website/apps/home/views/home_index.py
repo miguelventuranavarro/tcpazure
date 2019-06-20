@@ -554,7 +554,7 @@ class Upmodal1(TemplateView):
                     dic['nombre'] = geo.nombre
                     dic['dir'] = geo.direccion
                 else:
-                    dic['nombre'] = ''
+                    dic['nombre'] = '-'
                     dic['dir'] = 'http://maps.google.com/?q='+mt.punto
 
                 det.append(dic)
