@@ -206,20 +206,20 @@
 										<td>{{ detalle.transportista }}</td>
 										{% for cnt in detalle.control %}
 											{% if cnt == 'all' %}
-											<td style="background-color: #39ec0c";>X</td>	
+											<td style="background-color: #07A34F; color: black; text-align: center; vertical-align: middle;">X</td>	
 											{% elif 'x' in cnt %}
-											<td style="background-color: #39ec0c";><a  href="{% url 'up_modal1' detalle.numero_lpn cnt %}" class="btn" target="_blank">X</a></td>	
+											<td style="background-color: #07A34F;text-align: center;vertical-align: middle;"><a style="color: black;" href="{% url 'up_modal1' detalle.numero_lpn cnt %}" class="btn" target="_blank">X</a></td>	
 											{% elif '.' in cnt %}
 											<td style="background-color: #b3b3b3";></td>
 											{% elif '-' in cnt %}
-											<td style="background-color: #ec0a1d";></td>
+											<td style="background-color: #F61723";></td>
 											{% else %}
 											<td>{{ cnt }}</td>
 											{% endif%}
 											
 										{% endfor %}
 										{% if detalle.om != 0 %}
-											<td style="background-color: #f5e93d";><a  href="{% url 'up_modal1' detalle.numero_lpn 'fuera' %}" class="btn" target="_blank">{{ detalle.om }}</a></td>
+											<td style="background-color: #F8E903; text-align: center;vertical-align: middle;"><a style="color: black"; href="{% url 'up_modal1' detalle.numero_lpn 'fuera' %}" class="btn" target="_blank">{{ detalle.om }}</a></td>
 										{% else %}
 											<td></td>
 										{% endif%}

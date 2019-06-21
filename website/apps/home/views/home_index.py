@@ -537,12 +537,15 @@ class Upmodal1(TemplateView):
         if cnt == 'fuera':
             estado = 'Fuera'
             marcaciones = []
+            
             todas = MarcacionesMatch.objects.filter(lpn=lpn).filter(dentro=0)
             matchs = []
             for t in todas:
-                if not t.id_marcacion in marcaciones:
-                    marcaciones.append(t.id_marcacion)
-                    matchs.append(t)
+                todas1 = MarcacionesMatch.objects.filter(lpn=lpn).filter(dentro=1).filter(id_marcacion = t.id_marcacion)
+                if len(todas1) == 0:
+                    if not t.id_marcacion in marcaciones:
+                        marcaciones.append(t.id_marcacion)
+                        matchs.append(t)
 
             for mt in matchs:
                 geo = PuntoGeo.hallarGeo(mt.punto)
@@ -572,9 +575,16 @@ class Upmodal1(TemplateView):
             
             for mt in matchs:
                 dic = {}
-                geo = PlanificacionPuntoControl.objects.get(ruta_codigo = mt.cnt_nombre,orden = mt.id_control)
+                if cnt == 'f':
+                    dest = PlanificacionCargaBulto.objects.get(numero_lpn=mt.lpn)
+                    geo = PlanificacionGeocerca.objects.get(codigo = dest.destino)
+                    dic['nombre'] = geo.nombre
+                else:
+                    geo = PlanificacionPuntoControl.objects.get(ruta_codigo = mt.cnt_nombre,orden = mt.id_control)
+                    dic['nombre'] = geo.geocerca.nombre
+
                 dic['control'] = mt.id_control
-                dic['nombre'] = geo.geocerca.nombre
+                
                 dic['punto'] = mt.punto
                 dic['fecha'] = mt.fecha_marca
                 det.append(dic)
@@ -715,13 +725,13 @@ def consulta_registros(request):
                 dic1['transportista'] = ''
                 dic1['om'] = 0      
                 dic1['display'] = 'table-row'
-                bultos = PlanificacionCargaBulto.objects.filter(numero_carga = cb.numero_carga)
+                bultos = PlanificacionCargaBulto.objects.filter(numero_carga = cb.numero_carga).filter(destino = cb.destino)
                 for i in range(1,max_puntos + 1):
                     con_in = 0
                     for b in bultos:
                         match = MarcacionesMatch.objects.filter(lpn = b.numero_lpn).filter(id_control=i).filter(dentro=1)
                         match1 = MarcacionesMatch.objects.filter(lpn = b.numero_lpn).filter(id_control=i).filter(dentro=0)
-                        if len(match) > 0 and len(match1) == 0:
+                        if len(match) > 0 and len(match1) >= 0:
                             con_in = con_in + 1
                     if len(bultos) == con_in:
                         innercnt1.append('all')
@@ -794,9 +804,12 @@ def consulta_registros(request):
             todas = MarcacionesMatch.objects.filter(lpn=cb.numero_lpn).filter(dentro=0)
             cont = 0
             for t in todas:
-                if not t.id_marcacion in marcaciones:
-                    marcaciones.append(t.id_marcacion)
-                    cont = cont + 1
+                todas1 = MarcacionesMatch.objects.filter(lpn=cb.numero_lpn).filter(dentro=1).filter(id_marcacion = t.id_marcacion)
+                if len(todas1) == 0:
+                    if not t.id_marcacion in marcaciones:
+                        marcaciones.append(t.id_marcacion)
+                        cont = cont + 1
+
 
             dic['om'] = cont       
             dic['control'] = innercnt
