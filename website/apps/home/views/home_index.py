@@ -725,7 +725,9 @@ def consulta_registros(request):
                 dic1['transportista'] = ''
                 dic1['om'] = 0      
                 dic1['display'] = 'table-row'
+                orden = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
                 bultos = PlanificacionCargaBulto.objects.filter(numero_carga = cb.numero_carga).filter(destino = cb.destino)
+                all = 0
                 for i in range(1,max_puntos + 1):
                     con_in = 0
                     for b in bultos:
@@ -733,10 +735,24 @@ def consulta_registros(request):
                         match1 = MarcacionesMatch.objects.filter(lpn = b.numero_lpn).filter(id_control=i).filter(dentro=0)
                         if len(match) > 0 and len(match1) >= 0:
                             con_in = con_in + 1
-                    if len(bultos) == con_in:
-                        innercnt1.append('all')
-                    else:
-                        innercnt1.append('')
+                    if i < orden :
+                        if len(bultos) == con_in:
+                            innercnt1.append('all')
+                        else:
+                            innercnt1.append('')
+
+                    elif i >= orden and i < max_puntos:
+                        if len(bultos) == con_in:
+                            innercnt1.append('')
+                            all = 1
+                        else:
+                            innercnt1.append('')
+
+                    if i == max_puntos:
+                        if all == 1: 
+                            innercnt1.append('all')
+                        else:
+                            innercnt1.append('')
 
                 dic1['control'] = innercnt1
                 detalles.append(dic1)
