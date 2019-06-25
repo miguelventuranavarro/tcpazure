@@ -126,10 +126,10 @@
 	                <div class="col-lg-12">
 	                    <div class="card">
 	                    	<div class="card-body">
-	                            <table class="table table-striped" style="font-size:12px">
+	                            <table id="t1" class="table table-striped" style="font-size:12px">
 	                            	<thead>
 	                                    <tr>
-	                                    	<th>-</th>
+	                                    	<th></th>
 
 			                                {% for control in resumen.control %}
 			                                	<th>Control {{ control }}</th>
@@ -166,10 +166,12 @@
 	                                    
 									</tbody>
 								</table>
+								<button onclick="exportTableToExcel('t1','resumen')">Exportar</button>
 	                        </div>
 	                        <div class="card-body filterable">
-									
-	                            <table class="table table-striped" style="font-size:12px">
+									<form action = "{% url 'excel_r' %}" method="post" enctype="multipart/form-data" target="_blank">	
+										{% csrf_token %}
+	                            <table id="t2" class="table table-striped" style="font-size:12px">
 	                            	<thead>
 	                                    <tr class="filters">
 											<th></th>
@@ -213,6 +215,15 @@
 
 										
 									{% for detalle in resumen.detalles %}
+									<input type="hidden" name="data1[]" value="{{ detalle.numero_carga }}" />
+									<input type="hidden" name="data2[]" value="{{ detalle.numero_lpn}}" />
+									<input type="hidden" name="data3[]" value="{{ detalle.numero_controles }}" />
+									<input type="hidden" name="data4[]" value="{{ detalle.ruta_codigo  }}" />
+									<input type="hidden" name="data5[]" value="{{ detalle.destino }}" />
+									<input type="hidden" name="data6[]" value="{{ detalle.fecha_carga  }}" />
+									<input type="hidden" name="data7[]" value="{{ detalle.transportista  }}" />
+									<input type="hidden" name="control[]" value="{{ detalle.control }}" />
+									<input type="hidden" name="om[]" value="{{ detalle.om }}" />
 									<tr id="{{ detalle.numero_lpn }}" class="block {{ detalle.numero_carga }}" style="display: {{ detalle.display }}">
 										<td>	
 										{% if detalle.display != 'none' %}
@@ -225,8 +236,9 @@
 										<td>{{ detalle.ruta_codigo }}</td>
 										<td>{{ detalle.destino }}</td>										
 										<td>{{ detalle.fecha_carga }}</td>
-										<td>{{ detalle.transportista }}</td>
+										<td>{{ detalle.fecha_carga  }}</td>
 										{% for cnt in detalle.control %}
+										
 											{% if cnt == 'all' %}
 											<td style="background-color: #07A34F; color: black; text-align: center; vertical-align: middle;">X</td>	
 											{% elif 'x' in cnt %}
@@ -246,118 +258,17 @@
 											<td></td>
 										{% endif%}
 									</tr>
-									<!-- <div class="modal fade" id="control" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
-											<div class="modal-dialog modal-lg" role="document">
-												<div class="modal-content">
-													<div class="modal-header">
-														<h5 class="modal-title" id="largeModalLabel">Detalle de Marca</h5>
-														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-															<span aria-hidden="true">&times;</span>
-														</button>
-													</div>
-													<div class="modal-body text-center">
-													{% for fc in detalle.modal1 %}
-													
-														<div class="row">
-															<div class="col-lg-12">
-																<div class="col-lg-12 float-left">
-																	control : {{ fc.nombre }}
-																</div>
-															
-																<div class="col-lg-12 float-left">
-																	Latitud y Longitud: {{ fc.punto }}
-																</div>
-																
-																<div class="col-lg-12 float-left mrg-bottom-20">
-																	Fecha y Hora de Marca: {{ fc.fecha }}
-																</div>
-															</div>
-														</div>
-													
-													{% endfor %}
-													</div>
-												</div>
-											</div>
-										</div> -->
+
 
 									{% endfor %}
 									
 									</tbody>
-		                            <!-- <tbody>
-		                            {% for detalle in detalles %}
-									    <tr id="{{ detalle.numero_lpn }}" class="block {{ detalle.numero_carga }}" style="display: {{ detalle.display }}">
-									    	<td>
-									    		{% if detalle.display != 'none' %}
-									    			<a style="font-size:16px;font-weight:bold;padding:6px;" href="{{ detalle.numero_carga }}">+</a>
-									    		{% endif %}
-									    	</td>
-									    	<td>{{ detalle.numero_carga }}</td>
-			                                <td>{{ detalle.numero_lpn }}</td>
-			                                <td>{{ detalle.numero_controles }}</td>
-			                                <td>{{ detalle.ruta_codigo }}</td>
-			                                <td>{{ detalle.local }}</td>
-			                                <td>{{ detalle.fecha_carga }}</td>
-			                                {% for control in data %}
-	                                    		{% if detalle.numero_lpn == control.numero_lpn %}
-		                                    		{% if control.control_1 == 'x' %}
-			                                    	<td><a href="#" class="btn btn-info mb-1" data-toggle="modal" data-target="#control-{{ detalle.id }}">x-{{control.orden}}</a></td>
-			                                    	{% endif %}
-			                                    	{% if control.control_2 == 'x' %}
-			                                    	<td><a href="#" class="btn btn-info mb-1" data-toggle="modal" data-target="#control-{{ detalle.id }}">x-{{control.orden}}</a></td>
-			                                    	{% endif %}
-		                                    	{% endif %}
-			                                {% endfor %}
-			                                
-	                                    </tr>
-										
-	                                    <div class="modal fade" id="control-{{ detalle.id }}" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
-							                <div class="modal-dialog modal-lg" role="document">
-							                    <div class="modal-content">
-							                        <div class="modal-header">
-							                            <h5 class="modal-title" id="largeModalLabel">Detalle de Marca</h5>
-							                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							                                <span aria-hidden="true">&times;</span>
-							                            </button>
-							                        </div>
-							                        <div class="modal-body">
-							                            <div class="row">
-                    										<div class="col-lg-12">
-                    											<div class="col-lg-6 float-left">
-                    												control :
-                    											</div>
-                    											<div class="col-lg-6 float-left">
-                    												{{ detalle.nombre }}
-                    											</div>
-                    											<div class="col-lg-6 float-left">
-                    												Latitud y Longitud:
-                    											</div>
-                    											<div class="col-lg-6 float-left">
-                    												{{ detalle.point }}
-                    											</div>
-                    											<div class="col-lg-6 float-left">
-                    												Fecha y Hora de Marca:
-                    											</div>
-                    											<div class="col-lg-6 float-left">
-                    												{{ detalle.fecha_registro }}
-                    											</div>
-                    										</div>
-                    									</div>
-							                        </div>
-							                    </div>
-							                </div>
-							            </div>
-	                                    
-									{% endfor %}
-									</tbody> -->
+
 									
 								</table>
-								<!-- <div class="icon-container">
-                                    <span class="ti-download"></span><span class="icon-name">
-                                    	<a href="/export_consulta_registros/?numero_carga={{request.GET.numero_carga}}&numero_bandeja={{request.GET.numero_bandeja}}&ruta={{request.GET.ruta}}&fecini={{request.GET.fecini}}&fecfin={{request.GET.fecfin}}">Descargar Excel</a>
-                                    </span>
-                                </div> -->
 								
-								
+								<button type="submit">Exportar</button>
+								</form>
 	                        </div>
 	                    </div>
 	                </div>
@@ -480,6 +391,41 @@
 				}
 			});
 			});
+		</script>
+
+		<script>
+			function exportTableToExcel(tableID, filename = ''){
+				
+				var downloadLink;
+				var dataType = 'application/vnd.ms-excel';
+				var tableSelect = document.getElementById(tableID);
+				var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+				
+				// Specify file name
+				filename = filename?filename+'.xls':'excel_data.xls';
+				
+				// Create download link element
+				downloadLink = document.createElement("a");
+				
+				document.body.appendChild(downloadLink);
+				
+				if(navigator.msSaveOrOpenBlob){
+					var blob = new Blob(['ufeff', tableHTML], {
+						type: dataType
+					});
+					navigator.msSaveOrOpenBlob( blob, filename);
+				}else{
+					// Create a link to the file
+					downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+				
+					// Setting the file name
+					downloadLink.download = filename;
+					
+					//triggering the function
+					downloadLink.click();
+				}
+			}
+			
 		</script>
 				
 {% endblock %}

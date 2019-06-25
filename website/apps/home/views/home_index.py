@@ -8,7 +8,7 @@ from django.shortcuts import render, render_to_response, redirect, get_object_or
 from django.db.models import Max
 from datetime import datetime
 from django.views.generic import TemplateView
-
+import json
 
 from apps.home.forms.form import *
 
@@ -595,6 +595,102 @@ class Upmodal1(TemplateView):
         return render(request, 'modal1.html',{'equis':equis})
 
 @csrf_exempt
+def Excel(request):
+    data1 = request.POST.getlist('data1[]')
+    data2 = request.POST.getlist('data2[]')
+    data3 = request.POST.getlist('data3[]')
+    data4 = request.POST.getlist('data4[]')
+    data5 = request.POST.getlist('data5[]')
+    data6 = request.POST.getlist('data6[]')
+    data7 = request.POST.getlist('data7[]')
+    control = request.POST.getlist('control[]')
+    om = request.POST.getlist('om[]')
+    # Export excel
+    from openpyxl import Workbook
+    from openpyxl.styles import Color, PatternFill, Font, Border
+    from openpyxl.styles import colors
+    from openpyxl.cell import Cell
+    
+    wb = Workbook()
+    ws = wb.active
+
+    redFill = PatternFill(start_color='FFF61723',end_color='FFF61723',fill_type='solid')
+    greenFill = PatternFill(start_color='FF07A34F',end_color='FF07A34F',fill_type='solid')
+    yellowFill = PatternFill(start_color='FFF8E903',end_color='FFF8E903',fill_type='solid')
+    greyFill = PatternFill(start_color='FFb3b3b3',end_color='FFb3b3b3',fill_type='solid')
+
+    #--------------DETALLE................
+    ws['A1'] = 'Número de carga'
+    ws['B1'] = 'Número de bandeja'
+    ws['C1'] = '#Controles'
+    ws['D1'] = 'Ruta'
+    ws['E1'] = 'Destino'
+    ws['F1'] = 'Fecha de carga'
+    ws['G1'] = 'Transportista'
+
+    cnt = []
+    tam = 0
+    for cn in control:
+        arreglo = cn.replace('[','').replace(']','').split(',')
+        if tam < len(arreglo):
+            tam = len(arreglo)
+        cnt.append(arreglo)
+    
+    c = 8
+
+    for i in range(1,tam+1):
+        if i < tam:
+            ws.cell(row=1,column=c).value = 'Control '+str(i)
+            
+        else:
+            ws.cell(row=1,column=c).value = 'Control Final'
+        c = c + 1
+
+    ws.cell(row=1,column=c).value = 'Otras Marcas'
+
+    cont=2
+  
+ 
+    for row1,row2,row3,row4,row5,row6,row7,cn,o in zip(data1,data2,data3,data4,data5,data6,data7,cnt,om):
+        if row2 != '':
+            ws.cell(row=cont,column=1).value = row1
+            ws.cell(row=cont,column=2).value = row2
+            ws.cell(row=cont,column=3).value = row3
+            ws.cell(row=cont,column=4).value = row4
+            ws.cell(row=cont,column=5).value = row5
+            ws.cell(row=cont,column=6).value = row6
+            ws.cell(row=cont,column=7).value = row7
+            clm = 8
+            for c in cn:
+                if 'x' in c:
+                    ws.cell(row=cont,column=clm).value = 'X'
+                    ws.cell(row=cont,column=clm).fill = greenFill
+                elif '.' in c:
+                    ws.cell(row=cont,column=clm).value = ''
+                    ws.cell(row=cont,column=clm).fill = greyFill
+                elif '-':
+                    ws.cell(row=cont,column=clm).value = ''
+                    ws.cell(row=cont,column=clm).fill = redFill
+                else:
+                    ws.cell(row=cont,column=clm).value = ''
+                clm = clm + 1
+            if o == '0':
+                ws.cell(row=cont,column=clm).value = ''
+            else:
+                ws.cell(row=cont,column=clm).value = o
+                ws.cell(row=cont,column=clm).fill = yellowFill
+            cont = cont + 1
+        
+    
+    nombre_archivo ="Detalles.xlsx" 
+    response = HttpResponse(content_type="application/ms-excel") 
+    contenido = "attachment; filename={0}".format(nombre_archivo)
+    response["Content-Disposition"] = contenido
+    wb.save(response)
+    return response 
+
+
+@csrf_exempt
 def consulta_registros(request):
     from django.db.models import Prefetch
     numero_carga = request.POST.get('numero_carga')
@@ -645,8 +741,8 @@ def consulta_registros(request):
         fuera = []
         control.append(0)
         total.append(len(carga_bulto))
-        dentro.append('-')
-        fuera.append('-')
+        dentro.append('')
+        fuera.append('')
 
         n_carga = []
         n_lpn = []
