@@ -732,6 +732,9 @@ def consulta_registros(request):
                 query['destino'] = destino
             if trans != '':
                 query['transportista'] = trans
+
+            if not request.user.is_superuser:
+                query['user'] = request.user
             
             carga_bulto = PlanificacionCargaBulto.objects.filter(**query)
         
@@ -1327,8 +1330,8 @@ def registro_manual(request):
         resumen = {}
         detalles = {}
         detallado = {}
+        data1 = []
         data = []
-
         if "POST" == request.method:
             from shapely import wkt
             
@@ -1364,8 +1367,17 @@ def registro_manual(request):
                 else:
                     if not detalles[n].numero_lpn in lpn:
                         lpn.append(detalles[n].numero_lpn)
-                        data.append(detalles[n])
+                        data1.append(detalles[n])
                 n = n + 1
+
+            usuario = request.user.username
+            if request.user.is_superuser:
+                data = data1
+            else:
+                for d in data1: 
+                    cb = PlanificacionCargaBulto.objects.get(numero_lpn = d.numero_bandeja)
+                    if cb.transportista == usuario:
+                        data.append(d)
 
             message = ''
             status = None
@@ -1432,13 +1444,22 @@ def consulta_incidencias(request):
                     "where t2.numero_placa = %s or t2.ruta = %s "
                     "or (t2.fecha_registro BETWEEN convert(datetime2, %s, 103) AND convert(datetime2, %s, 103)) "
                     "or t3.username like %s ", [numero_placa, ruta, fecini, fecfin, transportista])'''
-                data = PlanificacionIncidencia.objects.raw(
+                data = []
+                data1 = PlanificacionIncidencia.objects.raw(
                     "select distinct t2.id, t3.username transportista, t2.fecha_registro, t2.ruta, t2.descripcion, t3.username from planificacion_ruta t1 "
                     "right join planificacion_incidencia t2 on t1.codigo = t2.ruta "
                     "left join auth_user t3 on t2.usuario_id = t3.id "
                     "where t2.numero_placa = %s or t2.ruta = %s "
                     "or (t2.fecha_registro BETWEEN convert(datetime2, %s, 103) AND convert(datetime2, %s, 103)) "
                     "or t3.username like %s ", [numero_placa, ruta, fecini, fecfin, transportista])
+                
+                usuario = request.user.username
+                if request.user.is_superuser:
+                    data = data1
+                else:
+                    for d in data1: 
+                       if d.transportista == usuario:
+                           data.append(d)
 
         except Exception as e:
             print(e)

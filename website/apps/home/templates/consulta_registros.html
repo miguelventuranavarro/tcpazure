@@ -186,9 +186,9 @@
 												{% if control != 0 %}
 												<th><select>
 														<option value="">...</option>
-														<option style="background-color: #07A34F;" value="x">x</option>
-														<option style="background-color: #b3b3b3;" value=".">.</option>
-														<option style="background-color: #F61723;" value="-">-</option>
+														<option style="background-color: #07A34F;color: #07A34F;" value="x">x</option>
+														<option style="background-color: #b3b3b3;color: #b3b3b3;" value=".">.</option>
+														<option style="background-color: #F61723;color: #F61723;" value="-">-</option>
 													</select></th>
 												{% endif %}
 											{% endfor %}
@@ -236,7 +236,7 @@
 										<td>{{ detalle.ruta_codigo }}</td>
 										<td>{{ detalle.destino }}</td>										
 										<td>{{ detalle.fecha_carga }}</td>
-										<td>{{ detalle.fecha_carga  }}</td>
+										<td>{{ detalle.transportista  }}</td>
 										{% for cnt in detalle.control %}
 										
 											{% if cnt == 'all' %}
