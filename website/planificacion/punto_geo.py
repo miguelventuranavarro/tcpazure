@@ -1,4 +1,4 @@
-from planificacion.models import PuntoGeocerca, PlanificacionPuntoControl,PlanificacionGeocerca,PlanificacionDetalleGeocerca,PlanificacionCargaPuntoControl,MarcacionesMatch
+from planificacion.models import PuntoGeocerca, PlanificacionPuntoControl,PlanificacionGeocerca,PlanificacionDetalleGeocerca,PlanificacionCargaPuntoControl,MarcacionesMatch, PlanificacionPermisos
 
 class PuntoGeo():
 
@@ -78,6 +78,14 @@ class PuntoGeo():
             p1x,p1y = p2x,p2y
 
         return inside
+
+    def permisos(u):
+        perm = PlanificacionPermisos()
+        try:
+            perm = PlanificacionPermisos.objects.get(us=u)
+        except:
+            print('debe solicitar permisos')            
+        return perm
                         
 
 

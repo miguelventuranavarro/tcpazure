@@ -18,6 +18,7 @@ from django.template import RequestContext
 from planificacion.models import *
 from planificacion.punto_geo import PuntoGeo
 
+
 import openpyxl
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
@@ -37,8 +38,9 @@ class index(SingleObjectMixin, FormView):
     form_class = MyForm
     initial = {'key': 'value'}
     template_name = 'index.html'
-
+    
     def get(self, request, *args, **kwargs):
+        
         form = self.form_class(initial=self.initial)
         return render(request, self.template_name, {'form': form})
 
@@ -77,209 +79,214 @@ def import_data(request):
     message = ''
     status = None
     mCargaBulto = []
-    if "GET" == request.method:
-        status = None
-        #return render(request, 'index.html', {})
-    if "POST" == request.method:
-        user = User.objects.get(id=request.user.id)
+    if PuntoGeo.permisos(request.user.id).carga_masiva:
         
+        if "GET" == request.method:
+            status = None
+            #return render(request, 'index.html', {})
+        if "POST" == request.method:
+            user = User.objects.get(id=request.user.id)
+            
 
-        try:
-            excel_file = request.FILES["excel_file"]
-            PrePlanificacionCargaBulto.objects.filter(user=request.user).delete()
+            try:
+                excel_file = request.FILES["excel_file"]
+                PrePlanificacionCargaBulto.objects.filter(user=request.user).delete()
 
-            # you may put validations here to check extension or file size
+                # you may put validations here to check extension or file size
 
-            wb = openpyxl.load_workbook(excel_file)
-            #worksheet = wb.get_sheet_by_name('Hoja1')
-            worksheet = wb.active
+                wb = openpyxl.load_workbook(excel_file)
+                #worksheet = wb.get_sheet_by_name('Hoja1')
+                worksheet = wb.active
 
-            # getting a particular sheet by name out of many sheets
+                # getting a particular sheet by name out of many sheets
 
-            excel_data = list()
-            data = list()
-            # iterating over the rows and
-            # getting value from each cell in row
-            import datetime
-            import time
-            import re
-        
-            i = 2
-            for row in worksheet.iter_rows():
+                excel_data = list()
+                data = list()
+                # iterating over the rows and
+                # getting value from each cell in row
+                import datetime
+                import time
+                import re
+            
+                i = 2
+                for row in worksheet.iter_rows():
 
-                row_data = list()
+                    row_data = list()
 
-                fecha_carga = worksheet['A'+str(i)].value
-                if fecha_carga != None:
                     fecha_carga = worksheet['A'+str(i)].value
-                    fecha_carga = datetime.datetime.strptime(str(fecha_carga), '%Y-%m-%d %H:%M:%S')
+                    if fecha_carga != None:
+                        fecha_carga = worksheet['A'+str(i)].value
+                        fecha_carga = datetime.datetime.strptime(str(fecha_carga), '%Y-%m-%d %H:%M:%S')
 
-                    numero_carga = worksheet['B'+str(i)].value
-                    ruta_codigo = worksheet['C'+str(i)].value
-                    destino = worksheet['D'+str(i)].value
-                    #local = worksheet['E'+str(i)].value
-                    paradas = worksheet['E'+str(i)].value
-                    numero_lpn = worksheet['F'+str(i)].value
-                    peso = str(worksheet['G'+str(i)].value)
-                    volumen = worksheet['H'+str(i)].value
-                    guia_remision = worksheet['I'+str(i)].value
-                    transportista = worksheet['J'+str(i)].value
-                    fecha_llegada_inicial = worksheet['K'+str(i)].value
-                    fecha_llegada = worksheet['L'+str(i)].value
-                    if fecha_llegada != None:
-                        fecha_llegada = datetime.datetime.strptime(str(fecha_llegada), '%Y-%m-%d %H:%M:%S')
-                    if fecha_llegada_inicial != None:
-                        fecha_llegada_inicial = datetime.datetime.strptime(str(fecha_llegada_inicial), '%Y-%m-%d %H:%M:%S')
-                    region = worksheet['M'+str(i)].value
-                    unidades = worksheet['N'+str(i)].value
-                    now = datetime.datetime.now()
-                    
-                    if ruta_codigo != None:
-                        try:
-                            
-                            objRuta = PlanificacionRuta.objects.get(codigo=ruta_codigo)
-                        except:
-                            objRuta = PlanificacionRuta(codigo=ruta_codigo)
-                    else:
-                        objRuta = PlanificacionRuta(codigo='')
-
-                    mCargaBulto.append(PlanificacionCargaBulto(user=user,fecha_carga=fecha_carga,numero_carga=numero_carga,
-                        ruta_codigo=objRuta,destino=destino,paradas=paradas,numero_lpn=numero_lpn,
-                        peso=peso,volumen=volumen,guia_remision=guia_remision,transportista=transportista,
-                        fecha_llegada=fecha_llegada,region=region,fecha_registro=now,fecha_llegada_inicial=fecha_llegada_inicial,unidades=unidades))
+                        numero_carga = worksheet['B'+str(i)].value
+                        ruta_codigo = worksheet['C'+str(i)].value
+                        destino = worksheet['D'+str(i)].value
+                        #local = worksheet['E'+str(i)].value
+                        paradas = worksheet['E'+str(i)].value
+                        numero_lpn = worksheet['F'+str(i)].value
+                        peso = str(worksheet['G'+str(i)].value)
+                        volumen = worksheet['H'+str(i)].value
+                        guia_remision = worksheet['I'+str(i)].value
+                        transportista = worksheet['J'+str(i)].value
+                        fecha_llegada_inicial = worksheet['K'+str(i)].value
+                        fecha_llegada = worksheet['L'+str(i)].value
+                        if fecha_llegada != None:
+                            fecha_llegada = datetime.datetime.strptime(str(fecha_llegada), '%Y-%m-%d %H:%M:%S')
+                        if fecha_llegada_inicial != None:
+                            fecha_llegada_inicial = datetime.datetime.strptime(str(fecha_llegada_inicial), '%Y-%m-%d %H:%M:%S')
+                        region = worksheet['M'+str(i)].value
+                        unidades = worksheet['N'+str(i)].value
+                        now = datetime.datetime.now()
                         
-                    i=i+1
+                        if ruta_codigo != None:
+                            try:
+                                
+                                objRuta = PlanificacionRuta.objects.get(codigo=ruta_codigo)
+                            except:
+                                objRuta = PlanificacionRuta(codigo=ruta_codigo)
+                        else:
+                            objRuta = PlanificacionRuta(codigo='')
 
-            status = True
-            message = 'El archivo se cargo correctamente.'
-     
+                        mCargaBulto.append(PlanificacionCargaBulto(user=user,fecha_carga=fecha_carga,numero_carga=numero_carga,
+                            ruta_codigo=objRuta,destino=destino,paradas=paradas,numero_lpn=numero_lpn,
+                            peso=peso,volumen=volumen,guia_remision=guia_remision,transportista=transportista,
+                            fecha_llegada=fecha_llegada,region=region,fecha_registro=now,fecha_llegada_inicial=fecha_llegada_inicial,unidades=unidades))
+                            
+                        i=i+1
 
-        except IntegrityError as e: 
-            status = False
-            message = 'Lo sentimos, problemas al cargar el archivo. ' + str(e)
-        except ValidationError as e:
-            status = False
-            message = 'Lo sentimos, problemas al cargar el archivo. ' + str(e)
-        except ValueError as e:
-            status = False
-            message = 'Lo sentimos, problemas al cargar el archivo. ' + str(e)
-        except Exception as e:
-            status = False
-            message = 'Lo sentimos, problemas al cargar el archivo. ' + str(e)
-
+                status = True
+                message = 'El archivo se cargo correctamente.'
         
 
-#**************Validacionees****************************************************
+            except IntegrityError as e: 
+                status = False
+                message = 'Lo sentimos, problemas al cargar el archivo. ' + str(e)
+            except ValidationError as e:
+                status = False
+                message = 'Lo sentimos, problemas al cargar el archivo. ' + str(e)
+            except ValueError as e:
+                status = False
+                message = 'Lo sentimos, problemas al cargar el archivo. ' + str(e)
+            except Exception as e:
+                status = False
+                message = 'Lo sentimos, problemas al cargar el archivo. ' + str(e)
 
-        mCargaBultoCopy = mCargaBulto.copy()
-
-        cont = 0
-        lpn = []
-        lpnbd = []
-        lpnempty = []
-        strlpnempty = ''
-        strlpn = ''
-        strlpnbd = ''
-        regcont = 1
-        geo = []
-        strgeo = ''
-        ruta = []
-        strruta = ''
-        
-        for mb in mCargaBulto:
-            regcont = regcont + 1
-            rutas = 10 
-            geos = 10
-            lpns = PlanificacionCargaBulto.objects.filter(numero_lpn=mb.numero_lpn).count()
-            if mb.destino != None:
-                geos = PlanificacionGeocerca.objects.filter(codigo=mb.destino).count()
-
-            if mb.ruta_codigo.codigo != '':
-                rutas = PlanificacionPuntoControl.objects.filter(nombre=mb.ruta_codigo).count()
-                
-            if rutas == 0:
-                ruta.append(mb.ruta_codigo)
-
-            if geos == 0:
-                geo.append(mb.destino)
             
-            if (mb.fecha_carga == None) or (mb.numero_carga == None) or (mb.ruta_codigo.codigo == '') or (mb.destino == None):
-                lpnempty.append(regcont)
 
-            if lpns > 0:
-                lpnbd.append(mb.numero_lpn)
-            for mbc in mCargaBultoCopy:
-                if mb.numero_lpn == mbc.numero_lpn:
-                    cont = cont + 1
-                    if cont >= 2:
-                        lpn.append(mb.numero_lpn)
+    #**************Validacionees****************************************************
+
+            mCargaBultoCopy = mCargaBulto.copy()
+
             cont = 0
-
-        message1 = ''
-        message2 = ''
-        message3 = ''
-        message4 = ''
-        message5 = ''
-
-        if len(lpn) > 0:
-            result = list(set(lpn))
-            for r in result:
-                strlpn = strlpn+str(r)+','
+            lpn = []
+            lpnbd = []
+            lpnempty = []
+            strlpnempty = ''
+            strlpn = ''
+            strlpnbd = ''
+            regcont = 1
+            geo = []
+            strgeo = ''
+            ruta = []
+            strruta = ''
             
-            status = False
-            message1 = 'Los siguientes campos (numero_lpn) estas duplicados: '+strlpn
+            for mb in mCargaBulto:
+                regcont = regcont + 1
+                rutas = 10 
+                geos = 10
+                lpns = PlanificacionCargaBulto.objects.filter(numero_lpn=mb.numero_lpn).count()
+                if mb.destino != None:
+                    geos = PlanificacionGeocerca.objects.filter(codigo=mb.destino).count()
 
-        if len(lpnbd) > 0:
-            result = list(set(lpnbd))
-            for r in result:
-                strlpnbd = strlpnbd+str(r)+','
+                if mb.ruta_codigo.codigo != '':
+                    rutas = PlanificacionPuntoControl.objects.filter(nombre=mb.ruta_codigo).count()
+                    
+                if rutas == 0:
+                    ruta.append(mb.ruta_codigo)
+
+                if geos == 0:
+                    geo.append(mb.destino)
+                
+                if (mb.fecha_carga == None) or (mb.numero_carga == None) or (mb.ruta_codigo.codigo == '') or (mb.destino == None):
+                    lpnempty.append(regcont)
+
+                if lpns > 0:
+                    lpnbd.append(mb.numero_lpn)
+                for mbc in mCargaBultoCopy:
+                    if mb.numero_lpn == mbc.numero_lpn:
+                        cont = cont + 1
+                        if cont >= 2:
+                            lpn.append(mb.numero_lpn)
+                cont = 0
+
+            message1 = ''
+            message2 = ''
+            message3 = ''
+            message4 = ''
+            message5 = ''
+
+            if len(lpn) > 0:
+                result = list(set(lpn))
+                for r in result:
+                    strlpn = strlpn+str(r)+','
+                
+                status = False
+                message1 = 'Los siguientes campos (numero_lpn) estas duplicados: '+strlpn
+
+            if len(lpnbd) > 0:
+                result = list(set(lpnbd))
+                for r in result:
+                    strlpnbd = strlpnbd+str(r)+','
+                
+                status = False 
+                message2 = 'Los siguientes campos (numero_lpn) ya existen en la base de datos: '+strlpnbd
+
+            if len(lpnempty) > 0:
+                for r in lpnempty:
+                    strlpnempty  = strlpnempty +str(r)+','   
+                
+                status = False
+                message3 = 'Los siguientes registros tienen campos obligatorios vacíos: '+strlpnempty 
+
+            if len(geo) > 0:
+                result = list(set(geo))
+                for r in result:
+                    strgeo  = strgeo +str(r)+',' 
+                
+                status = False
+                message4 = 'Los siguientes campos (destino) no existen como código de Geocerca: '+strgeo
+
+            if len(ruta) > 0:
+                result = list(set(ruta))
+                for r in result:
+                    strruta  = strruta +str(r)+','
+                
+                status = False
+                message5 = 'Los siguientes campos (ruta) no están asociados a un punto de control: '+strruta 
+
+            if not status:
+                message = 'Lo sentimos, no es posible guardar este archivo. '+message1+". "+message2+". "+message3+". "+message4+". "+message5
+            else:
+                for b in mCargaBulto:
+                    PrePlanificacionCargaBulto.objects.create(user=b.user,fecha_carga=b.fecha_carga,numero_carga=b.numero_carga,
+                            ruta_codigo=b.ruta_codigo,destino=b.destino,paradas=b.paradas,numero_lpn=b.numero_lpn,
+                            peso=b.peso,volumen=b.volumen,guia_remision=b.guia_remision,transportista=b.transportista,
+                            fecha_llegada=b.fecha_llegada,region=b.region,fecha_registro=b.fecha_registro,fecha_llegada_inicial=b.fecha_llegada_inicial,unidades=b.unidades)
+
             
-            status = False 
-            message2 = 'Los siguientes campos (numero_lpn) ya existen en la base de datos: '+strlpnbd
 
-        if len(lpnempty) > 0:
-            for r in lpnempty:
-                strlpnempty  = strlpnempty +str(r)+','   
-            
-            status = False
-            message3 = 'Los siguientes registros tienen campos obligatorios vacíos: '+strlpnempty 
-
-        if len(geo) > 0:
-            result = list(set(geo))
-            for r in result:
-                strgeo  = strgeo +str(r)+',' 
-            
-            status = False
-            message4 = 'Los siguientes campos (destino) no existen como código de Geocerca: '+strgeo
-
-        if len(ruta) > 0:
-            result = list(set(ruta))
-            for r in result:
-                strruta  = strruta +str(r)+','
-            
-            status = False
-            message5 = 'Los siguientes campos (ruta) no están asociados a un punto de control: '+strruta 
-
-        if not status:
-            message = 'Lo sentimos, no es posible guardar este archivo. '+message1+". "+message2+". "+message3+". "+message4+". "+message5
-        else:
-            for b in mCargaBulto:
-                PrePlanificacionCargaBulto.objects.create(user=b.user,fecha_carga=b.fecha_carga,numero_carga=b.numero_carga,
-                        ruta_codigo=b.ruta_codigo,destino=b.destino,paradas=b.paradas,numero_lpn=b.numero_lpn,
-                        peso=b.peso,volumen=b.volumen,guia_remision=b.guia_remision,transportista=b.transportista,
-                        fecha_llegada=b.fecha_llegada,region=b.region,fecha_registro=b.fecha_registro,fecha_llegada_inicial=b.fecha_llegada_inicial,unidades=b.unidades)
-
+    #***********************************************************************************    
         
+        paginator = Paginator(mCargaBulto, 20) # Show 25 contacts per page
 
-#***********************************************************************************    
-    
-    paginator = Paginator(mCargaBulto, 20) # Show 25 contacts per page
-
-    page = request.GET.get('page')
-    data = paginator.get_page(page)
+        page = request.GET.get('page')
+        data = paginator.get_page(page)
 
 
-    return render(request, 'index.html', {"data":data,"message":message,"status":status})
+        return render(request, 'index.html', {"data":data,"message":message,"status":status})
+
+    else:
+        return render(request, 'permisos.html')
 
 @csrf_exempt
 def eliminar_carga(request):
@@ -352,16 +359,20 @@ def crear_geocercas(request):
     return render(request, 'geocercas.html', {"message":message,"status":success,"form":form})
 
 def listar_geocercas(request):
-    message = ''
-    status = None
-    dataGeocerca = PlanificacionGeocerca.objects.all()
+    if PuntoGeo.permisos(request.user.id).geocercas:
+        message = ''
+        status = None
+        dataGeocerca = PlanificacionGeocerca.objects.all()
 
-    paginator = Paginator(dataGeocerca, 20) # Show 25 contacts per page
+        paginator = Paginator(dataGeocerca, 20) # Show 25 contacts per page
 
-    page = request.GET.get('page')
-    data = paginator.get_page(page)
+        page = request.GET.get('page')
+        data = paginator.get_page(page)
 
-    return render(request, 'listar_geocercas.html', {"data":data,"message":message,"status":status})
+        return render(request, 'listar_geocercas.html', {"data":data,"message":message,"status":status})
+    else:
+        return render(request, 'permisos.html')
+
 
 @csrf_exempt
 def eliminar_geocercas(request):
@@ -692,259 +703,262 @@ def Excel(request):
 
 @csrf_exempt
 def consulta_registros(request):
-    from django.db.models import Prefetch
-    numero_carga = request.POST.get('numero_carga')
-    numero_bandeja = request.POST.get('numero_bandeja')
-    ruta = request.POST.get('ruta')
-    destino = request.POST.get('destino')
-    trans = request.POST.get('trans')
-    fecini = request.POST.get('fecini')
-    fecfin = request.POST.get('fecfin')
-    resumen = {}
-    detalles = []
+    if PuntoGeo.permisos(request.user.id).consulta_registros:
+        from django.db.models import Prefetch
+        numero_carga = request.POST.get('numero_carga')
+        numero_bandeja = request.POST.get('numero_bandeja')
+        ruta = request.POST.get('ruta')
+        destino = request.POST.get('destino')
+        trans = request.POST.get('trans')
+        fecini = request.POST.get('fecini')
+        fecfin = request.POST.get('fecfin')
+        resumen = {}
+        detalles = []
 
-    if "POST" == request.method:
+        if "POST" == request.method:
 
-        fecini = datetime.strftime(datetime.strptime(fecini,'%d/%m/%Y %H:%M:%S'),'%Y-%m-%d %H:%M:%S')
-        fecfin = datetime.strftime(datetime.strptime(fecfin,'%d/%m/%Y %H:%M:%S'),'%Y-%m-%d %H:%M:%S')
+            fecini = datetime.strftime(datetime.strptime(fecini,'%d/%m/%Y %H:%M:%S'),'%Y-%m-%d %H:%M:%S')
+            fecfin = datetime.strftime(datetime.strptime(fecfin,'%d/%m/%Y %H:%M:%S'),'%Y-%m-%d %H:%M:%S')
 
-        query = {}
-        query['fecha_carga__range'] = [fecini, fecfin]
-        if numero_carga != '':
-            query['numero_carga'] = numero_carga
-        if numero_bandeja != '':
-            query['numero_lpn'] = numero_bandeja
-        if ruta != '':
-            query['ruta_codigo'] = ruta
-        if destino != '':
-            query['destino'] = destino
-        if trans != '':
-            query['transportista'] = trans
+            query = {}
+            query['fecha_carga__range'] = [fecini, fecfin]
+            if numero_carga != '':
+                query['numero_carga'] = numero_carga
+            if numero_bandeja != '':
+                query['numero_lpn'] = numero_bandeja
+            if ruta != '':
+                query['ruta_codigo'] = ruta
+            if destino != '':
+                query['destino'] = destino
+            if trans != '':
+                query['transportista'] = trans
+            
+            carga_bulto = PlanificacionCargaBulto.objects.filter(**query)
         
-        carga_bulto = PlanificacionCargaBulto.objects.filter(**query)
-    
-        # if(numero_carga != '' and  numero_bandeja != '' and ruta != '' and destino != '' and trans != ''):
-        #     carga_bulto = PlanificacionCargaBulto.objects.filter(numero_carga=numero_carga).filter(numero_lpn=numero_bandeja).filter(ruta_codigo=ruta).filter(transportista=trans).filter(destino=destino).filter(fecha_carga__range=[fecini, fecfin])
-        # else:
-        #     carga_bulto = PlanificacionCargaBulto.objects.filter(fecha_carga__range=[fecini, fecfin])
+            # if(numero_carga != '' and  numero_bandeja != '' and ruta != '' and destino != '' and trans != ''):
+            #     carga_bulto = PlanificacionCargaBulto.objects.filter(numero_carga=numero_carga).filter(numero_lpn=numero_bandeja).filter(ruta_codigo=ruta).filter(transportista=trans).filter(destino=destino).filter(fecha_carga__range=[fecini, fecfin])
+            # else:
+            #     carga_bulto = PlanificacionCargaBulto.objects.filter(fecha_carga__range=[fecini, fecfin])
 
-        max_puntos = 0
-        for cb in carga_bulto:
-            plan_ruta = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
-            if max_puntos < plan_ruta:
-                max_puntos = plan_ruta
+            max_puntos = 0
+            for cb in carga_bulto:
+                plan_ruta = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
+                if max_puntos < plan_ruta:
+                    max_puntos = plan_ruta
 
-        
-        control = []
-        total = []
-        dentro = []
-        fuera = []
-        control.append(0)
-        total.append(len(carga_bulto))
-        dentro.append('')
-        fuera.append('')
+            
+            control = []
+            total = []
+            dentro = []
+            fuera = []
+            control.append(0)
+            total.append(len(carga_bulto))
+            dentro.append('')
+            fuera.append('')
 
-        n_carga = []
-        n_lpn = []
-        n_controles = []
-        ruta = []
-        f_carga = []
-        cnt =[]
-        trans = []
+            n_carga = []
+            n_lpn = []
+            n_controles = []
+            ruta = []
+            f_carga = []
+            cnt =[]
+            trans = []
 
-        dic = {}
-
-        contf = 0
-        contf1 = 0
-        contf2 = 0
-
-        for i in range(1,max_puntos + 1):
-            if i < max_puntos:
-                control.append(i)
-            else:
-                control.append('final')
-            cont = 0
-            cont1 = 0
-            cont2 = 0
-            for cb in carga_bulto:  
-
-                orden = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
-
-                if i < orden:
-                    match = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i)  
-                    inside = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=1)
-                    outside = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=0)
-
-                    if len(match) > 0:
-                        cont = cont + 1
-                    if len(inside) != 0:
-                        cont1 = cont1 + 1
-                    elif len(inside) == 0 and len(outside) != 0:
-                        cont2 = cont2 + 1
-                else:
-                    match = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i)  
-                    inside = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=1)
-                    outside = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=0)
-
-                    if len(match) > 0:
-                        contf = contf + 1
-                    if len(inside) != 0:
-                        contf1 = contf1 + 1
-                    elif len(inside) == 0 and len(outside) != 0:
-                        contf2 = contf2 + 1
-
-            if i == max_puntos:
-                cont = cont + contf
-                cont1 = cont1 + contf1
-                cont2 = cont2 + contf2
-
-            total.append(cont)
-            dentro.append(cont1)
-            fuera.append(cont2)
-        numCarga = []
-
-        for cb in carga_bulto:
             dic = {}
-            innercnt = []
-            geo = PlanificacionGeocerca.objects.get(codigo = cb.destino)
-            if not cb.numero_carga+"-"+str(cb.destino) in numCarga:
-                dic1 = {}
-                innercnt1 = []
-                numCarga.append(cb.numero_carga+"-"+str(cb.destino))
-        
-                dic1['numero_carga'] = cb.numero_carga+"-"+str(cb.destino)
-                dic1['numero_lpn'] = ''
-                dic1['numero_controles'] = ''
-                dic1['ruta_codigo'] = ''
-                dic1['destino'] = geo.nombre
-                dic1['fecha_carga'] = ''
-                dic1['transportista'] = ''
-                dic1['om'] = 0      
-                dic1['display'] = 'table-row'
-                orden = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
-                bultos = PlanificacionCargaBulto.objects.filter(numero_carga = cb.numero_carga).filter(destino = cb.destino)
-                all = 0
-                for i in range(1,max_puntos + 1):
-                    con_in = 0
-                    for b in bultos:
-                        match = MarcacionesMatch.objects.filter(lpn = b.numero_lpn).filter(id_control=i).filter(dentro=1)
-                        match1 = MarcacionesMatch.objects.filter(lpn = b.numero_lpn).filter(id_control=i).filter(dentro=0)
-                        if len(match) > 0 and len(match1) >= 0:
-                            con_in = con_in + 1
-                    if i < orden :
-                        if len(bultos) == con_in:
-                            innercnt1.append('all')
-                        else:
-                            innercnt1.append('')
 
-                    elif i >= orden and i < max_puntos:
-                        if len(bultos) == con_in:
-                            innercnt1.append('')
-                            all = 1
-                        else:
-                            innercnt1.append('')
+            contf = 0
+            contf1 = 0
+            contf2 = 0
 
-                    if i == max_puntos:
-                        if all == 1: 
-                            innercnt1.append('all')
-                        else:
-                            innercnt1.append('')
-
-                dic1['control'] = innercnt1
-                detalles.append(dic1)
-                        
-            nc = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
-            dic['numero_carga'] = cb.numero_carga+"-"+str(cb.destino)
-            dic['numero_lpn'] = cb.numero_lpn
-            dic['numero_controles'] = nc
-            dic['ruta_codigo'] = cb.ruta_codigo
-            dic['destino'] = geo.nombre
-            dic['fecha_carga'] = cb.fecha_carga
-            dic['transportista'] = cb.transportista
-            #dic['fecha_registro'] = cb.fecha_registro
-            
-  
-            orden = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
-
-            
-            contx = 0
-            cont_ = 0
-            found = 0
-           
             for i in range(1,max_puntos + 1):
-                match = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=1)
-                match1 = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=0)
-                #cont = cont + len(match1)
-                if i < orden:                  
-                    if len(match) > 0:
-                        innercnt.append('x'+str(i))    
-                    elif len(match1) > 0:
-                        innercnt.append('-')
-                    else:
-                        innercnt.append('')
-                        found = 1
-                elif i == orden and i < max_puntos:
-                    if len(match) > 0 :
-                        innercnt.append('.')
-                        contx = 1
-                    elif len(match1) > 0:
-                        innercnt.append('.')
-                        cont_ = 1
-                    else:
-                        innercnt.append('')
-                        found = 1
-                elif i == orden and i == max_puntos:
-                    if len(match) > 0 :
-                        contx = 1
-                    elif len(match1) > 0:                      
-                        cont_ = 1
-                    else:
-                        found = 1
+                if i < max_puntos:
+                    control.append(i)
+                else:
+                    control.append('final')
+                cont = 0
+                cont1 = 0
+                cont2 = 0
+                for cb in carga_bulto:  
 
-                elif i > orden and i < max_puntos:
-                    innercnt.append('')
+                    orden = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
+
+                    if i < orden:
+                        match = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i)  
+                        inside = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=1)
+                        outside = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=0)
+
+                        if len(match) > 0:
+                            cont = cont + 1
+                        if len(inside) != 0:
+                            cont1 = cont1 + 1
+                        elif len(inside) == 0 and len(outside) != 0:
+                            cont2 = cont2 + 1
+                    else:
+                        match = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i)  
+                        inside = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=1)
+                        outside = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=0)
+
+                        if len(match) > 0:
+                            contf = contf + 1
+                        if len(inside) != 0:
+                            contf1 = contf1 + 1
+                        elif len(inside) == 0 and len(outside) != 0:
+                            contf2 = contf2 + 1
 
                 if i == max_puntos:
-                    if contx > 0:
-                        innercnt.append('xf')
-                    elif cont_ > 0:
-                        innercnt.append('-')
-                    else:
+                    cont = cont + contf
+                    cont1 = cont1 + contf1
+                    cont2 = cont2 + contf2
+
+                total.append(cont)
+                dentro.append(cont1)
+                fuera.append(cont2)
+            numCarga = []
+
+            for cb in carga_bulto:
+                dic = {}
+                innercnt = []
+                geo = PlanificacionGeocerca.objects.get(codigo = cb.destino)
+                if not cb.numero_carga+"-"+str(cb.destino) in numCarga:
+                    dic1 = {}
+                    innercnt1 = []
+                    numCarga.append(cb.numero_carga+"-"+str(cb.destino))
+            
+                    dic1['numero_carga'] = cb.numero_carga+"-"+str(cb.destino)
+                    dic1['numero_lpn'] = ''
+                    dic1['numero_controles'] = ''
+                    dic1['ruta_codigo'] = ''
+                    dic1['destino'] = geo.nombre
+                    dic1['fecha_carga'] = ''
+                    dic1['transportista'] = ''
+                    dic1['om'] = 0      
+                    dic1['display'] = 'table-row'
+                    orden = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
+                    bultos = PlanificacionCargaBulto.objects.filter(numero_carga = cb.numero_carga).filter(destino = cb.destino)
+                    all = 0
+                    for i in range(1,max_puntos + 1):
+                        con_in = 0
+                        for b in bultos:
+                            match = MarcacionesMatch.objects.filter(lpn = b.numero_lpn).filter(id_control=i).filter(dentro=1)
+                            match1 = MarcacionesMatch.objects.filter(lpn = b.numero_lpn).filter(id_control=i).filter(dentro=0)
+                            if len(match) > 0 and len(match1) >= 0:
+                                con_in = con_in + 1
+                        if i < orden :
+                            if len(bultos) == con_in:
+                                innercnt1.append('all')
+                            else:
+                                innercnt1.append('')
+
+                        elif i >= orden and i < max_puntos:
+                            if len(bultos) == con_in:
+                                innercnt1.append('')
+                                all = 1
+                            else:
+                                innercnt1.append('')
+
+                        if i == max_puntos:
+                            if all == 1: 
+                                innercnt1.append('all')
+                            else:
+                                innercnt1.append('')
+
+                    dic1['control'] = innercnt1
+                    detalles.append(dic1)
+                            
+                nc = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
+                dic['numero_carga'] = cb.numero_carga+"-"+str(cb.destino)
+                dic['numero_lpn'] = cb.numero_lpn
+                dic['numero_controles'] = nc
+                dic['ruta_codigo'] = cb.ruta_codigo
+                dic['destino'] = geo.nombre
+                dic['fecha_carga'] = cb.fecha_carga
+                dic['transportista'] = cb.transportista
+                #dic['fecha_registro'] = cb.fecha_registro
+                
+    
+                orden = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
+
+                
+                contx = 0
+                cont_ = 0
+                found = 0
+            
+                for i in range(1,max_puntos + 1):
+                    match = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=1)
+                    match1 = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=0)
+                    #cont = cont + len(match1)
+                    if i < orden:                  
+                        if len(match) > 0:
+                            innercnt.append('x'+str(i))    
+                        elif len(match1) > 0:
+                            innercnt.append('-')
+                        else:
+                            innercnt.append('')
+                            found = 1
+                    elif i == orden and i < max_puntos:
+                        if len(match) > 0 :
+                            innercnt.append('.')
+                            contx = 1
+                        elif len(match1) > 0:
+                            innercnt.append('.')
+                            cont_ = 1
+                        else:
+                            innercnt.append('')
+                            found = 1
+                    elif i == orden and i == max_puntos:
+                        if len(match) > 0 :
+                            contx = 1
+                        elif len(match1) > 0:                      
+                            cont_ = 1
+                        else:
+                            found = 1
+
+                    elif i > orden and i < max_puntos:
                         innercnt.append('')
 
-            marcaciones = []
-            todas = MarcacionesMatch.objects.filter(lpn=cb.numero_lpn).filter(dentro=0)
-            cont = 0
-            for t in todas:
-                todas1 = MarcacionesMatch.objects.filter(lpn=cb.numero_lpn).filter(dentro=1).filter(id_marcacion = t.id_marcacion)
-                if len(todas1) == 0:
-                    if not t.id_marcacion in marcaciones:
-                        marcaciones.append(t.id_marcacion)
-                        cont = cont + 1
+                    if i == max_puntos:
+                        if contx > 0:
+                            innercnt.append('xf')
+                        elif cont_ > 0:
+                            innercnt.append('-')
+                        else:
+                            innercnt.append('')
+
+                marcaciones = []
+                todas = MarcacionesMatch.objects.filter(lpn=cb.numero_lpn).filter(dentro=0)
+                cont = 0
+                for t in todas:
+                    todas1 = MarcacionesMatch.objects.filter(lpn=cb.numero_lpn).filter(dentro=1).filter(id_marcacion = t.id_marcacion)
+                    if len(todas1) == 0:
+                        if not t.id_marcacion in marcaciones:
+                            marcaciones.append(t.id_marcacion)
+                            cont = cont + 1
 
 
-            dic['om'] = cont       
-            dic['control'] = innercnt
+                dic['om'] = cont       
+                dic['control'] = innercnt
+                
+                dic['display'] = 'table-row'
+                if not cb.numero_carga+"-"+str(cb.destino) in numCarga:
+                    numCarga.append(cb.numero_carga+"-"+str(cb.destino))
+
+                else:
+                    dic['display'] = 'none'
+                        
+                
+                
+                detalles.append(dic)
+
             
-            dic['display'] = 'table-row'
-            if not cb.numero_carga+"-"+str(cb.destino) in numCarga:
-                numCarga.append(cb.numero_carga+"-"+str(cb.destino))
-
-            else:
-                dic['display'] = 'none'
-                    
-            
-            
-            detalles.append(dic)
-
-        
-        resumen['detalles'] = detalles
-        resumen['control'] = control
-        resumen['total'] = total
-        resumen['dentro'] = dentro
-        resumen['fuera'] = fuera
-   
-    return render(request, 'consulta_registros.html', {'resumen':resumen})
+            resumen['detalles'] = detalles
+            resumen['control'] = control
+            resumen['total'] = total
+            resumen['dentro'] = dentro
+            resumen['fuera'] = fuera
+    
+        return render(request, 'consulta_registros.html', {'resumen':resumen})
+    else:
+        return render(request, 'permisos.html')
 
 @csrf_exempt
 def consulta_registros1(request):
@@ -1300,65 +1314,68 @@ def export_consulta_registros(request):
 
 @csrf_exempt
 def registro_manual(request):
-    from django.db.models import Prefetch
-    numero_carga = request.POST.get('numero_carga')
-    numero_bandeja = request.POST.get('numero_bandeja')
-    fecini = request.POST.get('fecini')
-    fecfin = request.POST.get('fecfin')
-    message = ''
-    status = None
-    data_pc = {}
-    countcargainicial = {}
-    resumen = {}
-    detalles = {}
-    detallado = {}
-    data = []
-
-    if "POST" == request.method:
-        from shapely import wkt
-        
-        detalles = PlanificacionPuntoControl.objects.raw("select distinct t1.numero_lpn, t3.id, t3.nombre, t2.fecha_registro, t1.numero_carga, "
-            "(select count(*) from planificacion_punto_control where ruta_codigo = t1.ruta_codigo ) numero_controles, "
-            "t1.ruta_codigo, t1.local, t1.fecha_carga, "
-            "t4.coordenadas_poligon polygon, t2.coordenadas_poligon point "
-            "from planificacion_carga_bulto t1 "
-            "left join planificacion_carga_punto_control t2 on t2.numero_lpn = t1.numero_lpn "
-            "inner join planificacion_punto_control t3 on t1.ruta_codigo = t3.ruta_codigo "
-            "inner join planificacion_geocerca t4 on t3.geocerca_id = t4.id "
-            "where t1.numero_carga = %s "
-            "or t1.numero_lpn = %s "
-            "or (t1.fecha_carga BETWEEN convert(datetime2, %s, 103) AND convert(datetime2, %s, 103)) order by t1.numero_lpn", [numero_carga,numero_bandeja,fecini,fecfin])
-
-        from shapely import wkt
-        lpn = []
-        n = 0
-        while n < len(detalles):
-            detalles[n].distance = 0
-            detalles[n].x = 0
-            if detalles[n].point:
-                #poly = wkt.loads('POLYGON('+str(detalles[n].polygon)+')')
-                #pt = wkt.loads('POINT'+str(detalles[n].point)+'')
-                #distance = poly.distance(pt)  # 0.0
-                #detalles[n].distance = distance
-                #if distance == 0.0:
-                #    if not detalles[n].numero_lpn in lpn:
-                #        lpn.append(detalles[n].numero_lpn)
-                #        detalles[n].x = int(detalles[n].x + 1)
-                #        data.append(detalles[n])
-                print(detalles[n].point)
-            else:
-                if not detalles[n].numero_lpn in lpn:
-                    lpn.append(detalles[n].numero_lpn)
-                    data.append(detalles[n])
-            n = n + 1
-
+    if PuntoGeo.permisos(request.user.id).registro_manual:
+        from django.db.models import Prefetch
+        numero_carga = request.POST.get('numero_carga')
+        numero_bandeja = request.POST.get('numero_bandeja')
+        fecini = request.POST.get('fecini')
+        fecfin = request.POST.get('fecfin')
         message = ''
         status = None
+        data_pc = {}
+        countcargainicial = {}
+        resumen = {}
+        detalles = {}
+        detallado = {}
+        data = []
 
-    return render(request, 'registro_manual.html', {
-        "detalles":data,
-        "message":message,
-        "status":status})
+        if "POST" == request.method:
+            from shapely import wkt
+            
+            detalles = PlanificacionPuntoControl.objects.raw("select distinct t1.numero_lpn, t3.id, t3.nombre, t2.fecha_registro, t1.numero_carga, "
+                "(select count(*) from planificacion_punto_control where ruta_codigo = t1.ruta_codigo ) numero_controles, "
+                "t1.ruta_codigo, t1.local, t1.fecha_carga, "
+                "t4.coordenadas_poligon polygon, t2.coordenadas_poligon point "
+                "from planificacion_carga_bulto t1 "
+                "left join planificacion_carga_punto_control t2 on t2.numero_lpn = t1.numero_lpn "
+                "inner join planificacion_punto_control t3 on t1.ruta_codigo = t3.ruta_codigo "
+                "inner join planificacion_geocerca t4 on t3.geocerca_id = t4.id "
+                "where t1.numero_carga = %s "
+                "or t1.numero_lpn = %s "
+                "or (t1.fecha_carga BETWEEN convert(datetime2, %s, 103) AND convert(datetime2, %s, 103)) order by t1.numero_lpn", [numero_carga,numero_bandeja,fecini,fecfin])
+
+            from shapely import wkt
+            lpn = []
+            n = 0
+            while n < len(detalles):
+                detalles[n].distance = 0
+                detalles[n].x = 0
+                if detalles[n].point:
+                    #poly = wkt.loads('POLYGON('+str(detalles[n].polygon)+')')
+                    #pt = wkt.loads('POINT'+str(detalles[n].point)+'')
+                    #distance = poly.distance(pt)  # 0.0
+                    #detalles[n].distance = distance
+                    #if distance == 0.0:
+                    #    if not detalles[n].numero_lpn in lpn:
+                    #        lpn.append(detalles[n].numero_lpn)
+                    #        detalles[n].x = int(detalles[n].x + 1)
+                    #        data.append(detalles[n])
+                    print(detalles[n].point)
+                else:
+                    if not detalles[n].numero_lpn in lpn:
+                        lpn.append(detalles[n].numero_lpn)
+                        data.append(detalles[n])
+                n = n + 1
+
+            message = ''
+            status = None
+
+        return render(request, 'registro_manual.html', {
+            "detalles":data,
+            "message":message,
+            "status":status})
+    else:
+        return render(request, 'permisos.html')
 
 @csrf_exempt
 def registro_manual_scaner(request):
@@ -1395,36 +1412,39 @@ def registro_manual_scaner(request):
 
 @csrf_exempt
 def consulta_incidencias(request):
-    message = ''
-    status = None
-    data = {}
-    from django.db.models import Prefetch
-    ruta = request.POST.get('ruta')
-    transportista = request.POST.get('transportista')
-    numero_placa = request.POST.get('numero_placa')
-    fecini = request.POST.get('fecini')
-    fecfin = request.POST.get('fecfin')
-
-    try:
-        if "POST" == request.method:
-            '''data = PlanificacionIncidencia.objects.raw(
-                "select distinct t2.id, t1.user_id, t2.fecha_registro, t2.ruta, t2.descripcion from planificacion_carga_bulto t1 "
-                "inner join planificacion_incidencia t2 on t1.ruta_codigo = t2.ruta "
-                "inner join auth_user t3 on t1.user_id = t3.id "
-                "where t2.numero_placa = %s or t2.ruta = %s "
-                "or (t2.fecha_registro BETWEEN convert(datetime2, %s, 103) AND convert(datetime2, %s, 103)) "
-                "or t3.username like %s ", [numero_placa, ruta, fecini, fecfin, transportista])'''
-            data = PlanificacionIncidencia.objects.raw(
-                "select distinct t2.id, t3.username transportista, t2.fecha_registro, t2.ruta, t2.descripcion, t3.username from planificacion_ruta t1 "
-                "right join planificacion_incidencia t2 on t1.codigo = t2.ruta "
-                "left join auth_user t3 on t2.usuario_id = t3.id "
-                "where t2.numero_placa = %s or t2.ruta = %s "
-                "or (t2.fecha_registro BETWEEN convert(datetime2, %s, 103) AND convert(datetime2, %s, 103)) "
-                "or t3.username like %s ", [numero_placa, ruta, fecini, fecfin, transportista])
-
-    except Exception as e:
-        print(e)
+    if PuntoGeo.permisos(request.user.id).consulta_incidentes:
         message = ''
         status = None
+        data = {}
+        from django.db.models import Prefetch
+        ruta = request.POST.get('ruta')
+        transportista = request.POST.get('transportista')
+        numero_placa = request.POST.get('numero_placa')
+        fecini = request.POST.get('fecini')
+        fecfin = request.POST.get('fecfin')
 
-    return render(request, 'consulta_incidencias.html', {"data":data,"message":message,"status":status})
+        try:
+            if "POST" == request.method:
+                '''data = PlanificacionIncidencia.objects.raw(
+                    "select distinct t2.id, t1.user_id, t2.fecha_registro, t2.ruta, t2.descripcion from planificacion_carga_bulto t1 "
+                    "inner join planificacion_incidencia t2 on t1.ruta_codigo = t2.ruta "
+                    "inner join auth_user t3 on t1.user_id = t3.id "
+                    "where t2.numero_placa = %s or t2.ruta = %s "
+                    "or (t2.fecha_registro BETWEEN convert(datetime2, %s, 103) AND convert(datetime2, %s, 103)) "
+                    "or t3.username like %s ", [numero_placa, ruta, fecini, fecfin, transportista])'''
+                data = PlanificacionIncidencia.objects.raw(
+                    "select distinct t2.id, t3.username transportista, t2.fecha_registro, t2.ruta, t2.descripcion, t3.username from planificacion_ruta t1 "
+                    "right join planificacion_incidencia t2 on t1.codigo = t2.ruta "
+                    "left join auth_user t3 on t2.usuario_id = t3.id "
+                    "where t2.numero_placa = %s or t2.ruta = %s "
+                    "or (t2.fecha_registro BETWEEN convert(datetime2, %s, 103) AND convert(datetime2, %s, 103)) "
+                    "or t3.username like %s ", [numero_placa, ruta, fecini, fecfin, transportista])
+
+        except Exception as e:
+            print(e)
+            message = ''
+            status = None
+
+        return render(request, 'consulta_incidencias.html', {"data":data,"message":message,"status":status})
+    else:
+        return render(request, 'permisos.html')

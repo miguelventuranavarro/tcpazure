@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+{% include "navbar.html" %}
+	<!-- Right Panel -->
+	<link rel="stylesheet" type="text/css" media="screen" href="{% static 'assets/css/bootstrap.css' %}" />
+
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+		<link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+		
+
+    <div id="right-panel" class="right-panel">
+
+        {% include "header.html" %}
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-6">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1></h1>
+                            </div>                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+                    <div class="col-lg-12">
+	                    <div class="card">
+	                        <div class="card-header">
+	                            <strong class="card-title">Accesos</strong>
+                            </div>
+                            <div class="card-body col-lg-12 text-center">
+                                <strong class="card-title text-center text-danger">No tiene acceso a esta página</strong>
+                        </div>
+	                    </div>
+	                </div>
+	                
+                </div>
+        	</div><!-- .animated -->
+    	</div><!-- .content -->
+    	<div class="clearfix"></div>
+{% endif %}
+
+
+		
+		<script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+		
+		<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+		<script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+
+		
+
+{% endblock %}

@@ -79,6 +79,18 @@ class MarcacionesMatch(models.Model):
         db_table = 'marcaciones_match'
 
 
+class PlanificacionPermisos(models.Model):
+    us = models.ForeignKey(User, models.DO_NOTHING, unique=True)
+    carga_masiva = models.IntegerField()
+    geocercas = models.IntegerField()
+    consulta_registros = models.IntegerField()
+    consulta_incidentes = models.IntegerField()
+    registro_manual = models.IntegerField()
+    
+
+    class Meta:
+        db_table = 'planificacion_permisos'
+
 
 
 class PlanificacionCargaMasiva(models.Model):

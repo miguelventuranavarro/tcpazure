@@ -46,21 +46,9 @@ class planificacionUsuarioRutaAdmin(admin.ModelAdmin):
 	model = PlanificacionUsuarioRuta
 	list_display = ['id','ruta_codigo','usuario']
 
-'''class datosClienteAdmin(admin.ModelAdmin):
-	model = DatosCliente
-	list_display = ['id']
-
-class datosProveedorAdmin(admin.ModelAdmin):
-	model = DatosProveedor
-	list_display = ['id']
-
-class datosCargoAdmin(admin.ModelAdmin):
-	model = DatosCargo
-	list_display = ['id']
-
-class datosCargoEmpleadoAdmin(admin.ModelAdmin):
-	model = DatosCargoEmpleado
-	list_display = ['id']'''
+class planificacionPermisosAdmin(admin.ModelAdmin):
+	model = PlanificacionPermisos
+	list_display = ['us','carga_masiva','geocercas', 'consulta_registros','consulta_incidentes','registro_manual']
 
 admin.site.register(PlanificacionCargaBulto, planificacionCargaBultoAdmin)
 admin.site.register(PlanificacionRuta, planificacionRutaAdmin)
@@ -73,3 +61,4 @@ admin.site.register(PlanificacionTipoGeocerca, planificacionTipoGeocercaAdmin)
 admin.site.register(PlanificacionCargaMasiva, planificacionCargaMasivaAdmin)
 admin.site.register(PlanificacionIncidencia, planificacionIncidenciaAdmin)
 admin.site.register(PlanificacionUsuarioRuta, planificacionUsuarioRutaAdmin)
+admin.site.register(PlanificacionPermisos, planificacionPermisosAdmin)
