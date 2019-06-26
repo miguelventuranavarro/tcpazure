@@ -40,7 +40,7 @@ class planificacionCargaMasivaAdmin(admin.ModelAdmin):
 
 class planificacionIncidenciaAdmin(admin.ModelAdmin):
 	model = PlanificacionIncidencia
-	list_display = ['id','numero_placa','descripcion','ruta','latitud','longitud','fecha_registro','fecha_envio']
+	list_display = ['id','numero_placa','descripcion','ruta','latitud','longitud','fecha_registro','fecha_envio', 'foto']
 	
 class planificacionUsuarioRutaAdmin(admin.ModelAdmin):
 	model = PlanificacionUsuarioRuta

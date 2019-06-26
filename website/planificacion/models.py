@@ -159,6 +159,7 @@ class PlanificacionIncidencia(models.Model):
     coordenadas = models.CharField(max_length=100, blank=True, null=True)
     coordenadas_poligon = models.CharField(max_length=100, blank=True, null=True)
     usuario = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
+    foto = models.FileField(upload_to='fotos/')
 
     class Meta:
         db_table = 'planificacion_incidencia'
