@@ -679,7 +679,7 @@ def Excel(request):
                 elif '.' in c:
                     ws.cell(row=cont,column=clm).value = ''
                     ws.cell(row=cont,column=clm).fill = greyFill
-                elif '-':
+                elif '-' in c:
                     ws.cell(row=cont,column=clm).value = ''
                     ws.cell(row=cont,column=clm).fill = redFill
                 else:
@@ -720,7 +720,7 @@ def pre_liquidacion(request):
             if numero_carga != '':
                 query['numero_carga'] = numero_carga
 
-            if not request.user.is_superuser:
+            if not request.user.is_staff:
                 query['user'] = request.user
             
             carga_bulto = PlanificacionCargaBulto.objects.filter(**query)
@@ -798,10 +798,10 @@ def consulta_registros(request):
             if trans != '':
                 query['transportista'] = trans
 
-            if not request.user.is_superuser:
+            if not request.user.is_staff:
                 query['user'] = request.user
             
-            carga_bulto = PlanificacionCargaBulto.objects.filter(**query)
+            carga_bulto = PlanificacionCargaBulto.objects.filter(**query).order_by('numero_carga').order_by('destino')
         
             # if(numero_carga != '' and  numero_bandeja != '' and ruta != '' and destino != '' and trans != ''):
             #     carga_bulto = PlanificacionCargaBulto.objects.filter(numero_carga=numero_carga).filter(numero_lpn=numero_bandeja).filter(ruta_codigo=ruta).filter(transportista=trans).filter(destino=destino).filter(fecha_carga__range=[fecini, fecfin])
@@ -923,6 +923,10 @@ def consulta_registros(request):
                                 all = 1
                             else:
                                 innercnt1.append('')
+
+                        elif i == orden and i == max_puntos:
+                            if len(bultos) == con_in:
+                                all = 1
 
                         if i == max_puntos:
                             if all == 1: 
@@ -1437,13 +1441,17 @@ def registro_manual(request):
                 n = n + 1
 
             usuario = request.user.username
-            if request.user.is_superuser:
+            if request.user.is_staff:
                 data = data1
             else:
                 for d in data1: 
-                    cb = PlanificacionCargaBulto.objects.get(numero_lpn = d.numero_bandeja)
-                    if cb.transportista == usuario:
-                        data.append(d)
+                    try:
+                        cb = PlanificacionCargaBulto.objects.get(numero_lpn = d.numero_bandeja)
+                        if cb.transportista == usuario:
+                            data.append(d)
+                    except: 
+                        print('no')
+                    
 
             message = ''
             status = None
@@ -1520,7 +1528,7 @@ def consulta_incidencias(request):
                     "or t3.username like %s ", [numero_placa, ruta, fecini, fecfin, transportista])
                 
                 usuario = request.user.username
-                if request.user.is_superuser:
+                if request.user.is_staff:
                     data = data1
                 else:
                     for d in data1: 
