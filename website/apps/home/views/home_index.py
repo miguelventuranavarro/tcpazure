@@ -721,7 +721,7 @@ def pre_liquidacion(request):
                 query['numero_carga'] = numero_carga
 
             if not request.user.is_staff:
-                query['user'] = request.user
+                query['transportista'] = request.user.username
             
             carga_bulto = PlanificacionCargaBulto.objects.filter(**query)
 
@@ -799,7 +799,7 @@ def consulta_registros(request):
                 query['transportista'] = trans
 
             if not request.user.is_staff:
-                query['user'] = request.user
+                query['transportista'] = request.user.username
             
             carga_bulto = PlanificacionCargaBulto.objects.filter(**query).order_by('numero_carga').order_by('destino')
         
@@ -1403,7 +1403,7 @@ def registro_manual(request):
         data1 = []
         data = []
         if "POST" == request.method:
-            from shapely import wkt
+            #from shapely import wkt
             
             detalles = PlanificacionPuntoControl.objects.raw("select distinct t1.numero_lpn, t3.id, t3.nombre, t2.fecha_registro, t1.numero_carga, "
                 "(select count(*) from planificacion_punto_control where ruta_codigo = t1.ruta_codigo ) numero_controles, "
@@ -1417,7 +1417,7 @@ def registro_manual(request):
                 "or t1.numero_lpn = %s "
                 "or (t1.fecha_carga BETWEEN convert(datetime2, %s, 103) AND convert(datetime2, %s, 103)) order by t1.numero_lpn", [numero_carga,numero_bandeja,fecini,fecfin])
 
-            from shapely import wkt
+            #from shapely import wkt
             lpn = []
             n = 0
             while n < len(detalles):
@@ -1438,19 +1438,20 @@ def registro_manual(request):
                     if not detalles[n].numero_lpn in lpn:
                         lpn.append(detalles[n].numero_lpn)
                         data1.append(detalles[n])
+            
                 n = n + 1
 
             usuario = request.user.username
             if request.user.is_staff:
                 data = data1
-            else:
-                for d in data1: 
-                    try:
-                        cb = PlanificacionCargaBulto.objects.get(numero_lpn = d.numero_bandeja)
-                        if cb.transportista == usuario:
-                            data.append(d)
-                    except: 
-                        print('no')
+            else:               
+                i = 0
+                while i < len(data1):
+                    cb = PlanificacionCargaBulto.objects.get(numero_lpn = data1[i].numero_lpn)
+                    if cb.transportista == usuario:
+                        data.append(data1[i])
+                    i = i + 1
+                    
                     
 
             message = ''
