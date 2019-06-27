@@ -86,6 +86,7 @@ class PlanificacionPermisos(models.Model):
     consulta_registros = models.IntegerField()
     consulta_incidentes = models.IntegerField()
     registro_manual = models.IntegerField()
+    pre_liquidacion = models.IntegerField()
     
 
     class Meta:
@@ -151,7 +152,7 @@ class PlanificacionGeocerca(models.Model):
     tipo_geocerca = models.ForeignKey('PlanificacionTipoGeocerca', models.DO_NOTHING)
     coordenadas = models.CharField(max_length=500, blank=True, null=True)
     coordenadas_poligon = models.CharField(max_length=500, blank=True, null=True)
-    #punto_control = models.ForeignKey('PlanificacionPuntoControl', models.DO_NOTHING)
+    tarifa = models.DecimalField(max_digits=13, decimal_places=2, blank=True, null=True)
 
     class Meta:
         db_table = 'planificacion_geocerca'
@@ -171,7 +172,9 @@ class PlanificacionIncidencia(models.Model):
     coordenadas = models.CharField(max_length=100, blank=True, null=True)
     coordenadas_poligon = models.CharField(max_length=100, blank=True, null=True)
     usuario = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
-    foto = models.FileField(upload_to='fotos/')
+    primer_foto = models.FileField(upload_to='fotos/',blank=True, null=True)
+    segunda_foto = models.FileField(upload_to='fotos/',blank=True, null=True)
+    tercer_foto = models.FileField(upload_to='fotos/',blank=True, null=True)
 
     class Meta:
         db_table = 'planificacion_incidencia'

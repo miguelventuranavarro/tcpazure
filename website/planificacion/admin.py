@@ -20,7 +20,7 @@ class planificacionPuntoControlAdmin(admin.ModelAdmin):
 
 class planificacionGeocercaAdmin(admin.ModelAdmin):
 	model = PlanificacionGeocerca
-	list_display = ['id','codigo','nombre','direccion','tipo_geocerca','coordenadas_poligon']
+	list_display = ['id','codigo','nombre','direccion','tipo_geocerca','coordenadas_poligon','tarifa']
 
 class planificacionDetalleGeocercaAdmin(admin.ModelAdmin):
 	model = PlanificacionDetalleGeocerca
@@ -40,7 +40,7 @@ class planificacionCargaMasivaAdmin(admin.ModelAdmin):
 
 class planificacionIncidenciaAdmin(admin.ModelAdmin):
 	model = PlanificacionIncidencia
-	list_display = ['id','numero_placa','descripcion','ruta','latitud','longitud','fecha_registro','fecha_envio', 'foto']
+	list_display = ['id','numero_placa','descripcion','ruta','latitud','longitud','fecha_registro','fecha_envio', 'primer_foto','segunda_foto','tercer_foto']
 	
 class planificacionUsuarioRutaAdmin(admin.ModelAdmin):
 	model = PlanificacionUsuarioRuta
@@ -48,7 +48,7 @@ class planificacionUsuarioRutaAdmin(admin.ModelAdmin):
 
 class planificacionPermisosAdmin(admin.ModelAdmin):
 	model = PlanificacionPermisos
-	list_display = ['us','carga_masiva','geocercas', 'consulta_registros','consulta_incidentes','registro_manual']
+	list_display = ['us','carga_masiva','geocercas', 'consulta_registros','consulta_incidentes','registro_manual','pre_liquidacion']
 
 admin.site.register(PlanificacionCargaBulto, planificacionCargaBultoAdmin)
 admin.site.register(PlanificacionRuta, planificacionRutaAdmin)

@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^puntos_control/', login_required(views.puntos_control), {}, 'puntos_control'),
 
     url(r'^consulta_registros/', login_required(views.consulta_registros), {}, 'consulta_registros'),
+    url(r'^preliquidacion/', login_required(views.pre_liquidacion), {}, 'pre_liquidacion'),
     url(r'^registro_manual/', login_required(views.registro_manual), {}, 'registro_manual'),
     url(r'^registro_manual_scaner/', login_required(views.registro_manual_scaner), {}, 'registro_manual_scaner'),
     url(r'^consulta_incidencias/', login_required(views.consulta_incidencias), {}, 'consulta_incidencias'),

@@ -700,6 +700,71 @@ def Excel(request):
     wb.save(response)
     return response 
 
+@csrf_exempt
+def pre_liquidacion(request):
+    if PuntoGeo.permisos(request.user.id).pre_liquidacion:
+        import decimal
+        detalles = []
+        gran_total = 0
+        if "POST" == request.method:
+            numero_carga = request.POST.get('numero_carga')
+            fecini = request.POST.get('fecini')
+            fecfin = request.POST.get('fecfin')
+
+            fecini = datetime.strftime(datetime.strptime(fecini,'%d/%m/%Y %H:%M:%S'),'%Y-%m-%d %H:%M:%S')
+            fecfin = datetime.strftime(datetime.strptime(fecfin,'%d/%m/%Y %H:%M:%S'),'%Y-%m-%d %H:%M:%S')
+
+            query = {}
+            query['fecha_carga__range'] = [fecini, fecfin]
+
+            if numero_carga != '':
+                query['numero_carga'] = numero_carga
+
+            if not request.user.is_superuser:
+                query['user'] = request.user
+            
+            carga_bulto = PlanificacionCargaBulto.objects.filter(**query)
+
+            nuevo = []
+            for cb in carga_bulto:
+                if not cb.numero_carga+"-"+str(cb.destino) in nuevo:
+                    nuevo.append(cb.numero_carga+"-"+str(cb.destino))
+
+            
+            for new in nuevo:
+                dic = {}
+                val = new.split("-")
+                
+                dic['numero_carga'] = val[0]
+                dic['tienda'] = val[1]
+                rows = PlanificacionCargaBulto.objects.filter(numero_carga=val[0]).filter(destino=val[1])
+                n_bultos = len(rows)
+                dic['numero_bultos'] = n_bultos
+                peso = 0
+                cont = 0
+                for row in rows:
+                    peso = peso + row.peso
+                    marca_final = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = row.ruta_codigo))
+                    marcaciones = len(MarcacionesMatch.objects.filter(lpn=row.numero_lpn).filter(id_control=marca_final).filter(dentro=1))
+                    if marcaciones > 0:
+                        cont = cont + 1
+                tarifa = 0
+                if cont == n_bultos:
+                    tarifa = PlanificacionGeocerca.objects.get(codigo=val[1]).tarifa
+
+                dic['pesos'] = round(peso,2)
+                dic['tarifa'] = tarifa
+                dic['total'] = round(decimal.Decimal(peso)*tarifa,2)
+                gran_total = gran_total + round(decimal.Decimal(peso)*tarifa,2)
+                detalles.append(dic)
+            
+
+
+
+
+        return render(request, 'pre_liquidacion.html',{'detalles':detalles, 'gran_total':gran_total})
+    else:
+        return render(request, 'permisos.html')
 
 @csrf_exempt
 def consulta_registros(request):
@@ -1314,6 +1379,7 @@ def export_consulta_registros(request):
         response["Content-Disposition"] = contenido
         wb.save(response)
         return response 
+
 
 @csrf_exempt
 def registro_manual(request):

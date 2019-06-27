@@ -255,7 +255,9 @@ def registro_incidencia(request):
     longitud = request.data.get("longitud")
     fecha_registro = request.data.get("fecha_registro")
     token = request.data.get("token")
-    foto = request.data.get("foto")
+    primer_foto = request.data.get("primer_foto")
+    segunda_foto = request.data.get("segunda_foto")
+    tercer_foto = request.data.get("tercer_foto")
 
     valid_tokens = valid_token(token)
 
@@ -279,7 +281,7 @@ def registro_incidencia(request):
             return Response({'error': 'La ruta no existe.'},
                         status=HTTP_200_OK)
 
-        PlanificacionIncidencia.objects.create(numero_placa=numero_placa,descripcion=descripcion_incidente,ruta=ruta,fecha_registro=fecha_registro,latitud=latitud,longitud=longitud,fecha_envio=now,coordenadas=coordenadas,usuario_id=valid_tokens.usuario,foto=foto)
+        PlanificacionIncidencia.objects.create(numero_placa=numero_placa,descripcion=descripcion_incidente,ruta=ruta,fecha_registro=fecha_registro,latitud=latitud,longitud=longitud,fecha_envio=now,coordenadas=coordenadas,usuario_id=valid_tokens.usuario,primer_foto=primer_foto,segunda_foto=segunda_foto,tercer_foto=tercer_foto)
         message = 'Registro insertado.'
     except PlanificacionIncidencia.DoesNotExist:
         message = 'Error al insertar registro.'
