@@ -801,7 +801,7 @@ def consulta_registros(request):
             if not request.user.is_staff:
                 query['transportista'] = request.user.username
             
-            carga_bulto = PlanificacionCargaBulto.objects.filter(**query).order_by('numero_carga').order_by('destino')
+            carga_bulto = PlanificacionCargaBulto.objects.filter(**query).order_by('numero_carga','destino')
         
             # if(numero_carga != '' and  numero_bandeja != '' and ruta != '' and destino != '' and trans != ''):
             #     carga_bulto = PlanificacionCargaBulto.objects.filter(numero_carga=numero_carga).filter(numero_lpn=numero_bandeja).filter(ruta_codigo=ruta).filter(transportista=trans).filter(destino=destino).filter(fecha_carga__range=[fecini, fecfin])

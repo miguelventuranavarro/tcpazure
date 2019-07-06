@@ -1,4 +1,6 @@
 from planificacion.models import PuntoGeocerca, PlanificacionPuntoControl,PlanificacionGeocerca,PlanificacionDetalleGeocerca,PlanificacionCargaPuntoControl,MarcacionesMatch, PlanificacionPermisos
+import base64
+from django.core.files.base import ContentFile
 
 class PuntoGeo():
 
@@ -86,6 +88,12 @@ class PuntoGeo():
         except:
             print('debe solicitar permisos')            
         return perm
+
+    def convertImage(image):
+        format, imagestr  = image.split(';base64,') 
+        ext = format.split('/')[-1] 
+        data = ContentFile(base64.b64decode(imagestr), name='temp.' + ext)
+        return data
                         
 
 
