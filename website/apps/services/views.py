@@ -255,9 +255,24 @@ def registro_incidencia(request):
     longitud = request.data.get("longitud")
     fecha_registro = request.data.get("fecha_registro")
     token = request.data.get("token")
-    primer_foto = PuntoGeo.convertImage(request.data.get("primer_foto"))
-    segunda_foto = PuntoGeo.convertImage(request.data.get("segunda_foto"))
-    tercer_foto = PuntoGeo.convertImage(request.data.get("tercer_foto"))
+
+    if request.data.get("primer_foto") != '':
+        f1 = request.data.get("primer_foto")
+        primer_foto = PuntoGeo.convertImage(f1)
+    else: 
+        primer_foto = ''
+
+    if request.data.get("segunda_foto") != '':
+        f2 = request.data.get("segunda_foto")
+        segunda_foto = PuntoGeo.convertImage(f2)
+    else: 
+        segunda_foto = ''
+
+    if request.data.get("tercer_foto") != '':
+        f3 = request.data.get("tercer_foto")
+        tercer_foto = PuntoGeo.convertImage(f3)
+    else: 
+        tercer_foto = ''
 
     valid_tokens = valid_token(token)
 
