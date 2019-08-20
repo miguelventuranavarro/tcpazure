@@ -128,7 +128,7 @@ WSGI_APPLICATION = 'website.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',
-        'NAME': 'wise',
+        'NAME': 'wisedevdev',
         'USER': 'sa',
         'PASSWORD': 'Wisetrack123!!',
         'HOST': '104.238.124.12, 1433\SQLEXPRESS',
@@ -177,10 +177,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'es-PE'
-#LANG="en_US.UTF-8"
+#LANGUAGE_CODE = 'es-PE'
+#TIME_ZONE = 'America/Lima'
 
-TIME_ZONE = 'America/Lima'
+LANGUAGE_CODE = 'en-us'
+
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 

@@ -6,7 +6,9 @@ from django.views.generic import FormView
 from django.views.generic.detail import SingleObjectMixin
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.db.models import Max
+import time
 from datetime import datetime
+from pytz import timezone
 from django.views.generic import TemplateView
 import json
 
@@ -54,6 +56,9 @@ class index(SingleObjectMixin, FormView):
 
 def guardar_carga(request):
     import json
+    zona = 'America/Lima'
+    info = {}
+    fecha = datetime.now(timezone(zona))
     bultos = PrePlanificacionCargaBulto.objects.filter(user=request.user)
     for b in bultos:
         PlanificacionCargaBulto.objects.create(user=b.user,fecha_carga=b.fecha_carga,numero_carga=b.numero_carga,
