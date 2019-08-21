@@ -231,7 +231,7 @@ def registro_scaner(request):
                 marcaciones.append(pcpc)
             message = str(i) + ' Registros insertados.'
             bultos = PlanificacionCargaBulto.objects.all()
-            PuntoGeo.crearPuntoGeo(bultos,valid_tokens.usuario,marcaciones)
+            PuntoGeo.crearPuntoGeo.delay(bultos,valid_tokens.usuario,marcaciones)
     except Exception as e:
         message = 'Error al insertar registros.'+str(e)
         success = False

@@ -1,9 +1,10 @@
 from planificacion.models import PuntoGeocerca, PlanificacionPuntoControl,PlanificacionGeocerca,PlanificacionDetalleGeocerca,PlanificacionCargaPuntoControl,MarcacionesMatch, PlanificacionPermisos
 import base64
 from django.core.files.base import ContentFile
+from celery.decorators import task
 
 class PuntoGeo():
-
+    @task(name="run_punto_geo")
     def crearPuntoGeo(lpns,user,marcadores):
         codigos = []
         for lpn in lpns:
