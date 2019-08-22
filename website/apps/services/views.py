@@ -228,10 +228,10 @@ def registro_scaner(request):
                     latitud=dt[i].get('latitud'),longitud=dt[i].get('longitud'),
                     fecha_envio=now,coordenadas=coordenadas,coordenadas_poligon=coordenadas_poligon,usuario_id=valid_tokens.usuario)
                 i = i + 1
-                marcaciones.append(pcpc)
+                marcaciones.append(pcpc.id)
             message = str(i) + ' Registros insertados.'
-            bultos = PlanificacionCargaBulto.objects.all()
-            PuntoGeo.crearPuntoGeo.delay(bultos,valid_tokens.usuario,marcaciones)
+            
+            PuntoGeo.crearPuntoGeo1.delay(valid_tokens.usuario,marcaciones)
     except Exception as e:
         message = 'Error al insertar registros.'+str(e)
         success = False
