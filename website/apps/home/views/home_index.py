@@ -665,7 +665,6 @@ def Excel(request):
     ws.cell(row=1,column=c).value = 'Otras Marcas'
 
     cont=2
-  
  
     for row1,row2,row3,row4,row5,row6,row7,cn,o in zip(data1,data2,data3,data4,data5,data6,data7,cnt,om):
         if row2 != '':
@@ -824,7 +823,7 @@ def consulta_registros(request):
             total = []
             dentro = []
             fuera = []
-            control.append(0)
+            control.append('Objetivo')
             total.append(len(carga_bulto))
             dentro.append('')
             fuera.append('')
@@ -842,12 +841,14 @@ def consulta_registros(request):
             contf = 0
             contf1 = 0
             contf2 = 0
+            control.append('CD')
+            for i in range(2,max_puntos + 1):
+                if i < max_puntos:
+                    control.append('Control ' + str(i-1))
+                else:
+                    control.append('Local')
 
             for i in range(1,max_puntos + 1):
-                if i < max_puntos:
-                    control.append(i)
-                else:
-                    control.append('final')
                 cont = 0
                 cont1 = 0
                 cont2 = 0

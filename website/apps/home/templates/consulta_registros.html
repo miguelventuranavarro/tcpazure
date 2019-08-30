@@ -132,7 +132,7 @@
 	                                    	<th></th>
 
 			                                {% for control in resumen.control %}
-			                                	<th>Control {{ control }}</th>
+			                                	<th>{{ control }}</th>
 			                                {% endfor %}		                            	
 	                                    </tr>
 	                                </thead>
@@ -183,7 +183,7 @@
 											<th></th>
 											<th></th>
 											{% for control in resumen.control %}
-												{% if control != 0 %}
+												{% if control != 'Objetivo' %}
 												<th><select>
 														<option value="">...</option>
 														<option style="background-color: #07A34F;color: #07A34F;" value="x">x</option>
@@ -204,8 +204,8 @@
 											<th>Fecha de carga</th>
 											<th>Transportista</th>
 											{% for control in resumen.control %}
-												{% if control != 0 %}
-												<th>Control {{ control }}</th>
+												{% if control != 'Objetivo' %}
+												<th>{{ control }}</th>
 												{% endif %}
 											{% endfor %}
 											<th>Otras marcas</th>		
