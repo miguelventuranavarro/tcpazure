@@ -626,6 +626,10 @@ def Excel(request):
     from openpyxl.styles import Color, PatternFill, Font, Border
     from openpyxl.styles import colors
     from openpyxl.cell import Cell
+    from datetime import datetime
+    from pytz import timezone
+
+    fmt = "%d-%m-%Y %H:%M"
     
     wb = Workbook()
     ws = wb.active
@@ -656,13 +660,23 @@ def Excel(request):
 
     for i in range(1,tam+1):
         if i < tam:
-            ws.cell(row=1,column=c).value = 'Control '+str(i)
+            if i == 1:
+                ws.cell(row=1,column=c).value = 'CD'
+            else:
+                ws.cell(row=1,column=c).value = 'Control '+str(i)
             
         else:
-            ws.cell(row=1,column=c).value = 'Control Final'
+            ws.cell(row=1,column=c).value = 'Local'
         c = c + 1
 
-    ws.cell(row=1,column=c).value = 'Otras Marcas'
+    longitudOM = 0
+    for o in om:
+        if int(o) > longitudOM:
+            longitudOM = int(o)
+    j = 0
+    for i in range(longitudOM):
+        ws.cell(row=1,column=c + j).value = 'Otras Marcas '+ str(j + 1)
+        j = j + 1
 
     cont=2
  
@@ -676,9 +690,12 @@ def Excel(request):
             ws.cell(row=cont,column=6).value = row6
             ws.cell(row=cont,column=7).value = row7
             clm = 8
+            k = 0
             for c in cn:
+                k = k + 1
                 if 'x' in c:
-                    ws.cell(row=cont,column=clm).value = 'X'
+                    marca = MarcacionesMatch.objects.get(lpn = row2, id_control = k)
+                    ws.cell(row=cont,column=clm).value = 'Fecha: '+marca.fecha_marca.strftime(fmt) +'   Coordenada: '+marca.punto
                     ws.cell(row=cont,column=clm).fill = greenFill
                 elif '.' in c:
                     ws.cell(row=cont,column=clm).value = ''
@@ -689,11 +706,13 @@ def Excel(request):
                 else:
                     ws.cell(row=cont,column=clm).value = ''
                 clm = clm + 1
-            if o == '0':
-                ws.cell(row=cont,column=clm).value = ''
-            else:
-                ws.cell(row=cont,column=clm).value = o
-                ws.cell(row=cont,column=clm).fill = yellowFill
+            
+            j = 0
+            marc = MarcacionesMatch.objects.filter(lpn = row2, dentro = 0)
+            for ma in marc:
+                ws.cell(row=cont,column=clm + j).value = 'Fecha: '+ma.fecha_marca.strftime(fmt) +'   Coordenada: '+ma.punto
+                ws.cell(row=cont,column=clm + j).fill = yellowFill
+                j = j + 1
             cont = cont + 1
         
     
