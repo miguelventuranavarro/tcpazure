@@ -146,7 +146,7 @@ class PlanificacionDetalleGeocerca(models.Model):
 
 
 class PlanificacionGeocerca(models.Model):
-    codigo = models.CharField(max_length=45, blank=True, null=True)
+    codigo = models.CharField(max_length=45, unique=True, blank=True, null=True)
     nombre = models.CharField(max_length=45, blank=True, null=True)
     direccion = models.CharField(max_length=100, blank=True, null=True)
     tipo_geocerca = models.ForeignKey('PlanificacionTipoGeocerca', models.DO_NOTHING)

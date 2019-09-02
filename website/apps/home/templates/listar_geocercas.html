@@ -7,11 +7,58 @@
 
     <div id="right-panel" class="right-panel">
 
-        {% include "header.html" %}
+		{% include "header.html" %}
+		<div class="col-lg-12">
+				<div class="card">
+					<div class="card-header">
+						<strong class="card-title">Consulta Geocercas</strong>
+					</div>
+						{% if status == False %}
+						<div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+							<span class="badge badge-pill badge-danger">Error</span>
+							{{ message }}
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						  {% endif %}
+					<form action="{% url 'listar_geocercas' %}" method="post">
+						<div class="card-body col-lg-6">
 
+							<div class="row form-group">
+								<div class="col col-md-3">
+									<label for="hf-carga" class=" form-control-label">Nombre de Geocerca:</label>
+								</div>
+								<div class="col-12 col-md-9">
+									<input type="text" id="nom_ge" name="nom_geo" placeholder="" class="form-control">
+								</div>
+							</div>
+
+							
+							<div class="row form-group">
+								<div class="col col-md-3">
+									<label for="bandeja" class=" form-control-label">Código de Geocerca:</label>
+								</div>
+								<div class="col-12 col-md-9">
+									<input type="text" id="cod_geo" name="cod_geo" placeholder="" class="form-control">
+								</div>
+							</div>
+
+							
+						</div>
+						
+						<div class="card-body col-lg-12">
+							<div class="form-actions form-group">
+								<button type="submit" value="Upload" class="btn btn-primary btn-sm">Buscar</button>
+							</div>
+						</div>
+					</form>
+				</div>
+		
         <div class="breadcrumbs">
             <div class="breadcrumbs-inner">
                 <div class="row m-0">
+					
                     <div class="col-sm-6">
                         <div class="page-header float-left">
                             <div class="page-title">
@@ -31,9 +78,10 @@
         </div>
 
 
-
+		
         <div class="content">
             <div class="animated fadeIn">
+					{% if data %}
                 <div class="row">
                     <div class="col-lg-12">
 	                    <div class="card">
@@ -108,9 +156,11 @@
 	                        </div>
 	                    </div>
 	                </div>
-                </div>
+				</div>
+				{% endif %}
         	</div><!-- .animated -->
-    	</div><!-- .content -->
+		</div><!-- .content -->
+		
     	<div class="clearfix"></div>
 {% endif %}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

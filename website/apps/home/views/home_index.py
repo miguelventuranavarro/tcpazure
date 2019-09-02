@@ -362,17 +362,34 @@ def crear_geocercas(request):
                 success = False
                 message = 'Lo sentimos, problemas al registrar. ' + str(e)
     return render(request, 'geocercas.html', {"message":message,"status":success,"form":form})
-
+@csrf_exempt
 def listar_geocercas(request):
+    
     if PuntoGeo.permisos(request.user.id).geocercas:
+        data = None
         message = ''
         status = None
-        dataGeocerca = PlanificacionGeocerca.objects.all()
+        if "POST" == request.method:
 
-        paginator = Paginator(dataGeocerca, 20) # Show 25 contacts per page
+            nom_geo = request.POST.get('nom_geo')
+            cod_geo = request.POST.get('cod_geo')
+            query = {}
 
-        page = request.GET.get('page')
-        data = paginator.get_page(page)
+            if nom_geo != '':
+                query['nombre'] = nom_geo
+
+            if cod_geo != '':
+                query['codigo'] = cod_geo
+
+            if nom_geo != '' or cod_geo != '':
+                dataGeocerca = PlanificacionGeocerca.objects.filter(**query)
+            else:
+                dataGeocerca = PlanificacionGeocerca.objects.all()
+
+            paginator = Paginator(dataGeocerca, 20) # Show 25 contacts per page
+
+            page = request.GET.get('page')
+            data = paginator.get_page(page)
 
         return render(request, 'listar_geocercas.html', {"data":data,"message":message,"status":status})
     else:
