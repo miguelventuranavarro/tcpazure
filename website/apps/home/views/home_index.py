@@ -691,9 +691,12 @@ def Excel(request):
         if int(o) > longitudOM:
             longitudOM = int(o)
     j = 0
-    for i in range(longitudOM):
-        ws.cell(row=1,column=c + j).value = 'Otras Marcas '+ str(j + 1)
-        j = j + 1
+    if longitudOM == 0:
+        ws.cell(row=1,column=c + j).value = 'Otras Marcas'
+    else:
+        for i in range(longitudOM):
+            ws.cell(row=1,column=c + j).value = 'Otras Marcas '+ str(j + 1)
+            j = j + 1
 
     cont=2
  
@@ -725,9 +728,18 @@ def Excel(request):
                 clm = clm + 1
             
             j = 0
-            marc = MarcacionesMatch.objects.filter(lpn = row2, dentro = 0)
+            marc = []
+            todas = MarcacionesMatch.objects.filter(lpn=row2).filter(dentro=0)
+            for t in todas:
+                todas1 = MarcacionesMatch.objects.filter(lpn=row2).filter(dentro=1).filter(id_marcacion = t.id_marcacion)
+                if len(todas1) == 0:
+                    if not t.id_marcacion in marc:
+                        marc.append(t.id_marcacion)
+                        
+
             for ma in marc:
-                ws.cell(row=cont,column=clm + j).value = 'Fecha: '+ma.fecha_marca.strftime(fmt) +'   Coordenada: '+ma.punto
+                ska = PlanificacionCargaPuntoControl.objects.get(id=ma)
+                ws.cell(row=cont,column=clm + j).value = 'Fecha: '+ska.fecha_registro.strftime(fmt) +'   Coordenada: '+ska.latitud+','+ska.longitud
                 ws.cell(row=cont,column=clm + j).fill = yellowFill
                 j = j + 1
             cont = cont + 1

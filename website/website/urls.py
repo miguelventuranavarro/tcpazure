@@ -20,7 +20,7 @@ from django.conf.urls import include, url
 from django.conf import settings
 from django.conf.urls.static import static
 
-admin.site.site_header = "e-PackageTracking"
+admin.site.site_header = "Track Check Pharma"
 #admin.site.site_title = "UMSRA Admin Portal"
 admin.site.index_title = "Bienvenidos"
 
