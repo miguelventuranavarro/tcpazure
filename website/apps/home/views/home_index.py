@@ -646,7 +646,7 @@ def Excel(request):
     from datetime import datetime
     from pytz import timezone
 
-    fmt = "%d-%m-%Y %H:%M"
+    fmt = "%d/%m/%Y %H:%M"
     
     wb = Workbook()
     ws = wb.active
@@ -666,24 +666,41 @@ def Excel(request):
     ws['G1'] = 'Transportista'
 
     cnt = []
-    tam = 0
+    equis = []
     for cn in control:
         arreglo = cn.replace('[','').replace(']','').split(',')
-        if tam < len(arreglo):
-            tam = len(arreglo)
         cnt.append(arreglo)
-    
-    c = 8
+        
+    # for c1 in cnt[0]:
+    #     equis.append(0)
 
-    for i in range(1,tam+1):
-        if i < tam:
-            if i == 1:
+    # for c2 in cnt:
+    #     i = 0
+    #     for c in c2:
+    #         if 'x' in c and equis[i] == 0:
+    #             equis[i] = 1
+    #         i = i + 1
+
+    c = 8
+    i = 0
+    for ct in cnt[0]:   
+        if i < len(ct):
+            if i == 0:
                 ws.cell(row=1,column=c).value = 'CD'
+                
+                ws.cell(row=1,column=c + 1).value = 'CD'
+                c = c + 1
             else:
                 ws.cell(row=1,column=c).value = 'Control '+str(i)
-            
+                
+                ws.cell(row=1,column=c + 1).value = 'Control '+str(i)
+                c = c + 1
+        
         else:
             ws.cell(row=1,column=c).value = 'Local'
+            ws.cell(row=1,column=c + 1).value = 'Local'
+            c = c + 1
+        i = i + 1
         c = c + 1
 
     longitudOM = 0
@@ -695,8 +712,9 @@ def Excel(request):
         ws.cell(row=1,column=c + j).value = 'Otras Marcas'
     else:
         for i in range(longitudOM):
-            ws.cell(row=1,column=c + j).value = 'Otras Marcas '+ str(j + 1)
-            j = j + 1
+            ws.cell(row=1,column=c + j).value = 'Otras Marcas '+ str(i + 1)
+            ws.cell(row=1,column=c + j + 1).value = 'Otras Marcas '+ str(i + 1)
+            j = j + 2
 
     cont=2
  
@@ -714,17 +732,28 @@ def Excel(request):
             for c in cn:
                 k = k + 1
                 if 'x' in c:
-                    marca = MarcacionesMatch.objects.get(lpn = row2, id_control = k)
-                    ws.cell(row=cont,column=clm).value = 'Fecha: '+marca.fecha_marca.strftime(fmt) +'   Coordenada: '+marca.punto
+                    marca = MarcacionesMatch.objects.filter(lpn = row2, dentro = 1, id_control = k).first()
+                    ws.cell(row=cont,column=clm).value = marca.fecha_marca.strftime(fmt) 
+                    ws.cell(row=cont,column=clm + 1).value = marca.punto
                     ws.cell(row=cont,column=clm).fill = greenFill
+                    ws.cell(row=cont,column=clm + 1).fill = greenFill
+                    clm = clm + 1
                 elif '.' in c:
                     ws.cell(row=cont,column=clm).value = ''
+                    ws.cell(row=cont,column=clm + 1).value = ''
                     ws.cell(row=cont,column=clm).fill = greyFill
+                    ws.cell(row=cont,column=clm + 1).fill = greyFill
+                    clm = clm + 1
                 elif '-' in c:
                     ws.cell(row=cont,column=clm).value = ''
+                    ws.cell(row=cont,column=clm + 1).value = ''
                     ws.cell(row=cont,column=clm).fill = redFill
+                    ws.cell(row=cont,column=clm + 1).fill = redFill
+                    clm = clm + 1
                 else:
                     ws.cell(row=cont,column=clm).value = ''
+                    ws.cell(row=cont,column=clm + 1).value = ''
+                    clm = clm + 1
                 clm = clm + 1
             
             j = 0
@@ -739,9 +768,11 @@ def Excel(request):
 
             for ma in marc:
                 ska = PlanificacionCargaPuntoControl.objects.get(id=ma)
-                ws.cell(row=cont,column=clm + j).value = 'Fecha: '+ska.fecha_registro.strftime(fmt) +'   Coordenada: '+ska.latitud+','+ska.longitud
+                ws.cell(row=cont,column=clm + j).value = ska.fecha_registro.strftime(fmt)
                 ws.cell(row=cont,column=clm + j).fill = yellowFill
-                j = j + 1
+                ws.cell(row=cont,column=clm + j + 1).value = ska.latitud+','+ska.longitud
+                ws.cell(row=cont,column=clm + j + 1).fill = yellowFill
+                j = j + 2
             cont = cont + 1
         
     
