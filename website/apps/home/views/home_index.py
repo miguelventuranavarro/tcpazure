@@ -335,32 +335,36 @@ def crear_geocercas(request):
         if coordenadas:
             c = json.loads(coordenadas)
             try:
-                
-                form = planificacionGeocercaForm(request.POST)
-                message = form.errors
-                if form.is_valid():
-                    #form.save()
-                    mTG = PlanificacionTipoGeocerca.objects.get(id=tipo_geocerca)
-                    mPG = PlanificacionGeocerca.objects.create(codigo=codigo,
-                        nombre=nombre,direccion=direccion,
-                        tipo_geocerca=mTG,
-                        coordenadas=coordenadas,
-                        coordenadas_poligon=coordenadas_poligon)
-                    i = 0
-                    while i < len(c):
-                        PlanificacionDetalleGeocerca.objects.create(geocerca_id=mPG.id,latitud=c[i]['lat'],longitud=c[i]['lng'])
-                        i = i + 1
-                    message = 'La Geocerca se creo correctamente.'
-                    return redirect('/listar_geocercas/')
+                PlanificacionGeocerca.objects.get(codigo=codigo)
+                success = False
+                message = 'Error, el código de geocerca ya existe'
             except PlanificacionGeocerca.DoesNotExist:
-                message = 'Error tabla no existe.'
-                success = False
-            except ValidationError as e:
-                success = False
-                message = 'Lo sentimos, problemas al registrar.' + str(e)
-            except IntegrityError as e: 
-                success = False
-                message = 'Lo sentimos, problemas al registrar. ' + str(e)
+                try:               
+                    form = planificacionGeocercaForm(request.POST)
+                    message = form.errors
+                    if form.is_valid():
+                        #form.save()
+                        mTG = PlanificacionTipoGeocerca.objects.get(id=tipo_geocerca)
+                        mPG = PlanificacionGeocerca.objects.create(codigo=codigo,
+                            nombre=nombre,direccion=direccion,
+                            tipo_geocerca=mTG,
+                            coordenadas=coordenadas,
+                            coordenadas_poligon=coordenadas_poligon)
+                        i = 0
+                        while i < len(c):
+                            PlanificacionDetalleGeocerca.objects.create(geocerca_id=mPG.id,latitud=c[i]['lat'],longitud=c[i]['lng'])
+                            i = i + 1
+                        message = 'La Geocerca se creo correctamente.'
+                        return redirect('/listar_geocercas/')
+                except PlanificacionGeocerca.DoesNotExist:
+                    message = 'Error tabla no existe.'
+                    success = False
+                except ValidationError as e:
+                    success = False
+                    message = 'Lo sentimos, problemas al registrar.' + str(e)
+                except IntegrityError as e: 
+                    success = False
+                    message = 'Lo sentimos, problemas al registrar. ' + str(e)
     return render(request, 'geocercas.html', {"message":message,"status":success,"form":form})
 @csrf_exempt
 def listar_geocercas(request):
@@ -386,10 +390,12 @@ def listar_geocercas(request):
             else:
                 dataGeocerca = PlanificacionGeocerca.objects.all()
 
-            paginator = Paginator(dataGeocerca, 20) # Show 25 contacts per page
+            # paginator = Paginator(dataGeocerca, 20) # Show 25 contacts per page
 
-            page = request.GET.get('page')
-            data = paginator.get_page(page)
+            # page = request.GET.get('page')
+            # data = paginator.get_page(page)
+
+            data = dataGeocerca
 
         return render(request, 'listar_geocercas.html', {"data":data,"message":message,"status":status})
     else:
@@ -431,61 +437,63 @@ def eliminar_geocercas(request):
     #return render(request, 'listar_geocercas.html', {"message":message,"status":success})
 
 
+# @csrf_exempt
+# def edita_geocercas(request, id=None, template_name='editar_geocercas.html'):
+#     if id:
+#         geocerca = get_object_or_404(PlanificacionGeocerca, pk=id)
+
+#         if not geocerca.id:
+#             return HttpResponseForbidden()
+#     #else:
+#     #    article = Article(author=request.user)
+
+#     form = planificacionGeocercaForm(request.POST or None, instance=geocerca)
+#     c = PlanificacionDetalleGeocerca.objects.filter(geocerca_id=id)
+
+#     coordenadas = ''
+#     coordenadas_poligon = ''
+#     i = 0
+#     while i < len(c):
+#         coordenadas += '{ "lat": '+c[i].latitud+', "lng": '+c[i].longitud+' }, '
+#         coordenadas_poligon += c[i].latitud+' '+c[i].longitud+', '
+#         i = i + 1
+
+#     cp = coordenadas_poligon[0 : -2]
+#     coordenadas_poligon = '('+geocerca.coordenadas_poligon+')'
+
+#     if "POST" == request.method:
+#         if request.POST and form.is_valid():
+#             form.save()
+
+#             # Save was successful, so redirect to another page
+#             redirect_url = reverse(geocerca_save_success)
+#             return redirect(redirect_url)
+
+#     return render(request, template_name, {
+#         'form': form, 'id':id,'coordenadas_poligon':coordenadas_poligon
+#     })
+
 @csrf_exempt
-def edita_geocercas(request, id=None, template_name='editar_geocercas.html'):
-    if id:
-        geocerca = get_object_or_404(PlanificacionGeocerca, pk=id)
-
-        if not geocerca.id:
-            return HttpResponseForbidden()
-    #else:
-    #    article = Article(author=request.user)
-
-    form = planificacionGeocercaForm(request.POST or None, instance=geocerca)
-    c = PlanificacionDetalleGeocerca.objects.filter(geocerca_id=id)
-
-    coordenadas = ''
-    coordenadas_poligon = ''
-    i = 0
-    while i < len(c):
-        coordenadas += '{ "lat": '+c[i].latitud+', "lng": '+c[i].longitud+' }, '
-        coordenadas_poligon += c[i].latitud+' '+c[i].longitud+', '
-        i = i + 1
-
-    cp = coordenadas_poligon[0 : -2]
-    coordenadas_poligon = '('+geocerca.coordenadas_poligon+')'
-
-    if "POST" == request.method:
-        if request.POST and form.is_valid():
-            form.save()
-
-            # Save was successful, so redirect to another page
-            redirect_url = reverse(geocerca_save_success)
-            return redirect(redirect_url)
-
-    return render(request, template_name, {
-        'form': form, 'id':id,'coordenadas_poligon':coordenadas_poligon
-    })
-
-@csrf_exempt
-def editar_geocercas(request, template_name='editar_geocercas.html'):
+def editgeo(request,id):
     import json
-    id = request.POST.get('id')
-    if id:
-        geocerca = get_object_or_404(PlanificacionGeocerca, pk=id)
-        if not geocerca.id:
-            return HttpResponseForbidden()
-    #else:
-    #    article = Article(author=request.user)
 
-    form = planificacionGeocercaForm(request.POST or None, instance=geocerca)
+    geocerca = PlanificacionGeocerca.objects.get(id=id)
+    success = True
+    message = ''
+    
+    if "POST" == request.method:
+        
 
-    coordenadas = request.POST.get('coordenadas')
-    coordenadas_poligon = request.POST.get('coordenadas_poligon')
-    print(coordenadas)
-    if coordenadas:
-
-        if "POST" == request.method:
+        coordenadas = request.POST.get('coordenadas')
+        coordenadas_poligon = request.POST.get('coordenadas_poligon')
+        codigo = request.POST.get('codigo')
+        
+        form = planificacionGeocercaForm(request.POST or None, instance=geocerca)    
+        cods = PlanificacionGeocerca.objects.filter(codigo=codigo).exclude(id__in=id)
+        if len(cods) > 0:
+            success=False
+            message = 'Error, lo sentimos el código de geocerca ya existe'
+        else:
             if request.POST and form.is_valid():
                 form.save()
 
@@ -517,12 +525,11 @@ def editar_geocercas(request, template_name='editar_geocercas.html'):
                     success = False
                     message = 'Lo sentimos, problemas al registrar. ' + str(e)
 
-                # Save was successful, so redirect to another page
-                return redirect('/listar_geocercas/', product_id=True)
-
-    return render(request, template_name, {
-        'form':form
-    })
+            # Save was successful, so redirect to another page
+            #return redirect('/listar_geocercas/', product_id=True)
+    else:
+        form = planificacionGeocercaForm(instance=geocerca)
+    return render(request, 'geocercas_edit.html', {"message":message,"status":success,"form":form})
 
 def puntos_control(request):
     message = ''

@@ -19,8 +19,8 @@ urlpatterns = [
     url(r'^crear_geocercas/', login_required(views.crear_geocercas), name='crear_geocercas'),
     url(r'^eliminar_geocercas/', login_required(views.eliminar_geocercas), name='eliminar_geocercas'),
     #(r'^article/new/$', views.edit, {}, 'article_new'),
-    url(r'^edita_geocercas/(?P<id>\d+)/$', login_required(views.edita_geocercas), {}, 'edita_geocercas'),
-    url(r'^editar_geocercas/', login_required(views.editar_geocercas), {}, 'editar_geocercas'),
+    #url(r'^edita_geocercas/(?P<id>\d+)/$', login_required(views.edita_geocercas), {}, 'edita_geocercas'),
+    path('editgeo/<slug:id>', login_required(views.editgeo), {}, 'edit_geo'),
     url(r'^puntos_control/', login_required(views.puntos_control), {}, 'puntos_control'),
 
     url(r'^consulta_registros/', login_required(views.consulta_registros), {}, 'consulta_registros'),

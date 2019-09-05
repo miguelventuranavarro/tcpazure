@@ -110,7 +110,8 @@
 	                            <form action="{% url "eliminar_geocercas" %}" method="post" enctype="multipart/form-data">
 	                                <div class="form-actions form-group">
 		                            	<button id="eliminar_carga" class="btn btn-danger btn-sm">Eliminar Geocerca(s)</button>
-		                        	</div>
+									</div>
+									<div class="table-overflow">
 		                            <table class="table table-striped" style="font-size:12px">
 		                            	<thead>
 		                                    <tr>
@@ -130,13 +131,14 @@
 				                                <td>{{ geocerca.nombre }}</td>
 				                                <td>{{ geocerca.direccion }}</td>
 				                                <td>{{ geocerca.tipo_geocerca }}</td>
-				                                <td><a href="../edita_geocercas/{{ geocerca.id }}">Editar</a></td>
+				                                <td><a href="../editgeo/{{ geocerca.id }}">Editar</a></td>
 		                                    </tr>
 										{% endfor %}
 										</tbody>
 									</table>
+								</div>
 								</form>
-								<div class="pagination">
+								<!-- <div class="pagination">
 								    <span class="step-links">
 								        {% if data.has_previous %}
 								            <a href="?page=1">&laquo; first</a>
@@ -152,7 +154,7 @@
 								            <a href="?page={{ data.paginator.num_pages }}">last &raquo;</a>
 								        {% endif %}
 								    </span>
-								</div>
+								</div> -->
 	                        </div>
 	                    </div>
 	                </div>
@@ -170,6 +172,8 @@
 		for(var i in checkboxes)
 			checkboxes[i].checked = source.checked;
 	}
+
+	
 
 	/*$("#eliminar_carga").click(function() {
 		var checkboxes = document.getElementsByName('data[]');
