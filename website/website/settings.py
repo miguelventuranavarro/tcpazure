@@ -125,6 +125,7 @@ WSGI_APPLICATION = 'website.wsgi.application'
         }
     }
 }'''
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',
@@ -140,6 +141,23 @@ DATABASES = {
         },
     },
 }
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'sql_server.pyodbc',
+        'NAME': 'wise',
+        'USER': 'sa',
+        'PASSWORD': 'Wisetrack123!!',
+        'HOST': '104.238.124.12, 1433\SQLEXPRESS',
+        'PORT': '',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+            #'driver': 'ODBC Driver 13 for SQL Server',
+            'unicode_results': True,
+        },
+    },
+}
+
 '''DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',

@@ -36,6 +36,21 @@ from django.db.models import Max
 
 #from django.shortcuts import get_object_or_404, redirect, render, reverse
 
+from utils.utils import (
+    get_max_ruta_codigo_planificacion_punto_control,
+    get_list_ruta_codigo,
+    get_list_lpn,
+    get_match,
+    get_inside,
+    get_outside,
+    get_dict_carga_bulto,
+    get_planificacion_geocerca,
+    get_num_planificacion_punto_control,
+    get_carga_bulto_filtered,
+    get_count_marcaciones,
+    get_marcaciones_for_report,
+)
+
 class index(SingleObjectMixin, FormView):
     form_class = MyForm
     initial = {'key': 'value'}
@@ -339,7 +354,7 @@ def crear_geocercas(request):
                 success = False
                 message = 'Error, el código de geocerca ya existe'
             except PlanificacionGeocerca.DoesNotExist:
-                try:               
+                try:
                     form = planificacionGeocercaForm(request.POST)
                     message = form.errors
                     if form.is_valid():
@@ -362,13 +377,13 @@ def crear_geocercas(request):
                 except ValidationError as e:
                     success = False
                     message = 'Lo sentimos, problemas al registrar.' + str(e)
-                except IntegrityError as e: 
+                except IntegrityError as e:
                     success = False
                     message = 'Lo sentimos, problemas al registrar. ' + str(e)
     return render(request, 'geocercas.html', {"message":message,"status":success,"form":form})
+
 @csrf_exempt
 def listar_geocercas(request):
-    
     if PuntoGeo.permisos(request.user.id).geocercas:
         data = None
         message = ''
@@ -397,7 +412,8 @@ def listar_geocercas(request):
 
             data = dataGeocerca
 
-        return render(request, 'listar_geocercas.html', {"data":data,"message":message,"status":status})
+        return render(request, 'listar_geocercas.html',
+                      {"data": data, "message": message, "status": status})
     else:
         return render(request, 'permisos.html')
 
@@ -441,15 +457,15 @@ def eliminar_geocercas(request):
 # def edita_geocercas(request, id=None, template_name='editar_geocercas.html'):
 #     if id:
 #         geocerca = get_object_or_404(PlanificacionGeocerca, pk=id)
-
+#
 #         if not geocerca.id:
 #             return HttpResponseForbidden()
 #     #else:
 #     #    article = Article(author=request.user)
-
+#
 #     form = planificacionGeocercaForm(request.POST or None, instance=geocerca)
 #     c = PlanificacionDetalleGeocerca.objects.filter(geocerca_id=id)
-
+#
 #     coordenadas = ''
 #     coordenadas_poligon = ''
 #     i = 0
@@ -457,41 +473,42 @@ def eliminar_geocercas(request):
 #         coordenadas += '{ "lat": '+c[i].latitud+', "lng": '+c[i].longitud+' }, '
 #         coordenadas_poligon += c[i].latitud+' '+c[i].longitud+', '
 #         i = i + 1
-
+#
 #     cp = coordenadas_poligon[0 : -2]
 #     coordenadas_poligon = '('+geocerca.coordenadas_poligon+')'
-
+#
 #     if "POST" == request.method:
 #         if request.POST and form.is_valid():
 #             form.save()
-
+#
 #             # Save was successful, so redirect to another page
 #             redirect_url = reverse(geocerca_save_success)
 #             return redirect(redirect_url)
-
+#
 #     return render(request, template_name, {
 #         'form': form, 'id':id,'coordenadas_poligon':coordenadas_poligon
 #     })
 
 @csrf_exempt
-def editgeo(request,id):
+def editgeo(request, id):
     import json
 
     geocerca = PlanificacionGeocerca.objects.get(id=id)
     success = True
     message = ''
-    
+
     if "POST" == request.method:
-        
 
         coordenadas = request.POST.get('coordenadas')
         coordenadas_poligon = request.POST.get('coordenadas_poligon')
         codigo = request.POST.get('codigo')
-        
-        form = planificacionGeocercaForm(request.POST or None, instance=geocerca)    
-        cods = PlanificacionGeocerca.objects.filter(codigo=codigo).exclude(id__in=id)
+
+        form = planificacionGeocercaForm(request.POST or None,
+                                         instance=geocerca)
+        cods = PlanificacionGeocerca.objects.filter(codigo=codigo).exclude(
+            id__in=id)
         if len(cods) > 0:
-            success=False
+            success = False
             message = 'Error, lo sentimos el código de geocerca ya existe'
         else:
             if request.POST and form.is_valid():
@@ -503,33 +520,38 @@ def editgeo(request,id):
 
                 c = json.loads(coordenadas)
                 try:
-                        mPG = PlanificacionDetalleGeocerca.objects.filter(geocerca_id=id)
-                        m = 0
-                        while m < len(mPG):
-                            PlanificacionDetalleGeocerca.objects.get(id=mPG[m].id).delete()
-                            m = m + 1
-                        i = 0
-                        while i < len(c):
-                            PlanificacionDetalleGeocerca.objects.create(geocerca_id=geocerca.id,latitud=c[i]['lat'],longitud=c[i]['lng'])
-                            i = i + 1
+                    mPG = PlanificacionDetalleGeocerca.objects.filter(
+                        geocerca_id=id)
+                    m = 0
+                    while m < len(mPG):
+                        PlanificacionDetalleGeocerca.objects.get(
+                            id=mPG[m].id).delete()
+                        m = m + 1
+                    i = 0
+                    while i < len(c):
+                        PlanificacionDetalleGeocerca.objects.create(
+                            geocerca_id=geocerca.id, latitud=c[i]['lat'],
+                            longitud=c[i]['lng'])
+                        i = i + 1
 
-                        message = 'La Geocerca se creo correctamente.'
-                        return redirect('/listar_geocercas/')
+                    message = 'La Geocerca se creo correctamente.'
+                    return redirect('/listar_geocercas/')
                 except PlanificacionGeocerca.DoesNotExist:
                     message = 'Error tabla no existe.'
                     success = False
                 except ValidationError as e:
                     success = False
                     message = 'Lo sentimos, problemas al registrar.' + str(e)
-                except IntegrityError as e: 
+                except IntegrityError as e:
                     success = False
                     message = 'Lo sentimos, problemas al registrar. ' + str(e)
 
-            # Save was successful, so redirect to another page
-            #return redirect('/listar_geocercas/', product_id=True)
+                    # Save was successful, so redirect to another page
+                    # return redirect('/listar_geocercas/', product_id=True)
     else:
         form = planificacionGeocercaForm(instance=geocerca)
-    return render(request, 'geocercas_edit.html', {"message":message,"status":success,"form":form})
+    return render(request, 'geocercas_edit.html',
+                  {"message": message, "status": success, "form": form})
 
 def puntos_control(request):
     message = ''
@@ -654,16 +676,20 @@ def Excel(request):
     from pytz import timezone
 
     fmt = "%d/%m/%Y %H:%M"
-    
+
     wb = Workbook()
     ws = wb.active
 
-    redFill = PatternFill(start_color='FFF61723',end_color='FFF61723',fill_type='solid')
-    greenFill = PatternFill(start_color='FF07A34F',end_color='FF07A34F',fill_type='solid')
-    yellowFill = PatternFill(start_color='FFF8E903',end_color='FFF8E903',fill_type='solid')
-    greyFill = PatternFill(start_color='FFb3b3b3',end_color='FFb3b3b3',fill_type='solid')
+    redFill = PatternFill(start_color='FFF61723', end_color='FFF61723',
+                          fill_type='solid')
+    greenFill = PatternFill(start_color='FF07A34F', end_color='FF07A34F',
+                            fill_type='solid')
+    yellowFill = PatternFill(start_color='FFF8E903', end_color='FFF8E903',
+                             fill_type='solid')
+    greyFill = PatternFill(start_color='FFb3b3b3', end_color='FFb3b3b3',
+                           fill_type='solid')
 
-    #--------------DETALLE................
+    # --------------DETALLE................
     ws['A1'] = 'Número de carga'
     ws['B1'] = 'Número de bandeja'
     ws['C1'] = '#Controles'
@@ -675,9 +701,9 @@ def Excel(request):
     cnt = []
     equis = []
     for cn in control:
-        arreglo = cn.replace('[','').replace(']','').split(',')
+        arreglo = cn.replace('[', '').replace(']', '').split(',')
         cnt.append(arreglo)
-        
+
     # for c1 in cnt[0]:
     #     equis.append(0)
 
@@ -690,22 +716,22 @@ def Excel(request):
 
     c = 8
     i = 0
-    for ct in cnt[0]:   
+    for ct in cnt[0]:
         if i < len(ct):
             if i == 0:
-                ws.cell(row=1,column=c).value = 'CD'
-                
-                ws.cell(row=1,column=c + 1).value = 'CD'
+                ws.cell(row=1, column=c).value = 'CD'
+
+                ws.cell(row=1, column=c + 1).value = 'CD'
                 c = c + 1
             else:
-                ws.cell(row=1,column=c).value = 'Control '+str(i)
-                
-                ws.cell(row=1,column=c + 1).value = 'Control '+str(i)
+                ws.cell(row=1, column=c).value = 'Control ' + str(i)
+
+                ws.cell(row=1, column=c + 1).value = 'Control ' + str(i)
                 c = c + 1
-        
+
         else:
-            ws.cell(row=1,column=c).value = 'Local'
-            ws.cell(row=1,column=c + 1).value = 'Local'
+            ws.cell(row=1, column=c).value = 'Local'
+            ws.cell(row=1, column=c + 1).value = 'Local'
             c = c + 1
         i = i + 1
         c = c + 1
@@ -716,79 +742,86 @@ def Excel(request):
             longitudOM = int(o)
     j = 0
     if longitudOM == 0:
-        ws.cell(row=1,column=c + j).value = 'Otras Marcas'
+        ws.cell(row=1, column=c + j).value = 'Otras Marcas'
     else:
         for i in range(longitudOM):
-            ws.cell(row=1,column=c + j).value = 'Otras Marcas '+ str(i + 1)
-            ws.cell(row=1,column=c + j + 1).value = 'Otras Marcas '+ str(i + 1)
+            ws.cell(row=1, column=c + j).value = 'Otras Marcas ' + str(i + 1)
+            ws.cell(row=1, column=c + j + 1).value = 'Otras Marcas ' + str(
+                i + 1)
             j = j + 2
 
-    cont=2
- 
-    for row1,row2,row3,row4,row5,row6,row7,cn,o in zip(data1,data2,data3,data4,data5,data6,data7,cnt,om):
+    cont = 2
+
+    for row1, row2, row3, row4, row5, row6, row7, cn, o in zip(data1, data2,
+                                                               data3, data4,
+                                                               data5, data6,
+                                                               data7, cnt, om):
         if row2 != '':
-            ws.cell(row=cont,column=1).value = row1
-            ws.cell(row=cont,column=2).value = row2
-            ws.cell(row=cont,column=3).value = row3
-            ws.cell(row=cont,column=4).value = row4
-            ws.cell(row=cont,column=5).value = row5
-            ws.cell(row=cont,column=6).value = row6
-            ws.cell(row=cont,column=7).value = row7
+            ws.cell(row=cont, column=1).value = row1
+            ws.cell(row=cont, column=2).value = row2
+            ws.cell(row=cont, column=3).value = row3
+            ws.cell(row=cont, column=4).value = row4
+            ws.cell(row=cont, column=5).value = row5
+            ws.cell(row=cont, column=6).value = row6
+            ws.cell(row=cont, column=7).value = row7
             clm = 8
             k = 0
             for c in cn:
                 k = k + 1
                 if 'x' in c:
-                    marca = MarcacionesMatch.objects.filter(lpn = row2, dentro = 1, id_control = k).first()
-                    ws.cell(row=cont,column=clm).value = marca.fecha_marca.strftime(fmt) 
-                    ws.cell(row=cont,column=clm + 1).value = marca.punto
-                    ws.cell(row=cont,column=clm).fill = greenFill
-                    ws.cell(row=cont,column=clm + 1).fill = greenFill
+                    marca = MarcacionesMatch.objects.filter(lpn=row2, dentro=1,
+                                                            id_control=k).first()
+                    ws.cell(row=cont,
+                            column=clm).value = marca.fecha_marca.strftime(fmt)
+                    ws.cell(row=cont, column=clm + 1).value = marca.punto
+                    ws.cell(row=cont, column=clm).fill = greenFill
+                    ws.cell(row=cont, column=clm + 1).fill = greenFill
                     clm = clm + 1
                 elif '.' in c:
-                    ws.cell(row=cont,column=clm).value = ''
-                    ws.cell(row=cont,column=clm + 1).value = ''
-                    ws.cell(row=cont,column=clm).fill = greyFill
-                    ws.cell(row=cont,column=clm + 1).fill = greyFill
+                    ws.cell(row=cont, column=clm).value = ''
+                    ws.cell(row=cont, column=clm + 1).value = ''
+                    ws.cell(row=cont, column=clm).fill = greyFill
+                    ws.cell(row=cont, column=clm + 1).fill = greyFill
                     clm = clm + 1
                 elif '-' in c:
-                    ws.cell(row=cont,column=clm).value = ''
-                    ws.cell(row=cont,column=clm + 1).value = ''
-                    ws.cell(row=cont,column=clm).fill = redFill
-                    ws.cell(row=cont,column=clm + 1).fill = redFill
+                    ws.cell(row=cont, column=clm).value = ''
+                    ws.cell(row=cont, column=clm + 1).value = ''
+                    ws.cell(row=cont, column=clm).fill = redFill
+                    ws.cell(row=cont, column=clm + 1).fill = redFill
                     clm = clm + 1
                 else:
-                    ws.cell(row=cont,column=clm).value = ''
-                    ws.cell(row=cont,column=clm + 1).value = ''
+                    ws.cell(row=cont, column=clm).value = ''
+                    ws.cell(row=cont, column=clm + 1).value = ''
                     clm = clm + 1
                 clm = clm + 1
-            
+
             j = 0
             marc = []
             todas = MarcacionesMatch.objects.filter(lpn=row2).filter(dentro=0)
             for t in todas:
-                todas1 = MarcacionesMatch.objects.filter(lpn=row2).filter(dentro=1).filter(id_marcacion = t.id_marcacion)
+                todas1 = MarcacionesMatch.objects.filter(lpn=row2).filter(
+                    dentro=1).filter(id_marcacion=t.id_marcacion)
                 if len(todas1) == 0:
                     if not t.id_marcacion in marc:
                         marc.append(t.id_marcacion)
-                        
 
             for ma in marc:
                 ska = PlanificacionCargaPuntoControl.objects.get(id=ma)
-                ws.cell(row=cont,column=clm + j).value = ska.fecha_registro.strftime(fmt)
-                ws.cell(row=cont,column=clm + j).fill = yellowFill
-                ws.cell(row=cont,column=clm + j + 1).value = ska.latitud+','+ska.longitud
-                ws.cell(row=cont,column=clm + j + 1).fill = yellowFill
+                ws.cell(row=cont,
+                        column=clm + j).value = ska.fecha_registro.strftime(fmt)
+                ws.cell(row=cont, column=clm + j).fill = yellowFill
+                ws.cell(row=cont,
+                        column=clm + j + 1).value = ska.latitud + ',' + ska.longitud
+                ws.cell(row=cont, column=clm + j + 1).fill = yellowFill
                 j = j + 2
             cont = cont + 1
-        
-    
-    nombre_archivo ="Detalles.xlsx" 
-    response = HttpResponse(content_type="application/ms-excel") 
+
+    nombre_archivo = "Detalles.xlsx"
+    response = HttpResponse(content_type="application/ms-excel")
     contenido = "attachment; filename={0}".format(nombre_archivo)
     response["Content-Disposition"] = contenido
     wb.save(response)
-    return response 
+    return response
 
 @csrf_exempt
 def pre_liquidacion(request):
@@ -890,27 +923,27 @@ def consulta_registros(request):
 
             if not request.user.is_staff:
                 query['transportista'] = request.user.username
-            
+
+            #import pdb; pdb.set_trace()
             carga_bulto = PlanificacionCargaBulto.objects.filter(**query).order_by('numero_carga','destino')
-        
-            # if(numero_carga != '' and  numero_bandeja != '' and ruta != '' and destino != '' and trans != ''):
-            #     carga_bulto = PlanificacionCargaBulto.objects.filter(numero_carga=numero_carga).filter(numero_lpn=numero_bandeja).filter(ruta_codigo=ruta).filter(transportista=trans).filter(destino=destino).filter(fecha_carga__range=[fecini, fecfin])
-            # else:
-            #     carga_bulto = PlanificacionCargaBulto.objects.filter(fecha_carga__range=[fecini, fecfin])
+            #max_puntos = 0
+            # for cb in carga_bulto:
+            #     print (cb)
+            #     plan_ruta = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
+            #     if max_puntos < plan_ruta:
+            #         max_puntos = plan_ruta
+            lista_ruta_codigo = get_list_ruta_codigo(carga_bulto)
+            max_puntos = get_max_ruta_codigo_planificacion_punto_control(lista_ruta_codigo)
+            #print ('paso!!', max_puntos)
 
-            max_puntos = 0
-            for cb in carga_bulto:
-                plan_ruta = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
-                if max_puntos < plan_ruta:
-                    max_puntos = plan_ruta
-
-            
             control = []
             total = []
             dentro = []
             fuera = []
+            #control.append(0)
             control.append('Objetivo')
-            total.append(len(carga_bulto))
+            #total.append(len(carga_bulto))
+            total.append(carga_bulto.count())
             dentro.append('')
             fuera.append('')
 
@@ -928,79 +961,65 @@ def consulta_registros(request):
             contf1 = 0
             contf2 = 0
             control.append('CD')
-            for i in range(2,max_puntos + 1):
-                if i < max_puntos:
-                    control.append('Control ' + str(i-1))
-                else:
-                    control.append('Local')
+            control = ["Local" if max_puntos==x else 'Control ' + str(x - 1) for x in range(2, max_puntos + 1)]
+            list_id_control = [x for x in range(1, max_puntos + 1)]
+            # for i in range(1,max_puntos + 1):
+            #     if i < max_puntos:
+            #         control.append(i)
+            #     else:
+            #         control.append('final')
+            #     cont = 0
+            #     cont1 = 0
+            #     cont2 = 0
+                #for cb in carga_bulto:
 
-            for i in range(1,max_puntos + 1):
-                cont = 0
-                cont1 = 0
-                cont2 = 0
-                for cb in carga_bulto:  
+                    #orden = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
 
-                    orden = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
+            list_marcaciones_match = list(
+                MarcacionesMatch.objects.filter(
+                    fecha_marca__range=[fecini, fecfin]).values().all())
 
-                    if i < orden:
-                        match = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i)  
-                        inside = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=1)
-                        outside = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=0)
-
-                        if len(match) > 0:
-                            cont = cont + 1
-                        if len(inside) != 0:
-                            cont1 = cont1 + 1
-                        elif len(inside) == 0 and len(outside) != 0:
-                            cont2 = cont2 + 1
-                    else:
-                        match = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i)  
-                        inside = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=1)
-                        outside = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=0)
-
-                        if len(match) > 0:
-                            contf = contf + 1
-                        if len(inside) != 0:
-                            contf1 = contf1 + 1
-                        elif len(inside) == 0 and len(outside) != 0:
-                            contf2 = contf2 + 1
-
-                if i == max_puntos:
-                    cont = cont + contf
-                    cont1 = cont1 + contf1
-                    cont2 = cont2 + contf2
-
-                total.append(cont)
-                dentro.append(cont1)
-                fuera.append(cont2)
+            l = get_list_lpn(carga_bulto)
+            #match = get_match(l, list_id_control)
+            match = get_match(list_marcaciones_match, l, list_id_control)
+            inside = get_inside(list_marcaciones_match, l, list_id_control)
+            outside = get_outside(list_marcaciones_match, l, list_id_control)
+            total.append(match)
+            dentro.append(inside)
+            fuera.append(outside)
             numCarga = []
+
+            carga_bulto = get_dict_carga_bulto(carga_bulto)
+            list_planificacion_geocerca = list(PlanificacionGeocerca.objects.values().all())
+            list_planificacion_punto_control = list(PlanificacionPuntoControl.objects.values().all())
 
             for cb in carga_bulto:
                 dic = {}
                 innercnt = []
-                geo = PlanificacionGeocerca.objects.get(codigo = cb.destino)
-                if not cb.numero_carga+"-"+str(cb.destino) in numCarga:
+                geo = get_planificacion_geocerca(list_planificacion_geocerca, cb.get('destino'))
+                if not cb.get('numero_carga') + "-" + str(cb.get('destino')) in numCarga:
                     dic1 = {}
                     innercnt1 = []
-                    numCarga.append(cb.numero_carga+"-"+str(cb.destino))
-            
-                    dic1['numero_carga'] = cb.numero_carga+"-"+str(cb.destino)
+                    numCarga.append(cb.get('numero_carga') + "-" + str(cb.get('destino')))
+                    dic1['numero_carga'] = cb.get('numero_carga') + "-" + str(
+                        cb.get('destino'))
                     dic1['numero_lpn'] = ''
                     dic1['numero_controles'] = ''
                     dic1['ruta_codigo'] = ''
-                    dic1['destino'] = geo.nombre
+                    #dic1['destino'] = geo.nombre
+                    dic1['destino'] = geo.get('nombre', '')
                     dic1['fecha_carga'] = ''
                     dic1['transportista'] = ''
-                    dic1['om'] = 0      
+                    dic1['om'] = 0
                     dic1['display'] = 'table-row'
-                    orden = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
-                    bultos = PlanificacionCargaBulto.objects.filter(numero_carga = cb.numero_carga).filter(destino = cb.destino)
+                    orden = get_num_planificacion_punto_control(list_planificacion_punto_control, cb.get('ruta_codigo'))
+                    bultos = get_carga_bulto_filtered(carga_bulto, cb.get('numero_carga'), cb.get('destino'))
                     all = 0
                     for i in range(1,max_puntos + 1):
                         con_in = 0
                         for b in bultos:
-                            match = MarcacionesMatch.objects.filter(lpn = b.numero_lpn).filter(id_control=i).filter(dentro=1)
-                            match1 = MarcacionesMatch.objects.filter(lpn = b.numero_lpn).filter(id_control=i).filter(dentro=0)
+                            match = get_count_marcaciones(list_marcaciones_match, b.get('numero_lpn'), i, 1)
+                            match1 = get_count_marcaciones(list_marcaciones_match, b.get('numero_lpn'), i, 0)
                             if len(match) > 0 and len(match1) >= 0:
                                 con_in = con_in + 1
                         if i < orden :
@@ -1021,39 +1040,34 @@ def consulta_registros(request):
                                 all = 1
 
                         if i == max_puntos:
-                            if all == 1: 
+                            if all == 1:
                                 innercnt1.append('all')
                             else:
                                 innercnt1.append('')
 
                     dic1['control'] = innercnt1
                     detalles.append(dic1)
-                            
-                nc = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
-                dic['numero_carga'] = cb.numero_carga+"-"+str(cb.destino)
-                dic['numero_lpn'] = cb.numero_lpn
-                dic['numero_controles'] = nc
-                dic['ruta_codigo'] = cb.ruta_codigo
-                dic['destino'] = geo.nombre
-                dic['fecha_carga'] = cb.fecha_carga
-                dic['transportista'] = cb.transportista
-                #dic['fecha_registro'] = cb.fecha_registro
-                
-    
-                orden = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
 
-                
+
+                nc = get_num_planificacion_punto_control(list_planificacion_punto_control, cb.get('ruta_codigo'))
+                dic['numero_carga'] = cb.get('numero_carga') + "-" + str(cb.get('destino'))
+                dic['numero_lpn'] = cb.get('numero_lpn')
+                dic['numero_controles'] = nc
+                dic['ruta_codigo'] = cb.get('ruta_codigo')
+                dic['destino'] = geo.get('nombre')
+                dic['fecha_carga'] = cb.get('fecha_carga')
+                dic['transportista'] = cb.get('transportista')
+                orden = get_num_planificacion_punto_control(list_planificacion_punto_control, cb.get('ruta_codigo'))
                 contx = 0
                 cont_ = 0
                 found = 0
             
                 for i in range(1,max_puntos + 1):
-                    match = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=1)
-                    match1 = MarcacionesMatch.objects.filter(lpn = cb.numero_lpn).filter(id_control=i).filter(dentro=0)
-                    #cont = cont + len(match1)
-                    if i < orden:                  
+                    match = get_count_marcaciones(list_marcaciones_match, cb.get('numero_lpn'), i, 1)
+                    match1 = get_count_marcaciones(list_marcaciones_match, cb.get('numero_lpn'), i, 0)
+                    if i < orden:
                         if len(match) > 0:
-                            innercnt.append('x'+str(i))    
+                            innercnt.append('x'+str(i))
                         elif len(match1) > 0:
                             innercnt.append('-')
                         else:
@@ -1072,7 +1086,7 @@ def consulta_registros(request):
                     elif i == orden and i == max_puntos:
                         if len(match) > 0 :
                             contx = 1
-                        elif len(match1) > 0:                      
+                        elif len(match1) > 0:
                             cont_ = 1
                         else:
                             found = 1
@@ -1089,31 +1103,25 @@ def consulta_registros(request):
                             innercnt.append('')
 
                 marcaciones = []
-                todas = MarcacionesMatch.objects.filter(lpn=cb.numero_lpn).filter(dentro=0)
+                todas = get_count_marcaciones(list_marcaciones_match, cb.get('numero_lpn'), '', 0)
                 cont = 0
                 for t in todas:
-                    todas1 = MarcacionesMatch.objects.filter(lpn=cb.numero_lpn).filter(dentro=1).filter(id_marcacion = t.id_marcacion)
+                    todas1 = get_marcaciones_for_report(list_marcaciones_match, cb.get('numero_lpn'), t.get('id_marcacion'), 1)
                     if len(todas1) == 0:
-                        if not t.id_marcacion in marcaciones:
-                            marcaciones.append(t.id_marcacion)
+                        if not t.get('id_marcacion') in marcaciones:
+                            marcaciones.append(t.get('id_marcacion'))
                             cont = cont + 1
 
-
-                dic['om'] = cont       
+                dic['om'] = cont
                 dic['control'] = innercnt
-                
-                dic['display'] = 'table-row'
-                if not cb.numero_carga+"-"+str(cb.destino) in numCarga:
-                    numCarga.append(cb.numero_carga+"-"+str(cb.destino))
 
+                dic['display'] = 'table-row'
+                if not cb.get('numero_carga') + "-" + str(cb.get('destino')) in numCarga:
+                    numCarga.append(cb.get('numero_carga') + "-" + str(cb.get('destino')))
                 else:
                     dic['display'] = 'none'
-                        
-                
-                
                 detalles.append(dic)
 
-            
             resumen['detalles'] = detalles
             resumen['control'] = control
             resumen['total'] = total

@@ -66,14 +66,15 @@ class PuntoGeocerca(models.Model):
         db_table = 'punto_geo'
 
 class MarcacionesMatch(models.Model):
-    lpn = models.CharField(max_length=50)
+    lpn = models.CharField(max_length=50, db_index=True)
     id_marcacion = models.IntegerField()
     us = models.IntegerField()
-    id_control = models.IntegerField()
+    id_control = models.IntegerField(db_index=True)
     dentro = models.IntegerField()
     cnt_nombre = models.CharField(max_length=50)
     punto = models.CharField(max_length=50)
     fecha_marca = models.DateTimeField(blank=True, null=True)
+    fecha_carga = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         db_table = 'marcaciones_match'

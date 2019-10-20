@@ -1,0 +1,1007 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3946ecba-c101-4338-b9f7-99b75678e394" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/admin.py" afterPath="$PROJECT_DIR$/website/apps/home/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/apps.py" afterPath="$PROJECT_DIR$/website/apps/home/apps.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/forms/form.py" afterPath="$PROJECT_DIR$/website/apps/home/forms/form.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/models.py" afterPath="$PROJECT_DIR$/website/apps/home/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/serializers.py" afterPath="$PROJECT_DIR$/website/apps/home/serializers.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/templates/base.html" afterPath="$PROJECT_DIR$/website/apps/home/templates/base.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/templates/consulta_incidencias.html" afterPath="$PROJECT_DIR$/website/apps/home/templates/consulta_incidencias.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/templates/consulta_registros.html" afterPath="$PROJECT_DIR$/website/apps/home/templates/consulta_registros.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/templates/footer.html" afterPath="$PROJECT_DIR$/website/apps/home/templates/footer.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/templates/geocercas.html" afterPath="$PROJECT_DIR$/website/apps/home/templates/geocercas.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/templates/geocercas_edit.html" afterPath="$PROJECT_DIR$/website/apps/home/templates/geocercas_edit.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/templates/header.html" afterPath="$PROJECT_DIR$/website/apps/home/templates/header.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/templates/index.html" afterPath="$PROJECT_DIR$/website/apps/home/templates/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/templates/listar_geocercas.html" afterPath="$PROJECT_DIR$/website/apps/home/templates/listar_geocercas.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/templates/login.html" afterPath="$PROJECT_DIR$/website/apps/home/templates/login.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/templates/modal1.html" afterPath="$PROJECT_DIR$/website/apps/home/templates/modal1.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/templates/navbar.html" afterPath="$PROJECT_DIR$/website/apps/home/templates/navbar.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/templates/permisos.html" afterPath="$PROJECT_DIR$/website/apps/home/templates/permisos.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/templates/pre_liquidacion.html" afterPath="$PROJECT_DIR$/website/apps/home/templates/pre_liquidacion.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/templates/puntos_control.html" afterPath="$PROJECT_DIR$/website/apps/home/templates/puntos_control.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/templates/registration/login.html" afterPath="$PROJECT_DIR$/website/apps/home/templates/registration/login.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/templates/registro_manual.html" afterPath="$PROJECT_DIR$/website/apps/home/templates/registro_manual.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/tests.py" afterPath="$PROJECT_DIR$/website/apps/home/tests.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/urls.py" afterPath="$PROJECT_DIR$/website/apps/home/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/home/views/home_index.py" afterPath="$PROJECT_DIR$/website/apps/home/views/home_index.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/services/admin.py" afterPath="$PROJECT_DIR$/website/apps/services/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/services/apps.py" afterPath="$PROJECT_DIR$/website/apps/services/apps.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/services/models.py" afterPath="$PROJECT_DIR$/website/apps/services/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/services/tests.py" afterPath="$PROJECT_DIR$/website/apps/services/tests.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/services/urls.py" afterPath="$PROJECT_DIR$/website/apps/services/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/apps/services/views.py" afterPath="$PROJECT_DIR$/website/apps/services/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/css/autocomplete.css" afterPath="$PROJECT_DIR$/website/foo/static/admin/css/autocomplete.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/css/base.css" afterPath="$PROJECT_DIR$/website/foo/static/admin/css/base.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/css/changelists.css" afterPath="$PROJECT_DIR$/website/foo/static/admin/css/changelists.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/css/dashboard.css" afterPath="$PROJECT_DIR$/website/foo/static/admin/css/dashboard.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/css/fonts.css" afterPath="$PROJECT_DIR$/website/foo/static/admin/css/fonts.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/css/forms.css" afterPath="$PROJECT_DIR$/website/foo/static/admin/css/forms.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/css/login.css" afterPath="$PROJECT_DIR$/website/foo/static/admin/css/login.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/css/responsive.css" afterPath="$PROJECT_DIR$/website/foo/static/admin/css/responsive.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/css/responsive_rtl.css" afterPath="$PROJECT_DIR$/website/foo/static/admin/css/responsive_rtl.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/css/rtl.css" afterPath="$PROJECT_DIR$/website/foo/static/admin/css/rtl.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/css/vendor/select2/LICENSE-SELECT2.md" afterPath="$PROJECT_DIR$/website/foo/static/admin/css/vendor/select2/LICENSE-SELECT2.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/css/vendor/select2/select2.css" afterPath="$PROJECT_DIR$/website/foo/static/admin/css/vendor/select2/select2.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/css/vendor/select2/select2.min.css" afterPath="$PROJECT_DIR$/website/foo/static/admin/css/vendor/select2/select2.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/css/widgets.css" afterPath="$PROJECT_DIR$/website/foo/static/admin/css/widgets.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/fonts/LICENSE.txt" afterPath="$PROJECT_DIR$/website/foo/static/admin/fonts/LICENSE.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/fonts/README.txt" afterPath="$PROJECT_DIR$/website/foo/static/admin/fonts/README.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/img/LICENSE" afterPath="$PROJECT_DIR$/website/foo/static/admin/img/LICENSE" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/img/README.txt" afterPath="$PROJECT_DIR$/website/foo/static/admin/img/README.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/img/calendar-icons.svg" afterPath="$PROJECT_DIR$/website/foo/static/admin/img/calendar-icons.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/img/icon-addlink.svg" afterPath="$PROJECT_DIR$/website/foo/static/admin/img/icon-addlink.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/img/icon-alert.svg" afterPath="$PROJECT_DIR$/website/foo/static/admin/img/icon-alert.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/img/icon-calendar.svg" afterPath="$PROJECT_DIR$/website/foo/static/admin/img/icon-calendar.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/img/icon-changelink.svg" afterPath="$PROJECT_DIR$/website/foo/static/admin/img/icon-changelink.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/img/icon-clock.svg" afterPath="$PROJECT_DIR$/website/foo/static/admin/img/icon-clock.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/img/icon-deletelink.svg" afterPath="$PROJECT_DIR$/website/foo/static/admin/img/icon-deletelink.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/img/icon-no.svg" afterPath="$PROJECT_DIR$/website/foo/static/admin/img/icon-no.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/img/icon-unknown-alt.svg" afterPath="$PROJECT_DIR$/website/foo/static/admin/img/icon-unknown-alt.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/img/icon-unknown.svg" afterPath="$PROJECT_DIR$/website/foo/static/admin/img/icon-unknown.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/img/icon-viewlink.svg" afterPath="$PROJECT_DIR$/website/foo/static/admin/img/icon-viewlink.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/img/icon-yes.svg" afterPath="$PROJECT_DIR$/website/foo/static/admin/img/icon-yes.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/img/inline-delete.svg" afterPath="$PROJECT_DIR$/website/foo/static/admin/img/inline-delete.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/img/search.svg" afterPath="$PROJECT_DIR$/website/foo/static/admin/img/search.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/img/selector-icons.svg" afterPath="$PROJECT_DIR$/website/foo/static/admin/img/selector-icons.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/img/sorting-icons.svg" afterPath="$PROJECT_DIR$/website/foo/static/admin/img/sorting-icons.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/img/tooltag-add.svg" afterPath="$PROJECT_DIR$/website/foo/static/admin/img/tooltag-add.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/img/tooltag-arrowright.svg" afterPath="$PROJECT_DIR$/website/foo/static/admin/img/tooltag-arrowright.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/SelectBox.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/SelectBox.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/SelectFilter2.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/SelectFilter2.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/actions.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/actions.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/actions.min.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/actions.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/admin/DateTimeShortcuts.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/admin/DateTimeShortcuts.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/admin/RelatedObjectLookups.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/admin/RelatedObjectLookups.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/autocomplete.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/autocomplete.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/calendar.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/calendar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/cancel.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/cancel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/change_form.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/change_form.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/collapse.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/collapse.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/collapse.min.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/collapse.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/core.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/core.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/inlines.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/inlines.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/inlines.min.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/inlines.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/jquery.init.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/jquery.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/popup_response.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/popup_response.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/prepopulate.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/prepopulate.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/prepopulate.min.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/prepopulate.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/prepopulate_init.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/prepopulate_init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/timeparse.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/timeparse.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/urlify.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/urlify.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/jquery/LICENSE.txt" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/jquery/LICENSE.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/jquery/jquery.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/jquery/jquery.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/jquery/jquery.min.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/jquery/jquery.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/LICENSE.md" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/LICENSE.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/ar.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/ar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/az.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/az.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/bg.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/bg.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/ca.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/ca.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/cs.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/cs.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/da.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/da.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/de.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/de.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/el.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/el.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/en.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/en.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/es.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/es.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/et.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/et.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/eu.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/eu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/fa.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/fa.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/fi.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/fi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/fr.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/fr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/gl.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/gl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/he.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/he.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/hi.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/hi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/hr.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/hr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/hu.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/hu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/id.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/id.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/is.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/is.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/it.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/it.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/ja.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/ja.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/km.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/km.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/ko.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/ko.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/lt.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/lt.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/lv.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/lv.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/mk.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/mk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/ms.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/ms.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/nb.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/nb.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/nl.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/nl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/pl.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/pl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/pt-BR.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/pt-BR.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/pt.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/pt.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/ro.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/ro.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/ru.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/ru.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/sk.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/sk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/sr-Cyrl.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/sr-Cyrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/sr.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/sr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/sv.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/sv.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/th.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/th.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/tr.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/tr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/uk.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/uk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/vi.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/vi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/zh-CN.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/zh-CN.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/zh-TW.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/i18n/zh-TW.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/select2.full.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/select2.full.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/select2.full.min.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/select2/select2.full.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/xregexp/LICENSE.txt" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/xregexp/LICENSE.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/xregexp/xregexp.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/xregexp/xregexp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/xregexp/xregexp.min.js" afterPath="$PROJECT_DIR$/website/foo/static/admin/js/vendor/xregexp/xregexp.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/assets/css/bootstrap.css" afterPath="$PROJECT_DIR$/website/foo/static/assets/css/bootstrap.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/assets/css/cs-skin-elastic.css" afterPath="$PROJECT_DIR$/website/foo/static/assets/css/cs-skin-elastic.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/assets/css/style.css" afterPath="$PROJECT_DIR$/website/foo/static/assets/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/assets/css/style.css.map" afterPath="$PROJECT_DIR$/website/foo/static/assets/css/style.css.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/assets/fonts/icomoon/icomoon.svg" afterPath="$PROJECT_DIR$/website/foo/static/assets/fonts/icomoon/icomoon.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/assets/js/dashboard.js" afterPath="$PROJECT_DIR$/website/foo/static/assets/js/dashboard.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/assets/js/init/chartjs-init.js" afterPath="$PROJECT_DIR$/website/foo/static/assets/js/init/chartjs-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/assets/js/init/datatables-init.js" afterPath="$PROJECT_DIR$/website/foo/static/assets/js/init/datatables-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/assets/js/init/flot-chart-init.js" afterPath="$PROJECT_DIR$/website/foo/static/assets/js/init/flot-chart-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/assets/js/init/fullcalendar-init.js" afterPath="$PROJECT_DIR$/website/foo/static/assets/js/init/fullcalendar-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/assets/js/init/gmap-init.js" afterPath="$PROJECT_DIR$/website/foo/static/assets/js/init/gmap-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/assets/js/init/peitychart-init.js" afterPath="$PROJECT_DIR$/website/foo/static/assets/js/init/peitychart-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/assets/js/init/vector-init.js" afterPath="$PROJECT_DIR$/website/foo/static/assets/js/init/vector-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/assets/js/init/weather-init.js" afterPath="$PROJECT_DIR$/website/foo/static/assets/js/init/weather-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/assets/js/main.js" afterPath="$PROJECT_DIR$/website/foo/static/assets/js/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/assets/js/widgets.js" afterPath="$PROJECT_DIR$/website/foo/static/assets/js/widgets.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/assets/scss/style.css" afterPath="$PROJECT_DIR$/website/foo/static/assets/scss/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/assets/scss/style.css.map" afterPath="$PROJECT_DIR$/website/foo/static/assets/scss/style.css.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/assets/scss/style.scss" afterPath="$PROJECT_DIR$/website/foo/static/assets/scss/style.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/rest_framework/css/bootstrap-theme.min.css" afterPath="$PROJECT_DIR$/website/foo/static/rest_framework/css/bootstrap-theme.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/rest_framework/css/bootstrap-tweaks.css" afterPath="$PROJECT_DIR$/website/foo/static/rest_framework/css/bootstrap-tweaks.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/rest_framework/css/bootstrap.min.css" afterPath="$PROJECT_DIR$/website/foo/static/rest_framework/css/bootstrap.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/rest_framework/css/default.css" afterPath="$PROJECT_DIR$/website/foo/static/rest_framework/css/default.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/rest_framework/css/font-awesome-4.0.3.css" afterPath="$PROJECT_DIR$/website/foo/static/rest_framework/css/font-awesome-4.0.3.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/rest_framework/css/prettify.css" afterPath="$PROJECT_DIR$/website/foo/static/rest_framework/css/prettify.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/rest_framework/docs/css/base.css" afterPath="$PROJECT_DIR$/website/foo/static/rest_framework/docs/css/base.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/rest_framework/docs/css/highlight.css" afterPath="$PROJECT_DIR$/website/foo/static/rest_framework/docs/css/highlight.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/rest_framework/docs/css/jquery.json-view.min.css" afterPath="$PROJECT_DIR$/website/foo/static/rest_framework/docs/css/jquery.json-view.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/rest_framework/docs/js/api.js" afterPath="$PROJECT_DIR$/website/foo/static/rest_framework/docs/js/api.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/rest_framework/docs/js/highlight.pack.js" afterPath="$PROJECT_DIR$/website/foo/static/rest_framework/docs/js/highlight.pack.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/rest_framework/docs/js/jquery.json-view.min.js" afterPath="$PROJECT_DIR$/website/foo/static/rest_framework/docs/js/jquery.json-view.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/rest_framework/fonts/fontawesome-webfont.svg" afterPath="$PROJECT_DIR$/website/foo/static/rest_framework/fonts/fontawesome-webfont.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/rest_framework/fonts/glyphicons-halflings-regular.svg" afterPath="$PROJECT_DIR$/website/foo/static/rest_framework/fonts/glyphicons-halflings-regular.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/rest_framework/js/ajax-form.js" afterPath="$PROJECT_DIR$/website/foo/static/rest_framework/js/ajax-form.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/rest_framework/js/bootstrap.min.js" afterPath="$PROJECT_DIR$/website/foo/static/rest_framework/js/bootstrap.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/rest_framework/js/coreapi-0.1.1.js" afterPath="$PROJECT_DIR$/website/foo/static/rest_framework/js/coreapi-0.1.1.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/rest_framework/js/csrf.js" afterPath="$PROJECT_DIR$/website/foo/static/rest_framework/js/csrf.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/rest_framework/js/default.js" afterPath="$PROJECT_DIR$/website/foo/static/rest_framework/js/default.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/rest_framework/js/jquery-3.3.1.min.js" afterPath="$PROJECT_DIR$/website/foo/static/rest_framework/js/jquery-3.3.1.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/rest_framework/js/prettify-min.js" afterPath="$PROJECT_DIR$/website/foo/static/rest_framework/js/prettify-min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/foo/static/web.config" afterPath="$PROJECT_DIR$/website/foo/static/web.config" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/geo.py" afterPath="$PROJECT_DIR$/website/geo.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/geocerca/admin.py" afterPath="$PROJECT_DIR$/website/geocerca/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/geocerca/apps.py" afterPath="$PROJECT_DIR$/website/geocerca/apps.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/geocerca/models.py" afterPath="$PROJECT_DIR$/website/geocerca/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/geocerca/tests.py" afterPath="$PROJECT_DIR$/website/geocerca/tests.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/geocerca/views.py" afterPath="$PROJECT_DIR$/website/geocerca/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/manage.py" afterPath="$PROJECT_DIR$/website/manage.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/models.py" afterPath="$PROJECT_DIR$/website/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/planificacion/admin.py" afterPath="$PROJECT_DIR$/website/planificacion/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/planificacion/apps.py" afterPath="$PROJECT_DIR$/website/planificacion/apps.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/planificacion/context_processors.py" afterPath="$PROJECT_DIR$/website/planificacion/context_processors.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/planificacion/migrations/0001_initial.py" afterPath="$PROJECT_DIR$/website/planificacion/migrations/0001_initial.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/planificacion/migrations/0002_planificacionpuntocontrol_orden.py" afterPath="$PROJECT_DIR$/website/planificacion/migrations/0002_planificacionpuntocontrol_orden.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/planificacion/migrations/0003_auto_20190526_1123.py" afterPath="$PROJECT_DIR$/website/planificacion/migrations/0003_auto_20190526_1123.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/planificacion/migrations/0004_auto_20190526_1125.py" afterPath="$PROJECT_DIR$/website/planificacion/migrations/0004_auto_20190526_1125.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/planificacion/models.py" afterPath="$PROJECT_DIR$/website/planificacion/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/planificacion/punto_geo.py" afterPath="$PROJECT_DIR$/website/planificacion/punto_geo.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/planificacion/tests.py" afterPath="$PROJECT_DIR$/website/planificacion/tests.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/planificacion/views.py" afterPath="$PROJECT_DIR$/website/planificacion/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/requirements.txt" afterPath="$PROJECT_DIR$/website/requirements.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/css/autocomplete.css" afterPath="$PROJECT_DIR$/website/static/admin/css/autocomplete.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/css/base.css" afterPath="$PROJECT_DIR$/website/static/admin/css/base.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/css/changelists.css" afterPath="$PROJECT_DIR$/website/static/admin/css/changelists.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/css/dashboard.css" afterPath="$PROJECT_DIR$/website/static/admin/css/dashboard.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/css/fonts.css" afterPath="$PROJECT_DIR$/website/static/admin/css/fonts.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/css/forms.css" afterPath="$PROJECT_DIR$/website/static/admin/css/forms.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/css/login.css" afterPath="$PROJECT_DIR$/website/static/admin/css/login.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/css/responsive.css" afterPath="$PROJECT_DIR$/website/static/admin/css/responsive.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/css/responsive_rtl.css" afterPath="$PROJECT_DIR$/website/static/admin/css/responsive_rtl.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/css/rtl.css" afterPath="$PROJECT_DIR$/website/static/admin/css/rtl.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/css/vendor/select2/LICENSE-SELECT2.md" afterPath="$PROJECT_DIR$/website/static/admin/css/vendor/select2/LICENSE-SELECT2.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/css/vendor/select2/select2.css" afterPath="$PROJECT_DIR$/website/static/admin/css/vendor/select2/select2.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/css/vendor/select2/select2.min.css" afterPath="$PROJECT_DIR$/website/static/admin/css/vendor/select2/select2.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/css/widgets.css" afterPath="$PROJECT_DIR$/website/static/admin/css/widgets.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/fonts/LICENSE.txt" afterPath="$PROJECT_DIR$/website/static/admin/fonts/LICENSE.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/fonts/README.txt" afterPath="$PROJECT_DIR$/website/static/admin/fonts/README.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/img/LICENSE" afterPath="$PROJECT_DIR$/website/static/admin/img/LICENSE" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/img/README.txt" afterPath="$PROJECT_DIR$/website/static/admin/img/README.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/img/calendar-icons.svg" afterPath="$PROJECT_DIR$/website/static/admin/img/calendar-icons.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/img/icon-addlink.svg" afterPath="$PROJECT_DIR$/website/static/admin/img/icon-addlink.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/img/icon-alert.svg" afterPath="$PROJECT_DIR$/website/static/admin/img/icon-alert.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/img/icon-calendar.svg" afterPath="$PROJECT_DIR$/website/static/admin/img/icon-calendar.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/img/icon-changelink.svg" afterPath="$PROJECT_DIR$/website/static/admin/img/icon-changelink.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/img/icon-clock.svg" afterPath="$PROJECT_DIR$/website/static/admin/img/icon-clock.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/img/icon-deletelink.svg" afterPath="$PROJECT_DIR$/website/static/admin/img/icon-deletelink.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/img/icon-no.svg" afterPath="$PROJECT_DIR$/website/static/admin/img/icon-no.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/img/icon-unknown-alt.svg" afterPath="$PROJECT_DIR$/website/static/admin/img/icon-unknown-alt.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/img/icon-unknown.svg" afterPath="$PROJECT_DIR$/website/static/admin/img/icon-unknown.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/img/icon-viewlink.svg" afterPath="$PROJECT_DIR$/website/static/admin/img/icon-viewlink.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/img/icon-yes.svg" afterPath="$PROJECT_DIR$/website/static/admin/img/icon-yes.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/img/inline-delete.svg" afterPath="$PROJECT_DIR$/website/static/admin/img/inline-delete.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/img/search.svg" afterPath="$PROJECT_DIR$/website/static/admin/img/search.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/img/selector-icons.svg" afterPath="$PROJECT_DIR$/website/static/admin/img/selector-icons.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/img/sorting-icons.svg" afterPath="$PROJECT_DIR$/website/static/admin/img/sorting-icons.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/img/tooltag-add.svg" afterPath="$PROJECT_DIR$/website/static/admin/img/tooltag-add.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/img/tooltag-arrowright.svg" afterPath="$PROJECT_DIR$/website/static/admin/img/tooltag-arrowright.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/SelectBox.js" afterPath="$PROJECT_DIR$/website/static/admin/js/SelectBox.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/SelectFilter2.js" afterPath="$PROJECT_DIR$/website/static/admin/js/SelectFilter2.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/actions.js" afterPath="$PROJECT_DIR$/website/static/admin/js/actions.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/actions.min.js" afterPath="$PROJECT_DIR$/website/static/admin/js/actions.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/admin/DateTimeShortcuts.js" afterPath="$PROJECT_DIR$/website/static/admin/js/admin/DateTimeShortcuts.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/admin/RelatedObjectLookups.js" afterPath="$PROJECT_DIR$/website/static/admin/js/admin/RelatedObjectLookups.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/autocomplete.js" afterPath="$PROJECT_DIR$/website/static/admin/js/autocomplete.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/calendar.js" afterPath="$PROJECT_DIR$/website/static/admin/js/calendar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/cancel.js" afterPath="$PROJECT_DIR$/website/static/admin/js/cancel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/change_form.js" afterPath="$PROJECT_DIR$/website/static/admin/js/change_form.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/collapse.js" afterPath="$PROJECT_DIR$/website/static/admin/js/collapse.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/collapse.min.js" afterPath="$PROJECT_DIR$/website/static/admin/js/collapse.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/core.js" afterPath="$PROJECT_DIR$/website/static/admin/js/core.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/inlines.js" afterPath="$PROJECT_DIR$/website/static/admin/js/inlines.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/inlines.min.js" afterPath="$PROJECT_DIR$/website/static/admin/js/inlines.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/jquery.init.js" afterPath="$PROJECT_DIR$/website/static/admin/js/jquery.init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/popup_response.js" afterPath="$PROJECT_DIR$/website/static/admin/js/popup_response.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/prepopulate.js" afterPath="$PROJECT_DIR$/website/static/admin/js/prepopulate.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/prepopulate.min.js" afterPath="$PROJECT_DIR$/website/static/admin/js/prepopulate.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/prepopulate_init.js" afterPath="$PROJECT_DIR$/website/static/admin/js/prepopulate_init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/timeparse.js" afterPath="$PROJECT_DIR$/website/static/admin/js/timeparse.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/urlify.js" afterPath="$PROJECT_DIR$/website/static/admin/js/urlify.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/jquery/LICENSE.txt" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/jquery/LICENSE.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/jquery/jquery.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/jquery/jquery.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/jquery/jquery.min.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/jquery/jquery.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/LICENSE.md" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/LICENSE.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/ar.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/ar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/az.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/az.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/bg.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/bg.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/ca.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/ca.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/cs.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/cs.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/da.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/da.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/de.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/de.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/el.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/el.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/en.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/en.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/es.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/es.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/et.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/et.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/eu.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/eu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/fa.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/fa.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/fi.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/fi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/fr.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/fr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/gl.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/gl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/he.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/he.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/hi.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/hi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/hr.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/hr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/hu.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/hu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/id.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/id.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/is.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/is.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/it.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/it.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/ja.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/ja.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/km.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/km.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/ko.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/ko.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/lt.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/lt.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/lv.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/lv.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/mk.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/mk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/ms.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/ms.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/nb.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/nb.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/nl.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/nl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/pl.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/pl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/pt-BR.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/pt-BR.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/pt.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/pt.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/ro.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/ro.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/ru.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/ru.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/sk.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/sk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/sr-Cyrl.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/sr-Cyrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/sr.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/sr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/sv.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/sv.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/th.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/th.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/tr.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/tr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/uk.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/uk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/vi.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/vi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/zh-CN.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/zh-CN.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/zh-TW.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/i18n/zh-TW.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/select2.full.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/select2.full.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/select2.full.min.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/select2/select2.full.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/xregexp/LICENSE.txt" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/xregexp/LICENSE.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/xregexp/xregexp.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/xregexp/xregexp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/admin/js/vendor/xregexp/xregexp.min.js" afterPath="$PROJECT_DIR$/website/static/admin/js/vendor/xregexp/xregexp.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/css/bootstrap.css" afterPath="$PROJECT_DIR$/website/static/assets/css/bootstrap.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/css/bootstrap.min.css" afterPath="$PROJECT_DIR$/website/static/assets/css/bootstrap.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/css/cs-skin-elastic.css" afterPath="$PROJECT_DIR$/website/static/assets/css/cs-skin-elastic.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/css/jquery-ui.css" afterPath="$PROJECT_DIR$/website/static/assets/css/jquery-ui.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/css/jquery.dataTables.min.css" afterPath="$PROJECT_DIR$/website/static/assets/css/jquery.dataTables.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/css/main.css" afterPath="$PROJECT_DIR$/website/static/assets/css/main.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/css/style.css" afterPath="$PROJECT_DIR$/website/static/assets/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/css/style.css.map" afterPath="$PROJECT_DIR$/website/static/assets/css/style.css.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/fonts/icomoon/icomoon.svg" afterPath="$PROJECT_DIR$/website/static/assets/fonts/icomoon/icomoon.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/js/bootstrap-notify.min.js" afterPath="$PROJECT_DIR$/website/static/assets/js/bootstrap-notify.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/js/bootstrap.min.js" afterPath="$PROJECT_DIR$/website/static/assets/js/bootstrap.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/js/dashboard.js" afterPath="$PROJECT_DIR$/website/static/assets/js/dashboard.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/js/init/chartjs-init.js" afterPath="$PROJECT_DIR$/website/static/assets/js/init/chartjs-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/js/init/datatables-init.js" afterPath="$PROJECT_DIR$/website/static/assets/js/init/datatables-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/js/init/flot-chart-init.js" afterPath="$PROJECT_DIR$/website/static/assets/js/init/flot-chart-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/js/init/fullcalendar-init.js" afterPath="$PROJECT_DIR$/website/static/assets/js/init/fullcalendar-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/js/init/gmap-init.js" afterPath="$PROJECT_DIR$/website/static/assets/js/init/gmap-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/js/init/peitychart-init.js" afterPath="$PROJECT_DIR$/website/static/assets/js/init/peitychart-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/js/init/vector-init.js" afterPath="$PROJECT_DIR$/website/static/assets/js/init/vector-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/js/init/weather-init.js" afterPath="$PROJECT_DIR$/website/static/assets/js/init/weather-init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/js/jquery-1.11.1.min.js" afterPath="$PROJECT_DIR$/website/static/assets/js/jquery-1.11.1.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/js/jquery-ui.js" afterPath="$PROJECT_DIR$/website/static/assets/js/jquery-ui.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/js/jquery.canvasjs.min.js" afterPath="$PROJECT_DIR$/website/static/assets/js/jquery.canvasjs.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/js/jquery.dataTables.min.js" afterPath="$PROJECT_DIR$/website/static/assets/js/jquery.dataTables.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/js/jquery.js" afterPath="$PROJECT_DIR$/website/static/assets/js/jquery.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/js/main.js" afterPath="$PROJECT_DIR$/website/static/assets/js/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/js/widgets.js" afterPath="$PROJECT_DIR$/website/static/assets/js/widgets.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/scss/style.css" afterPath="$PROJECT_DIR$/website/static/assets/scss/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/scss/style.css.map" afterPath="$PROJECT_DIR$/website/static/assets/scss/style.css.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/assets/scss/style.scss" afterPath="$PROJECT_DIR$/website/static/assets/scss/style.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/rest_framework/css/bootstrap-theme.min.css" afterPath="$PROJECT_DIR$/website/static/rest_framework/css/bootstrap-theme.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/rest_framework/css/bootstrap-tweaks.css" afterPath="$PROJECT_DIR$/website/static/rest_framework/css/bootstrap-tweaks.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/rest_framework/css/bootstrap.min.css" afterPath="$PROJECT_DIR$/website/static/rest_framework/css/bootstrap.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/rest_framework/css/default.css" afterPath="$PROJECT_DIR$/website/static/rest_framework/css/default.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/rest_framework/css/font-awesome-4.0.3.css" afterPath="$PROJECT_DIR$/website/static/rest_framework/css/font-awesome-4.0.3.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/rest_framework/css/prettify.css" afterPath="$PROJECT_DIR$/website/static/rest_framework/css/prettify.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/rest_framework/docs/css/base.css" afterPath="$PROJECT_DIR$/website/static/rest_framework/docs/css/base.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/rest_framework/docs/css/highlight.css" afterPath="$PROJECT_DIR$/website/static/rest_framework/docs/css/highlight.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/rest_framework/docs/css/jquery.json-view.min.css" afterPath="$PROJECT_DIR$/website/static/rest_framework/docs/css/jquery.json-view.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/rest_framework/docs/js/api.js" afterPath="$PROJECT_DIR$/website/static/rest_framework/docs/js/api.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/rest_framework/docs/js/highlight.pack.js" afterPath="$PROJECT_DIR$/website/static/rest_framework/docs/js/highlight.pack.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/rest_framework/docs/js/jquery.json-view.min.js" afterPath="$PROJECT_DIR$/website/static/rest_framework/docs/js/jquery.json-view.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/rest_framework/fonts/fontawesome-webfont.svg" afterPath="$PROJECT_DIR$/website/static/rest_framework/fonts/fontawesome-webfont.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/rest_framework/fonts/glyphicons-halflings-regular.svg" afterPath="$PROJECT_DIR$/website/static/rest_framework/fonts/glyphicons-halflings-regular.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/rest_framework/js/ajax-form.js" afterPath="$PROJECT_DIR$/website/static/rest_framework/js/ajax-form.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/rest_framework/js/bootstrap.min.js" afterPath="$PROJECT_DIR$/website/static/rest_framework/js/bootstrap.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/rest_framework/js/coreapi-0.1.1.js" afterPath="$PROJECT_DIR$/website/static/rest_framework/js/coreapi-0.1.1.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/rest_framework/js/csrf.js" afterPath="$PROJECT_DIR$/website/static/rest_framework/js/csrf.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/rest_framework/js/default.js" afterPath="$PROJECT_DIR$/website/static/rest_framework/js/default.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/rest_framework/js/jquery-3.3.1.min.js" afterPath="$PROJECT_DIR$/website/static/rest_framework/js/jquery-3.3.1.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/rest_framework/js/prettify-min.js" afterPath="$PROJECT_DIR$/website/static/rest_framework/js/prettify-min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/static/web.config" afterPath="$PROJECT_DIR$/website/static/web.config" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/website/__init__.py" afterPath="$PROJECT_DIR$/website/website/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/website/celeryapp.py" afterPath="$PROJECT_DIR$/website/website/celeryapp.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/website/settings.py" afterPath="$PROJECT_DIR$/website/website/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/website/urls.py" afterPath="$PROJECT_DIR$/website/website/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/website/web.config" afterPath="$PROJECT_DIR$/website/website/web.config" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/website/website/wsgi.py" afterPath="$PROJECT_DIR$/website/website/wsgi.py" />
+    </list>
+    <ignored path="geocercas.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="geocercas" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="local.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/website/website/local.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2232">
+              <caret line="126" column="4" selection-start-line="126" selection-start-column="4" selection-end-line="126" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="home_index.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/website/apps/home/views/home_index.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1749">
+              <caret line="1124" column="42" selection-start-line="1124" selection-start-column="34" selection-end-line="1124" selection-end-column="42" />
+              <folding>
+                <element signature="e#0#72#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="consulta_registros.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/website/apps/home/templates/consulta_registros.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1062">
+              <caret line="154" column="20" selection-start-line="154" selection-start-column="20" selection-end-line="154" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/.virtualenvs/wisetrack_qr/lib/python3.5/site-packages/sql_server/pyodbc/base.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="5634">
+              <caret line="318" column="0" selection-start-line="318" selection-start-column="0" selection-end-line="318" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/website/planificacion/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1296">
+              <caret line="73" column="19" selection-start-line="73" selection-start-column="19" selection-end-line="73" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/.virtualenvs/wisetrack_qr/lib/python3.5/site-packages/django/db/models/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#53#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/website/utils/utils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="347">
+              <caret line="166" column="4" selection-start-line="166" selection-start-column="4" selection-end-line="166" selection-end-column="4" />
+              <folding>
+                <element signature="e#0#34#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/website/utils/utils.py" />
+        <option value="$PROJECT_DIR$/website/apps/home/views/home_index.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-2" />
+    <option name="y" value="-1" />
+    <option name="width" value="1370" />
+    <option name="height" value="745" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geocercas" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geocercas" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geocercas" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geocercas" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geocercas" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="website" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geocercas" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geocercas" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="website" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geocercas" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geocercas" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="website" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="home" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geocercas" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geocercas" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="website" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="home" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$USER_HOME$/.virtualenvs/wisetrack_qr/bin/python3" />
+    <property name="settings.editor.selected.configurable" value="PyConsoleConfigurable.Python Console" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+  </component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings sdk-home="$USER_HOME$/.virtualenvs/uni/bin/python">
+        <option name="mySdkHome" value="$USER_HOME$/.virtualenvs/uni/bin/python" />
+      </console-settings>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.geocerca">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="geocercas" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="geocercas" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Attests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="geocercas" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="geocercas" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Nosetests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="geocercas" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="geocercas" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="py.test">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="geocercas" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="testToRun" value="" />
+      <option name="keywords" value="" />
+      <option name="params" value="" />
+      <option name="USE_PARAM" value="false" />
+      <option name="USE_KEYWORD" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="geocerca" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="website.local" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/.virtualenvs/wisetrack_qr/bin/python3" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="geocercas" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/website/manage.py" />
+      <option name="PARAMETERS" value="runserver" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Python.geocerca" />
+    </list>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3946ecba-c101-4338-b9f7-99b75678e394" name="Default" comment="" />
+      <created>1571180431746</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1571180431746</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-2" y="-1" width="1370" height="745" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24981412" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24981412" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29073483" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="4" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/website/website/local.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2232">
+          <caret line="126" column="4" selection-start-line="126" selection-start-column="4" selection-end-line="126" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/website/apps/home/views/home_index.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#72#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.virtualenvs/wisetrack_qr/lib/python3.5/site-packages/sql_server/pyodbc/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5634">
+          <caret line="318" column="0" selection-start-line="318" selection-start-column="0" selection-end-line="318" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/website/planificacion/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1296">
+          <caret line="73" column="19" selection-start-line="73" selection-start-column="19" selection-end-line="73" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.virtualenvs/wisetrack_qr/lib/python3.5/site-packages/django/db/models/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/website/utils/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2160">
+          <caret line="124" column="4" selection-start-line="124" selection-start-column="4" selection-end-line="124" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/website/website/local.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/website/apps/home/views/home_index.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17694">
+          <caret line="983" column="26" selection-start-line="983" selection-start-column="26" selection-end-line="983" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#72#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/website/planificacion/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1296">
+          <caret line="73" column="19" selection-start-line="73" selection-start-column="19" selection-end-line="73" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.virtualenvs/wisetrack_qr/lib/python3.5/site-packages/django/db/models/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/website/utils/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2628">
+          <caret line="150" column="37" selection-start-line="150" selection-start-column="37" selection-end-line="150" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.virtualenvs/wisetrack_qr/lib/python3.5/site-packages/django/db/models/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/website/planificacion/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1296">
+          <caret line="73" column="19" selection-start-line="73" selection-start-column="19" selection-end-line="73" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.virtualenvs/wisetrack_qr/lib/python3.5/site-packages/sql_server/pyodbc/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5634">
+          <caret line="318" column="0" selection-start-line="318" selection-start-column="0" selection-end-line="318" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/website/website/local.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2232">
+          <caret line="126" column="4" selection-start-line="126" selection-start-column="4" selection-end-line="126" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/website/utils/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="347">
+          <caret line="166" column="4" selection-start-line="166" selection-start-column="4" selection-end-line="166" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/website/apps/home/views/home_index.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1749">
+          <caret line="1124" column="42" selection-start-line="1124" selection-start-column="34" selection-end-line="1124" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#72#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/website/apps/home/templates/consulta_registros.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1062">
+          <caret line="154" column="20" selection-start-line="154" selection-start-column="20" selection-end-line="154" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
