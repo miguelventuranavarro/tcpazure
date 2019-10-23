@@ -122,14 +122,28 @@ def get_list_lpn(carga_bulto):
     )
     return val
 
-def get_match(list_marcaciones_match, list_lpn, list_id_control):
+def get_list_marcaciones_match(list_lpn):
+    """
+    Devuelve una lista de marcacionesmatch filtrados por lpn
+    :param list_lpn: lista de lpn, type list
+    :return: list_marcaciones_match, type list
+    """
+    list_marcaciones_match = []
+    for l in chunks(list_lpn, 2000):
+        list_marcaciones_match += list(MarcacionesMatch.objects.filter(
+                lpn__in=l
+            ).values().all())
+
+    return list_marcaciones_match
+
+def get_match(list_marcaciones_match, list_lpn, id_control):
     """
     Devuelve el numero de marcaciones coincidentes
     :param list_lpn: lista de lpn, type list
     :param list_id_control: type list
     :return: count, type integer
     """
-    count = len([lmm for lmm in list_marcaciones_match if lmm.get('lpn') in list_lpn and lmm.get('id_control') in list_id_control])
+    count = len([lmm for lmm in list_marcaciones_match if lmm.get('lpn') in list_lpn and lmm.get('id_control') == id_control])
     # count = 0
     # for l in chunks(list_lpn, 2000):
     #     count += MarcacionesMatch.objects.filter(
@@ -139,14 +153,14 @@ def get_match(list_marcaciones_match, list_lpn, list_id_control):
     #     #print('match', count, l)
     return count
 
-def get_inside(list_marcaciones_match, list_lpn, list_id_control):
+def get_inside(list_marcaciones_match, list_lpn, id_control):
     """
     Devuelve el numero de marcaciones dentro de la geocerca
     :param list_lpn: lista de lpn, type list
     :param id_control: type int
     :return: count, type integer
     """
-    count = len([lmm for lmm in list_marcaciones_match if lmm.get('lpn') in list_lpn and lmm.get('id_control') in list_id_control and lmm.get('dentro') == 1])
+    count = len([lmm for lmm in list_marcaciones_match if lmm.get('lpn') in list_lpn and lmm.get('id_control') == id_control and lmm.get('dentro') == 1])
     # count = 0
     # for l in chunks(list_lpn, 2000):
     #     count += MarcacionesMatch.objects.filter(
@@ -157,14 +171,14 @@ def get_inside(list_marcaciones_match, list_lpn, list_id_control):
     #     #print('inside', count)
     return count
 
-def get_outside(list_marcaciones_match, list_lpn, list_id_control):
+def get_outside(list_marcaciones_match, list_lpn, id_control):
     """
     Devuelve el numero de marcaciones fuera de la geocerca
     :param list_lpn: lista de lpn, type list
     :param id_control: type int
     :return: count, type integer
     """
-    count = len([lmm for lmm in list_marcaciones_match if lmm.get('lpn') in list_lpn and lmm.get('id_control') in list_id_control and lmm.get('dentro') == 0])
+    count = len([lmm for lmm in list_marcaciones_match if lmm.get('lpn') in list_lpn and lmm.get('id_control') == id_control and lmm.get('dentro') == 0])
     # count = 0
     # for l in chunks(list_lpn, 2000):
     #     count += MarcacionesMatch.objects.filter(

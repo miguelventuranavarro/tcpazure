@@ -49,6 +49,7 @@ from utils.utils import (
     get_carga_bulto_filtered,
     get_count_marcaciones,
     get_marcaciones_for_report,
+    get_list_marcaciones_match,
 )
 
 class index(SingleObjectMixin, FormView):
@@ -772,8 +773,8 @@ def Excel(request):
                     marca = MarcacionesMatch.objects.filter(lpn=row2, dentro=1,
                                                             id_control=k).first()
                     ws.cell(row=cont,
-                            column=clm).value = marca.fecha_marca.strftime(fmt)
-                    ws.cell(row=cont, column=clm + 1).value = marca.punto
+                            column=clm).value = marca.fecha_marca.strftime(fmt) if marca and marca.fecha_marca else ''
+                    ws.cell(row=cont, column=clm + 1).value = marca.punto if marca else ''
                     ws.cell(row=cont, column=clm).fill = greenFill
                     ws.cell(row=cont, column=clm + 1).fill = greenFill
                     clm = clm + 1
@@ -961,7 +962,8 @@ def consulta_registros(request):
             contf1 = 0
             contf2 = 0
             control.append('CD')
-            control = ["Local" if max_puntos==x else 'Control ' + str(x - 1) for x in range(2, max_puntos + 1)]
+            control_ = ["Local" if max_puntos==x else 'Control ' + str(x - 1) for x in range(2, max_puntos + 1)]
+            control += control_
             list_id_control = [x for x in range(1, max_puntos + 1)]
             # for i in range(1,max_puntos + 1):
             #     if i < max_puntos:
@@ -975,18 +977,21 @@ def consulta_registros(request):
 
                     #orden = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
 
-            list_marcaciones_match = list(
-                MarcacionesMatch.objects.filter(
-                    fecha_marca__range=[fecini, fecfin]).values().all())
+            # list_marcaciones_match = list(
+            #     MarcacionesMatch.objects.filter(
+            #         fecha_marca__range=[fecini, fecfin]).values().all())
 
             l = get_list_lpn(carga_bulto)
+            list_marcaciones_match = get_list_marcaciones_match(l)
             #match = get_match(l, list_id_control)
-            match = get_match(list_marcaciones_match, l, list_id_control)
-            inside = get_inside(list_marcaciones_match, l, list_id_control)
-            outside = get_outside(list_marcaciones_match, l, list_id_control)
-            total.append(match)
-            dentro.append(inside)
-            fuera.append(outside)
+            match = [get_match(list_marcaciones_match, l, idc) for idc in list_id_control]
+            #inside = get_inside(list_marcaciones_match, l, list_id_control)
+            inside = [get_inside(list_marcaciones_match, l, idc) for idc in list_id_control]
+            #outside = get_outside(list_marcaciones_match, l, list_id_control)
+            outside = [get_outside(list_marcaciones_match, l, idc) for idc in list_id_control]
+            total += match
+            dentro += inside
+            fuera += outside
             numCarga = []
 
             carga_bulto = get_dict_carga_bulto(carga_bulto)
