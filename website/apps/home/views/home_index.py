@@ -768,10 +768,11 @@ def Excel(request):
             clm = 8
             k = 0
             for c in cn:
-                k = k + 1
+                #k = k + 1
                 if 'x' in c:
-                    marca = MarcacionesMatch.objects.filter(lpn=row2, dentro=1,
-                                                            id_control=k).first()
+                    #marca = MarcacionesMatch.objects.filter(lpn=row2, dentro=1,
+                    #                                        id_control=k).first()
+                    marca = MarcacionesMatch.objects.filter(lpn=row2, dentro=1).first()
                     ws.cell(row=cont,
                             column=clm).value = marca.fecha_marca.strftime(fmt) if marca and marca.fecha_marca else ''
                     ws.cell(row=cont, column=clm + 1).value = marca.punto if marca else ''
@@ -807,12 +808,12 @@ def Excel(request):
                         marc.append(t.id_marcacion)
 
             for ma in marc:
-                ska = PlanificacionCargaPuntoControl.objects.get(id=ma)
+                ska = PlanificacionCargaPuntoControl.objects.filter(id=ma).first()
                 ws.cell(row=cont,
-                        column=clm + j).value = ska.fecha_registro.strftime(fmt)
+                        column=clm + j).value = ska.fecha_registro.strftime(fmt) if ska and ska.fecha_registro else ''
                 ws.cell(row=cont, column=clm + j).fill = yellowFill
                 ws.cell(row=cont,
-                        column=clm + j + 1).value = ska.latitud + ',' + ska.longitud
+                        column=clm + j + 1).value = ska.latitud + ',' + ska.longitud if ska else ''
                 ws.cell(row=cont, column=clm + j + 1).fill = yellowFill
                 j = j + 2
             cont = cont + 1
