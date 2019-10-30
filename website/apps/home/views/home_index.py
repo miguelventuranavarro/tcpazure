@@ -507,7 +507,7 @@ def editgeo(request, id):
         form = planificacionGeocercaForm(request.POST or None,
                                          instance=geocerca)
         cods = PlanificacionGeocerca.objects.filter(codigo=codigo).exclude(
-            id__in=id)
+            id=id)
         if len(cods) > 0:
             success = False
             message = 'Error, lo sentimos el código de geocerca ya existe'
