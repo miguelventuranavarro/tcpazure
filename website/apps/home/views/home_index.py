@@ -613,7 +613,7 @@ class Upmodal1(TemplateView):
             for mt in matchs:
                 geo = PuntoGeo.hallarGeo(mt.punto)
                 dic = {}
-                dic['marca'] = mt.id_marcacion
+                dic['lpn'] = mt.lpn
                 dic['punto'] = mt.punto
                 dic['fecha'] = mt.fecha_marca
                 if geo != None:
