@@ -666,6 +666,7 @@ def Excel(request):
     data5 = request.POST.getlist('data5[]')
     data6 = request.POST.getlist('data6[]')
     data7 = request.POST.getlist('data7[]')
+    data8 = request.POST.getlist('data8[]')
     control = request.POST.getlist('control[]')
     om = request.POST.getlist('om[]')
     # Export excel
@@ -696,8 +697,9 @@ def Excel(request):
     ws['C1'] = '#Controles'
     ws['D1'] = 'Ruta'
     ws['E1'] = 'Destino'
-    ws['F1'] = 'Fecha de carga'
-    ws['G1'] = 'Transportista'
+    ws['F1'] = 'Paradas'
+    ws['G1'] = 'Fecha de carga'
+    ws['H1'] = 'Transportista'
 
     cnt = []
     equis = []
@@ -753,10 +755,10 @@ def Excel(request):
 
     cont = 2
 
-    for row1, row2, row3, row4, row5, row6, row7, cn, o in zip(data1, data2,
+    for row1, row2, row3, row4, row5, row6, row7, row8, cn, o in zip(data1, data2,
                                                                data3, data4,
                                                                data5, data6,
-                                                               data7, cnt, om):
+                                                               data7, data8, cnt, om):
         if row2 != '':
             ws.cell(row=cont, column=1).value = row1
             ws.cell(row=cont, column=2).value = row2
@@ -765,6 +767,7 @@ def Excel(request):
             ws.cell(row=cont, column=5).value = row5
             ws.cell(row=cont, column=6).value = row6
             ws.cell(row=cont, column=7).value = row7
+            ws.cell(row=cont, column=8).value = row8
             clm = 8
             k = 0
             for c in cn:
@@ -927,7 +930,7 @@ def consulta_registros(request):
                 query['transportista'] = request.user.username
 
             #import pdb; pdb.set_trace()
-            carga_bulto = PlanificacionCargaBulto.objects.filter(**query).order_by('numero_carga','destino')
+            carga_bulto = PlanificacionCargaBulto.objects.filter(**query).order_by('numero_carga','destino')[0:100]
             #max_puntos = 0
             # for cb in carga_bulto:
             #     print (cb)
@@ -1063,6 +1066,7 @@ def consulta_registros(request):
                 dic['destino'] = geo.get('nombre')
                 dic['fecha_carga'] = cb.get('fecha_carga')
                 dic['transportista'] = cb.get('transportista')
+                dic['paradas'] = cb.get('paradas')
                 orden = get_num_planificacion_punto_control(list_planificacion_punto_control, cb.get('ruta_codigo'))
                 contx = 0
                 cont_ = 0

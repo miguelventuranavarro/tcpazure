@@ -58,6 +58,7 @@ def get_dict_carga_bulto(carga_bulto):
         'numero_lpn',
         'fecha_carga',
         'transportista',
+        'paradas',
     ))
     return val
 
