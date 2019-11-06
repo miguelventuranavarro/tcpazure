@@ -94,7 +94,7 @@
     	<div class="clearfix"></div>
 
 <script type="text/javascript"
-        src="http://maps.google.com/maps/api/js?key=AIzaSyBUzO3TXD833UdmanX6SJsWjNByf-oe6Cg&sensor=false&libraries=drawing"></script>
+        src="http://maps.google.com/maps/api/js?key=AIzaSyBUzO3TXD833UdmanX6SJsWjNByf-oe6Cg&sensor=false&libraries=drawing,places"></script>
         <style type="text/css">
             #map {
                 padding: 0;
@@ -234,6 +234,18 @@
                     editable: true,
                     draggable: true
                 };
+
+                id_direccion = new google.maps.places.Autocomplete(
+                  (document.getElementById('id_direccion')),
+                    { types: ['address'] });
+
+                google.maps.event.addListener(id_direccion, 'place_changed', function () {
+                    lat = id_direccion.getPlace().geometry.location.lat()
+                    lng = id_direccion.getPlace().geometry.location.lng()
+                    map.setZoom(16)
+                    map.setCenter({lat: lat, lng: lng})
+                });
+
                 // Creates a drawing manager attached to the map that allows the user to draw
                 // markers, lines, and shapes.
                 drawingManager = new google.maps.drawing.DrawingManager({
