@@ -96,32 +96,52 @@
                                             <th>Número de Carga</th>
                                             <th>Tienda</th>
 			                                <th>Número de Bultos</th>
-                                            <th>Peso</th>
+                                            <th>Peso (Kg.)</th>
                                             <!-- <th>Tarifa</th> -->
-			                                <th>Total</th>	
+			                                <th>A Pagar Cumple (S/.)</th>
+											<th>A Pagar General (S/.)</th>
 	                                    </tr>
 	                                </thead>
 		                            <tbody>
-		                            {% for detalle in detalles %}
-									    <tr>
-			                                <td>{{ detalle.numero_carga }}</td>
-									    	<td>{{ detalle.tienda }}</td>
-			                                <td>{{ detalle.numero_bultos }}</td>
-                                            <td>{{ detalle.pesos }}</td>
-                                            <!-- <td>{{ detalle.tarifa }}</td> -->
-		                                    <td>{{ detalle.total }}</td>
-	                                    </tr>
-                                    {% endfor %}
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        
-                                        <td>Gran Total</td>
-                                        <td>{{gran_total}}</td>
-                                    </tr>
+										<form name="form" method="post" action="{% url 'export-pre-liquidacion' %}">
+											{% csrf_token %}
+											{% for detalle in detalles %}
+												{% include 'export_hidden_pre_liquidacion.html' with detalle=detalle %}
+												<input type="hidden" name="gran_total" value="{{ gran_total }}">
+												<input type="hidden" name="total_item_paid_general" value="{{ total_item_paid_general }}">
+												<tr>
+													<td>{{ detalle.numero_carga }}</td>
+													<td>{{ detalle.tienda }}</td>
+													<td>{{ detalle.numero_bultos }}</td>
+													<td>{{ detalle.pesos }}</td>
+													<!-- <td>{{ detalle.tarifa }}</td> -->
+													<td>{{ detalle.total }}</td>
+													<td>{{ detalle.item_paid_general }}</td>
+												</tr>
+											{% endfor %}
+											{% if detalles %}
+											<tr><td colspan="6">&nbsp;</td></tr>
+											<tr>
+												<td colspan="4">&nbsp;</td>
+												<td>Total a pagar cumple</td>
+												<td>{{ gran_total }}</td>
+											</tr>
+											<tr>
+												<td colspan="4">&nbsp;</td>
+												<td>Total a pagar general</td>
+												<td>{{ total_item_paid_general }}</td>
+											</tr>
+											<tr>
+												<td colspan="6"><button type="submit">Exportar</button></td>
+
+											</tr>
+											{% endif %}
+										</form>
 									</tbody>
 								</table>
+								<div>
+
+								</div>
 								<div class="pagination">
 								    <span class="step-links">
 								        {% if data.has_previous %}

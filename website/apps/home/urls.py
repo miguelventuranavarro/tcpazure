@@ -6,6 +6,7 @@ from django.urls import include, path
 from apps.home.views import home_index as views
 from apps.home.views.home_index import *
 from django.contrib.auth.decorators import login_required
+from apps.home.views.export_pre_liquidacion import ExportPreLiquidacion
 
 
 
@@ -39,4 +40,6 @@ urlpatterns = [
     #path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     #path('logout/', auth_views.LogoutView.as_view(template_name='home/login.html'), name='logout'),
     path('accounts/', include('django.contrib.auth.urls')), # new
+
+    url(r'^export-pre-liquidacion/', login_required(ExportPreLiquidacion.as_view()), name='export-pre-liquidacion'),
 ]

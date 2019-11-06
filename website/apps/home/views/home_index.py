@@ -810,6 +810,7 @@ def Excel(request):
                         marc.append(t.id_marcacion)
 
             for ma in marc:
+
                 ska = PlanificacionCargaPuntoControl.objects.filter(id=ma).first()
                 ws.cell(row=cont,
                         column=clm + j).value = ska.fecha_registro.strftime(fmt) if ska and ska.fecha_registro else ''
@@ -832,7 +833,10 @@ def pre_liquidacion(request):
     if PuntoGeo.permisos(request.user.id).pre_liquidacion:
         import decimal
         detalles = []
-        gran_total = 0
+        gran_total = decimal.Decimal('0.00')
+        total_item_paid_general = decimal.Decimal('0.00')
+        total = decimal.Decimal('0.00')
+        val_zero = decimal.Decimal('0.00')
         if "POST" == request.method:
             numero_carga = request.POST.get('numero_carga')
             fecini = request.POST.get('fecini')
@@ -875,21 +879,29 @@ def pre_liquidacion(request):
                     marcaciones = len(MarcacionesMatch.objects.filter(lpn=row.numero_lpn).filter(id_control=marca_final).filter(dentro=1))
                     if marcaciones > 0:
                         cont = cont + 1
-                tarifa = 0
+
+                tarifa = PlanificacionGeocerca.objects.get(codigo=val[1]).tarifa or val_zero
                 if cont == n_bultos:
-                    tarifa = PlanificacionGeocerca.objects.get(codigo=val[1]).tarifa
+                    total = round(decimal.Decimal(peso) * tarifa, 2)
+                else:
+                    item_paid_general = round(decimal.Decimal(peso) * tarifa, 2)
 
                 dic['pesos'] = round(peso,2)
                 dic['tarifa'] = tarifa
-                dic['total'] = round(decimal.Decimal(peso)*tarifa,2)
-                gran_total = gran_total + round(decimal.Decimal(peso)*tarifa,2)
+                dic['total'] = total
+                dic['item_paid_general'] = item_paid_general
+                gran_total = gran_total + total
+                total_item_paid_general = total_item_paid_general + item_paid_general
                 detalles.append(dic)
             
 
 
 
 
-        return render(request, 'pre_liquidacion.html',{'detalles':detalles, 'gran_total':gran_total})
+        return render(request, 'pre_liquidacion.html',
+                      {'detalles':detalles,
+                       'gran_total':gran_total,
+                       'total_item_paid_general': total_item_paid_general})
     else:
         return render(request, 'permisos.html')
 
