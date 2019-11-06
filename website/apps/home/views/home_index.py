@@ -604,7 +604,7 @@ class Upmodal1(TemplateView):
             todas = MarcacionesMatch.objects.filter(lpn=lpn).filter(dentro=0)
             matchs = []
             for t in todas:
-                todas1 = MarcacionesMatch.objects.filter(lpn=lpn).filter(dentro=1).filter(id_marcacion = t.id_marcacion)
+                todas1 = MarcacionesMatch.objects.filter(lpn=lpn).filter(dentro=1).filter(id_marcacion = t.id_marcacion)[0:100]
                 if len(todas1) == 0:
                     if not t.id_marcacion in marcaciones:
                         marcaciones.append(t.id_marcacion)
@@ -695,12 +695,11 @@ def Excel(request):
     ws['A1'] = 'Número de carga'
     ws['B1'] = 'Número de bandeja'
     ws['C1'] = '#Controles'
-    ws['D1'] = 'Ruta'
-    ws['E1'] = 'Destino'
-    ws['F1'] = 'Paradas'
+    ws['D1'] = 'Paradas'
+    ws['E1'] = 'Ruta'
+    ws['F1'] = 'Destino'
     ws['G1'] = 'Fecha de carga'
     ws['H1'] = 'Transportista'
-
     cnt = []
     equis = []
     for cn in control:
@@ -717,7 +716,7 @@ def Excel(request):
     #             equis[i] = 1
     #         i = i + 1
 
-    c = 8
+    c = 9
     i = 0
     for ct in cnt[0]:
         if i < len(ct):
@@ -768,7 +767,7 @@ def Excel(request):
             ws.cell(row=cont, column=6).value = row6
             ws.cell(row=cont, column=7).value = row7
             ws.cell(row=cont, column=8).value = row8
-            clm = 8
+            clm = 9
             k = 0
             for c in cn:
                 #k = k + 1
@@ -930,7 +929,7 @@ def consulta_registros(request):
                 query['transportista'] = request.user.username
 
             #import pdb; pdb.set_trace()
-            carga_bulto = PlanificacionCargaBulto.objects.filter(**query).order_by('numero_carga','destino')[0:100]
+            carga_bulto = PlanificacionCargaBulto.objects.filter(**query).order_by('numero_carga','destino')[50:100]
             #max_puntos = 0
             # for cb in carga_bulto:
             #     print (cb)

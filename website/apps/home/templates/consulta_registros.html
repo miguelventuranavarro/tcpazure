@@ -199,9 +199,9 @@
 	                                    	<th>Número de Carga</th>
 			                                <th>Número de Bandeja</th>
 			                                <th>#Controles</th>
+											<th>Paradas</th>
 											<th>Ruta</th>
 											<th>Destino</th>
-											<th>Paradas</th>
 											<th>Fecha de carga</th>
 											<th>Transportista</th>
 											{% for control in resumen.control %}
@@ -220,9 +220,9 @@
 									<input type="hidden" name="data1[]" value="{{ detalle.numero_carga }}" />
 									<input type="hidden" name="data2[]" value="{{ detalle.numero_lpn}}" />
 									<input type="hidden" name="data3[]" value="{{ detalle.numero_controles }}" />
-									<input type="hidden" name="data4[]" value="{{ detalle.ruta_codigo  }}" />
-									<input type="hidden" name="data5[]" value="{{ detalle.destino }}" />
-									<input type="hidden" name="data6[]" value="{{ detalle.paradas }}" />
+									<input type="hidden" name="data4[]" value="{{ detalle.paradas }}" />
+									<input type="hidden" name="data5[]" value="{{ detalle.ruta_codigo  }}" />
+									<input type="hidden" name="data6[]" value="{{ detalle.destino }}" />
 									<input type="hidden" name="data7[]" value="{{ detalle.fecha_carga  }}" />
 									<input type="hidden" name="data8[]" value="{{ detalle.transportista  }}" />
 									<input type="hidden" name="control[]" value="{{ detalle.control }}" />
@@ -236,9 +236,9 @@
 										<td>{{ detalle.numero_carga }}</td>
 										<td>{{ detalle.numero_lpn }}</td>
 										<td>{{ detalle.numero_controles }}</td>
+										<td>{{ detalle.paradas }}</td>
 										<td>{{ detalle.ruta_codigo }}</td>
 										<td>{{ detalle.destino }}</td>
-										<td>{{ detalle.paradas }}</td>
 										<td>{{ detalle.fecha_carga }}</td>
 										<td>{{ detalle.transportista  }}</td>
 										{% for cnt in detalle.control %}
