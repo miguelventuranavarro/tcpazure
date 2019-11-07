@@ -941,7 +941,7 @@ def consulta_registros(request):
                 query['transportista'] = request.user.username
 
             #import pdb; pdb.set_trace()
-            carga_bulto = PlanificacionCargaBulto.objects.filter(**query).order_by('numero_carga','destino')[50:100]
+            carga_bulto = PlanificacionCargaBulto.objects.filter(**query).order_by('numero_carga','destino')
             #max_puntos = 0
             # for cb in carga_bulto:
             #     print (cb)
@@ -990,7 +990,7 @@ def consulta_registros(request):
             #     cont2 = 0
                 #for cb in carga_bulto:
 
-                    #orden = len(PlanificacionPuntoControl.objects.filter(ruta_codigo = cb.ruta_codigo))
+                    #orden = len(PlanificacionPuntotk_v2_2.2.2.1.1Control.objects.filter(ruta_codigo = cb.ruta_codigo))
 
             # list_marcaciones_match = list(
             #     MarcacionesMatch.objects.filter(
@@ -1017,6 +1017,8 @@ def consulta_registros(request):
                 dic = {}
                 innercnt = []
                 geo = get_planificacion_geocerca(list_planificacion_geocerca, cb.get('destino'))
+                nc = get_num_planificacion_punto_control(
+                    list_planificacion_punto_control, cb.get('ruta_codigo'))
                 if not cb.get('numero_carga') + "-" + str(cb.get('destino')) in numCarga:
                     dic1 = {}
                     innercnt1 = []
@@ -1024,12 +1026,13 @@ def consulta_registros(request):
                     dic1['numero_carga'] = cb.get('numero_carga') + "-" + str(
                         cb.get('destino'))
                     dic1['numero_lpn'] = ''
-                    dic1['numero_controles'] = ''
-                    dic1['ruta_codigo'] = ''
+                    dic1['numero_controles'] = nc
+                    dic1['paradas'] = cb.get('paradas')
+                    dic1['ruta_codigo'] = cb.get('ruta_codigo')
                     #dic1['destino'] = geo.nombre
                     dic1['destino'] = geo.get('nombre', '')
-                    dic1['fecha_carga'] = ''
-                    dic1['transportista'] = ''
+                    dic1['fecha_carga'] = cb.get('fecha_carga')
+                    dic1['transportista'] = cb.get('transportista')
                     dic1['om'] = 0
                     dic1['display'] = 'table-row'
                     orden = get_num_planificacion_punto_control(list_planificacion_punto_control, cb.get('ruta_codigo'))
@@ -1069,7 +1072,7 @@ def consulta_registros(request):
                     detalles.append(dic1)
 
 
-                nc = get_num_planificacion_punto_control(list_planificacion_punto_control, cb.get('ruta_codigo'))
+                #nc = get_num_planificacion_punto_control(list_planificacion_punto_control, cb.get('ruta_codigo'))
                 dic['numero_carga'] = cb.get('numero_carga') + "-" + str(cb.get('destino'))
                 dic['numero_lpn'] = cb.get('numero_lpn')
                 dic['numero_controles'] = nc
