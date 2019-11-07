@@ -99,7 +99,7 @@
             #map {
                 padding: 0;
                 margin: 0;
-                width: 540px;
+                width: 445px;
                 height: 390px;
             }
             #panel {
@@ -244,6 +244,12 @@
                     lng = id_direccion.getPlace().geometry.location.lng()
                     map.setZoom(16)
                     map.setCenter({lat: lat, lng: lng})
+                    console.log(lat, lng, '<<<<<')
+
+                    var marker = new google.maps.Marker({
+                        position: {lat: lat, lng: lng},
+                        map: map,
+                     });
                 });
 
                 // Creates a drawing manager attached to the map that allows the user to draw
