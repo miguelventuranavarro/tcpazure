@@ -235,6 +235,26 @@
                     draggable: true
                 };
 
+                var latlng_direccion = (input) => {
+                    let input_array = input.split(',').map(x => Number(x))
+                    return input_array
+
+                }
+                var id_direccion_obj = document.getElementById('id_direccion')
+                id_direccion_obj.onpaste = function(event) {
+                    let id_direccion_value = event.clipboardData.getData('text/plain')
+                    let latlng_direccion_result = latlng_direccion(id_direccion_value)
+                    let lat = latlng_direccion_result[0]
+                    let lng = latlng_direccion_result[1]
+                    map.setZoom(16)
+                    map.setCenter({lat: lat, lng: lng})
+                    var marker = new google.maps.Marker({
+                        position: {lat: lat, lng: lng},
+                        map: map,
+                     });
+                    //return false;
+                };
+
                 id_direccion = new google.maps.places.Autocomplete(
                   (document.getElementById('id_direccion')),
                     { types: ['address'] });
@@ -244,7 +264,6 @@
                     lng = id_direccion.getPlace().geometry.location.lng()
                     map.setZoom(16)
                     map.setCenter({lat: lat, lng: lng})
-                    console.log(lat, lng, '<<<<<')
 
                     var marker = new google.maps.Marker({
                         position: {lat: lat, lng: lng},
