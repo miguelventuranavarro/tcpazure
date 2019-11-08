@@ -5,10 +5,12 @@ from celery.decorators import task
 
 class PuntoGeo():
     @task(name="run_punto_geo")
-    def crearPuntoGeo1(user,marca):
+    def crearPuntoGeo1(user,marca, data):
         codigos = []
         marcadores = []
-        lpns = PlanificacionCargaBulto.objects.all()
+        #lpns = PlanificacionCargaBulto.objects.all()
+        list_lpn_from_marca = [m.get('numero_lpn') for m in data]
+        lpns = PlanificacionCargaBulto.objects.filter(numero_lpn__in=list_lpn_from_marca)
         for lpn in lpns:
             puntos_control = PlanificacionPuntoControl.objects.filter(ruta_codigo=lpn.ruta_codigo)
 
@@ -109,18 +111,18 @@ class PuntoGeo():
 
         n = len(poly)
         inside =False
-
-        p1x,p1y = poly[0]
-        for i in range(n+1):
-            p2x,p2y = poly[i % n]
-            if y > min(p1y,p2y):
-                if y <= max(p1y,p2y):
-                    if x <= max(p1x,p2x):
-                        if p1y != p2y:
-                            xinters = (y-p1y)*(p2x-p1x)/(p2y-p1y)+p1x
-                        if p1x == p2x or x <= xinters:
-                            inside = not inside
-            p1x,p1y = p2x,p2y
+        if poly:
+            p1x,p1y = poly[0]
+            for i in range(n+1):
+                p2x,p2y = poly[i % n]
+                if y > min(p1y,p2y):
+                    if y <= max(p1y,p2y):
+                        if x <= max(p1x,p2x):
+                            if p1y != p2y:
+                                xinters = (y-p1y)*(p2x-p1x)/(p2y-p1y)+p1x
+                            if p1x == p2x or x <= xinters:
+                                inside = not inside
+                p1x,p1y = p2x,p2y
 
         return inside
 
